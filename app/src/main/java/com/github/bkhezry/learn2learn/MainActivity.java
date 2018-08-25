@@ -1,5 +1,7 @@
 package com.github.bkhezry.learn2learn;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,7 +14,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,16 +26,9 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    Toolbar toolbar = findViewById(R.id.toolbar);
-    toolbar.setTitle("Title");
-    toolbar.setNavigationOnClickListener(
-      new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          MainActivity.this.onBackPressed();
-        }
-      });
-
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      getWindow().setStatusBarColor(Color.parseColor("#000000"));
+    }
     coordinatorLayout = findViewById(R.id.coordinator_layout);
     bar = findViewById(R.id.bar);
     setSupportActionBar(bar);
@@ -48,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
           Toast.makeText(MainActivity.this, fab.getContentDescription(), Toast.LENGTH_SHORT).show();
         }
       });
-    NavigationView navigationView = findViewById(R.id.navigation_view);
+    final NavigationView navigationView = findViewById(R.id.navigation_view);
     navigationView.setNavigationItemSelectedListener(
       new NavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -57,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
           return false;
         }
       });
+    findViewById(R.id.main_layout).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+      }
+    });
   }
 
 //  @Override
