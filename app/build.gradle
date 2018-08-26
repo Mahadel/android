@@ -23,6 +23,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.0-rc01'
+    implementation "androidx.recyclerview:recyclerview:1.0.0-rc01"
     implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha05'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     testImplementation 'junit:junit:4.12'
@@ -30,4 +31,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
 
     implementation 'com.google.android.material:material:1.0.0-rc01'
+    implementation 'com.mikepenz:fastadapter:3.3.0-rc01'
+    implementation 'com.mikepenz:fastadapter-commons:3.3.0-rc01'
+
+    implementation 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-SNAPSHOT'
 }

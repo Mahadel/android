@@ -8,4 +8,5 @@
     <color name="grey_40">#999999</color>
     <color name="grey_60">#666666</color>
     <color name="grey_90">#263238</color>
+    <color name="transparent">#00ffffff</color>
 </resources>
