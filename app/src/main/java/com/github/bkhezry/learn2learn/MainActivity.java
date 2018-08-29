@@ -18,7 +18,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -145,12 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
 
   private void requestSkills() {
-    List<Skill> skillList = new ArrayList<>();
-    for (int i = 0; i < 10; i++) {
-      Skill skill = new Skill();
-      skill.setName(String.valueOf(i));
-      skillList.add(skill);
-    }
+    List<Skill> skillList = AppUtil.getSkills();
     mItemAdapter_1.clear();
     mItemAdapter_1.add(skillList);
 

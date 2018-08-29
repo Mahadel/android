@@ -1,7 +1,10 @@
 package com.github.bkhezry.learn2learn.ui.fragment;
 
 import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +12,17 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.github.bkhezry.learn2learn.R;
+import com.github.bkhezry.learn2learn.model.Skill;
+import com.github.bkhezry.learn2learn.presenter.SkillPresenter;
 import com.github.bkhezry.learn2learn.util.AppUtil;
+import com.otaliastudios.autocomplete.Autocomplete;
+import com.otaliastudios.autocomplete.AutocompleteCallback;
+import com.otaliastudios.autocomplete.AutocompletePresenter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +39,7 @@ public class DialogAddSkillFragment extends DialogFragment {
   AppCompatEditText skillDescriptionEditText;
   private int requestCode;
   private AppUtil.SkillType skillType;
+  private Autocomplete userAutocomplete;
 
   public void setOnCallbackResult(final CallbackResult callbackResult) {
     this.callbackResult = callbackResult;
@@ -49,7 +59,31 @@ public class DialogAddSkillFragment extends DialogFragment {
     } else {
       skillTypeTextView.setText("Add skill want teach");
     }
+    initSkillAutoComplete();
     return rootView;
+  }
+
+  private void initSkillAutoComplete() {
+    float elevation = 6f;
+    Drawable backgroundDrawable = new ColorDrawable(ContextCompat.getColor(getActivity(), R.color.grey_10));
+    AutocompletePresenter<Skill> presenter = new SkillPresenter(getActivity());
+    AutocompleteCallback<Skill> callback = new AutocompleteCallback<Skill>() {
+      @Override
+      public boolean onPopupItemClicked(Editable editable, Skill item) {
+        editable.clear();
+        editable.append(item.getName());
+        return true;
+      }
+
+      public void onPopupVisibilityChanged(boolean shown) {
+      }
+    };
+    userAutocomplete = Autocomplete.<Skill>on(skillNameEditText)
+      .with(elevation)
+      .with(backgroundDrawable)
+      .with(presenter)
+      .with(callback)
+      .build();
   }
 
 
