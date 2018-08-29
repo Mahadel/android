@@ -9,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.github.bkhezry.learn2learn.model.Skill;
+import com.github.bkhezry.learn2learn.ui.fragment.DialogAddSkillFragment;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -23,6 +24,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,6 +35,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
+  private static final int DIALOG_QUEST_CODE = 1001;
   @BindView(R.id.recycler_view_1)
   RecyclerView recyclerView_1;
   @BindView(R.id.recycler_view_2)
@@ -115,15 +119,30 @@ public class MainActivity extends AppCompatActivity {
 
   @OnClick(R.id.fab)
   void fabClick() {
-    AppUtil.showSelectGenderDialog(this, new AppUtil.DialogClickListener() {
+    AppUtil.showSkillTypeDialog(this, new AppUtil.DialogClickListener() {
 
       @Override
       public void selectedSkillType(AppUtil.SkillType skillType) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        DialogAddSkillFragment skillFragment = new DialogAddSkillFragment();
+        skillFragment.setRequestCode(DIALOG_QUEST_CODE);
+        skillFragment.setSkillType(skillType);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.add(android.R.id.content, skillFragment).addToBackStack(null).commit();
+        skillFragment.setOnCallbackResult(new DialogAddSkillFragment.CallbackResult() {
+          @Override
+          public void sendResult(int requestCode, Object obj) {
+            if (requestCode == DIALOG_QUEST_CODE) {
 
+            }
+          }
+        });
       }
     });
 
   }
+
 
   private void requestSkills() {
     List<Skill> skillList = new ArrayList<>();
