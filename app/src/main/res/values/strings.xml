@@ -23,4 +23,7 @@ Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus
     <string name="cat_bottomappbar_dashboard">Dashboard</string>
     <string name="cat_bottomappbar_navigation_button_content_description">Show navigation drawer</string>
     <string name="cat_bottomappbar_fab_button_content_description">FAB</string>
+    <string name="prompt_select_kind_skill_label">Please select which kind of skill you want to add</string>
+    <string name="add_want_to_learn_label">Add skill want to learn</string>
+    <string name="add_want_to_teach_label">Add skill want to teach</string>
 </resources>

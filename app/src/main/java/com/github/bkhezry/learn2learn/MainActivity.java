@@ -115,6 +115,13 @@ public class MainActivity extends AppCompatActivity {
 
   @OnClick(R.id.fab)
   void fabClick() {
+    AppUtil.showSelectGenderDialog(this, new AppUtil.DialogClickListener() {
+
+      @Override
+      public void selectedSkillType(AppUtil.SkillType skillType) {
+
+      }
+    });
 
   }
 
