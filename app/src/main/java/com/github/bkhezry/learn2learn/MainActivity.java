@@ -1,9 +1,6 @@
 package com.github.bkhezry.learn2learn;
 
-import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -12,6 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.github.bkhezry.learn2learn.model.Skill;
+import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -30,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,22 +55,19 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
-    ButterKnife.bind(this);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       getWindow().setStatusBarColor(Color.parseColor("#000000"));
     }
+    setContentView(R.layout.activity_main);
+    ButterKnife.bind(this);
     setSupportActionBar(bar);
     setUpBottomDrawer();
+    initNavigationView();
+    initRecyclerViews();
+    requestSkills();
+  }
 
-    fab.setOnClickListener(
-      new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          Toast.makeText(MainActivity.this, fab.getContentDescription(), Toast.LENGTH_SHORT).show();
-        }
-      });
-    final NavigationView navigationView = findViewById(R.id.navigation_view);
+  private void initNavigationView() {
     navigationView.setNavigationItemSelectedListener(
       new NavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -80,16 +76,28 @@ public class MainActivity extends AppCompatActivity {
           return false;
         }
       });
-    int[] ATTRS = new int[] {android.R.attr.listDivider};
+  }
 
-    TypedArray a = MainActivity.this.obtainStyledAttributes(ATTRS);
-    Drawable divider = a.getDrawable(0);
-    int inset = getResources().getDimensionPixelSize(R.dimen.item_space);
-    InsetDrawable insetDivider = new InsetDrawable(divider, inset, 0, inset, 0);
-    a.recycle();
+  protected void setUpBottomDrawer() {
+    View bottomDrawer = coordinatorLayout.findViewById(R.id.bottom_drawer);
+    bottomDrawerBehavior = BottomSheetBehavior.from(bottomDrawer);
+    bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+    bar.setNavigationOnClickListener(
+      new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+        }
+      });
+    bar.setNavigationIcon(R.drawable.ic_drawer_menu_24px);
+    bar.replaceMenu(R.menu.demo_primary);
+  }
+
+  private void initRecyclerViews() {
     DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView_1.getContext(),
       DividerItemDecoration.HORIZONTAL);
-    dividerItemDecoration.setDrawable(insetDivider);
+    dividerItemDecoration.setDrawable(AppUtil.getInsetDrawable(this));
     RecyclerView.LayoutManager mLayoutManager_1 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     RecyclerView.LayoutManager mLayoutManager_2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     recyclerView_1.setLayoutManager(mLayoutManager_1);
@@ -103,7 +111,11 @@ public class MainActivity extends AppCompatActivity {
     mFastAdapter_2 = FastAdapter.with(mItemAdapter_2);
     recyclerView_2.setAdapter(mFastAdapter_2);
     recyclerView_2.addItemDecoration(dividerItemDecoration);
-    requestSkills();
+  }
+
+  @OnClick(R.id.fab)
+  void fabClick() {
+
   }
 
   private void requestSkills() {
@@ -132,21 +144,5 @@ public class MainActivity extends AppCompatActivity {
 //    Toast.makeText(this, menuItem.getTitle(), Toast.LENGTH_SHORT).show();
 //    return true;
 //  }
-
-  protected void setUpBottomDrawer() {
-    View bottomDrawer = coordinatorLayout.findViewById(R.id.bottom_drawer);
-    bottomDrawerBehavior = BottomSheetBehavior.from(bottomDrawer);
-    bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-
-    bar.setNavigationOnClickListener(
-      new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
-        }
-      });
-    bar.setNavigationIcon(R.drawable.ic_drawer_menu_24px);
-    bar.replaceMenu(R.menu.demo_primary);
-  }
 }
 
