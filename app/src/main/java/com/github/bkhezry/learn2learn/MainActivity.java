@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      getWindow().setStatusBarColor(Color.parseColor("#000000"));
+      getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
