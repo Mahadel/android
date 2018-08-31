@@ -34,7 +34,7 @@ public class AppUtil {
     dialog.setCancelable(true);
     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
     lp.copyFrom(dialog.getWindow().getAttributes());
-    lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
     lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
     dialog.findViewById(R.id.add_skill_want_learn_btn).setOnClickListener(new View.OnClickListener() {
       @Override

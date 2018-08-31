@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/spacing_xlarge"
+            android:layout_margin="@dimen/spacing_large"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/submit_label"
                 android:textAllCaps="false"
-                app:icon="@drawable/ic_google_plus_32px" />
+                app:icon="@drawable/ic_done_black_24dp" />
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
