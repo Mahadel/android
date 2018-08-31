@@ -2,6 +2,7 @@ package com.github.bkhezry.learn2learn.util;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
@@ -14,6 +15,7 @@ import com.github.bkhezry.learn2learn.model.Skill;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class AppUtil {
 
@@ -101,5 +103,14 @@ public class AppUtil {
     skill.setName("Material design");
     skillList.add(skill);
     return skillList;
+  }
+
+  public static void updateResources(Context context, String language) {
+    Locale locale = new Locale(language);
+    Locale.setDefault(locale);
+    Configuration config = context.getResources().getConfiguration();
+    config.setLocale(locale);
+    context.getResources().updateConfiguration(config,
+      context.getResources().getDisplayMetrics());
   }
 }

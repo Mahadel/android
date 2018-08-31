@@ -6,17 +6,21 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
+import com.github.bkhezry.learn2learn.util.AppUtil;
+import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.AppCompatTextView;
 import butterknife.BindView;
@@ -46,13 +50,23 @@ public class LauncherActivity extends AppCompatActivity implements
   RadioGroup radioGender;
   @BindView(R.id.personal_layout)
   LinearLayout personalLayout;
+  @BindView(R.id.persian_image_view)
+  AppCompatImageView persianImageView;
+  @BindView(R.id.english_image_view)
+  AppCompatImageView englishImageView;
+  @BindView(R.id.submit_info_button)
+  MaterialButton submitInfoButton;
   private GoogleApiClient mGoogleApiClient;
+  // language=1 means persian, and 2 means english
+  private Prefser prefser;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_launcher);
     ButterKnife.bind(this);
+    prefser = new Prefser(this);
+    setUpLocale();
     setUpGoogleSignIn();
   }
 
@@ -67,6 +81,17 @@ public class LauncherActivity extends AppCompatActivity implements
       .build();
   }
 
+  private void setUpLocale() {
+    if (prefser.contains("language")) {
+      if (prefser.get("language", Integer.class, 1) == 1) {
+        AppUtil.updateResources(getBaseContext(), "fa");
+        changeLanguagePersian();
+      } else {
+        AppUtil.updateResources(getBaseContext(), "en");
+        changeLanguageEnglish();
+      }
+    }
+  }
 
   @OnClick(R.id.google_login_button)
   public void login() {
@@ -129,6 +154,38 @@ public class LauncherActivity extends AppCompatActivity implements
   public void submitInfo() {
     startActivity(new Intent(this, MainActivity.class));
     finish();
+  }
+
+  @OnClick( {R.id.persian_image_view, R.id.english_image_view})
+  public void handleLanguage(View view) {
+    switch (view.getId()) {
+      case R.id.persian_image_view:
+        changeLanguagePersian();
+        break;
+      case R.id.english_image_view:
+        changeLanguageEnglish();
+        break;
+    }
+    restartApp();
+  }
+
+  private void changeLanguagePersian() {
+    persianImageView.setBackgroundResource(R.drawable.image_border);
+    englishImageView.setBackgroundResource(android.R.color.transparent);
+    prefser.put("language", 1);
+  }
+
+  private void changeLanguageEnglish() {
+    englishImageView.setBackgroundResource(R.drawable.image_border);
+    persianImageView.setBackgroundResource(android.R.color.transparent);
+    prefser.put("language", 2);
+  }
+
+  private void restartApp() {
+    Intent intent = getIntent();
+    finish();
+    startActivity(intent);
+
   }
 }
 
