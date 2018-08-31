@@ -20,4 +20,11 @@
         <item name="android:layout_marginEnd">20dp</item>
     </style>
 
+    <style name="StyleMaterialButtonLarge" parent="Widget.MaterialComponents.Button">
+        <item name="android:gravity">center</item>
+        <item name="cornerRadius">40dp</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginEnd">20dp</item>
+    </style>
+
 </resources>

@@ -10,8 +10,24 @@
         android:layout_height="match_parent"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="10dp"
-        app:strokeColor="#0000ff"
+        app:strokeColor="#990000ff"
         app:strokeWidth="2dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/google_login_button"
+                style="@style/StyleMaterialButtonLarge"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="@string/login_with_google_label"
+                android:textAllCaps="false"
+                app:icon="@drawable/ic_google_plus_32px"
+                app:iconSize="@dimen/spacing_xlarge" />
+        </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
 </RelativeLayout>

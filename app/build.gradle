@@ -34,6 +34,8 @@ dependencies {
 
     implementation 'com.github.bkhezry:Autocomplete:1.2.0'
 
+    implementation 'com.google.android.gms:play-services-auth:16.0.0'
+
     implementation 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-SNAPSHOT'
 

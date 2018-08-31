@@ -3,4 +3,5 @@
     <string name="prompt_select_kind_skill_label">Select which kind of skill you want to add</string>
     <string name="add_want_to_learn_label">Add skill want to learn</string>
     <string name="add_want_to_teach_label">Add skill want to teach</string>
+    <string name="login_with_google_label">Login with Google account</string>
 </resources>
