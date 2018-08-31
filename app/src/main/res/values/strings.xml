@@ -5,4 +5,8 @@
     <string name="add_want_to_teach_label">Add skill want to teach</string>
     <string name="login_with_google_label">Login with Google account</string>
     <string name="submit_label">Submit</string>
+    <string name="first_name_label">First Name</string>
+    <string name="last_name_label">Last Name</string>
+    <string name="male_label">Male</string>
+    <string name="female_label">Female</string>
 </resources>

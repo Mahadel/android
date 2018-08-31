@@ -2,6 +2,7 @@ package com.github.bkhezry.learn2learn;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
@@ -93,6 +94,9 @@ public class LauncherActivity extends AppCompatActivity implements
   }
 
   private void handleAccount(GoogleSignInAccount acct) {
+    emailTextView.setText(acct.getEmail());
+    loginLayout.setVisibility(View.GONE);
+    personalLayout.setVisibility(View.VISIBLE);
 
   }
 
