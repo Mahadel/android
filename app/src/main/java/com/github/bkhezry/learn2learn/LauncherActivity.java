@@ -57,7 +57,6 @@ public class LauncherActivity extends AppCompatActivity implements
   @BindView(R.id.submit_info_button)
   MaterialButton submitInfoButton;
   private GoogleApiClient mGoogleApiClient;
-  // language=1 means persian, and 2 means english
   private Prefser prefser;
 
   @Override
@@ -66,6 +65,7 @@ public class LauncherActivity extends AppCompatActivity implements
     setContentView(R.layout.activity_launcher);
     ButterKnife.bind(this);
     prefser = new Prefser(this);
+    submitInfo();
     setUpLocale();
     setUpGoogleSignIn();
   }
@@ -185,7 +185,6 @@ public class LauncherActivity extends AppCompatActivity implements
     Intent intent = getIntent();
     finish();
     startActivity(intent);
-
   }
 }
 

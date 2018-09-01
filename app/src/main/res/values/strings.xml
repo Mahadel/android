@@ -9,4 +9,6 @@
     <string name="last_name_label">Last Name</string>
     <string name="male_label">Male</string>
     <string name="female_label">Female</string>
+    <string name="skill_name_label">Skill name</string>
+    <string name="description_label">Description</string>
 </resources>

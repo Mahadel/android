@@ -1,5 +1,6 @@
 package com.github.bkhezry.learn2learn.ui.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.Skill;
@@ -40,6 +42,7 @@ public class DialogAddSkillFragment extends DialogFragment {
   private int requestCode;
   private AppUtil.SkillType skillType;
   private Autocomplete userAutocomplete;
+  private Activity activity;
 
   public void setOnCallbackResult(final CallbackResult callbackResult) {
     this.callbackResult = callbackResult;
@@ -54,6 +57,7 @@ public class DialogAddSkillFragment extends DialogFragment {
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.dialog_add_skill, container, false);
     ButterKnife.bind(this, rootView);
+    activity = getActivity();
     if (skillType == AppUtil.SkillType.WANT_LEARN) {
       skillTypeTextView.setText("Add skill want learn");
     } else {
@@ -65,13 +69,19 @@ public class DialogAddSkillFragment extends DialogFragment {
 
   private void initSkillAutoComplete() {
     float elevation = 6f;
-    Drawable backgroundDrawable = new ColorDrawable(ContextCompat.getColor(getActivity(), R.color.grey_10));
-    AutocompletePresenter<Skill> presenter = new SkillPresenter(getActivity());
+    Drawable backgroundDrawable = new ColorDrawable(ContextCompat.getColor(activity, R.color.grey_10));
+    AutocompletePresenter<Skill> presenter = new SkillPresenter(activity);
     AutocompleteCallback<Skill> callback = new AutocompleteCallback<Skill>() {
       @Override
       public boolean onPopupItemClicked(Editable editable, Skill item) {
-        editable.clear();
-        editable.append(item.getName());
+        AppUtil.hideSoftInput(activity);
+        if (item.isWantCreate()) {
+          editable.clear();
+          Toast.makeText(activity, item.getName(), Toast.LENGTH_SHORT).show();
+        } else {
+          editable.clear();
+          editable.append(item.getName());
+        }
         return true;
       }
 
@@ -106,7 +116,7 @@ public class DialogAddSkillFragment extends DialogFragment {
   }
 
   @OnClick(R.id.submit_btn)
-  public void onViewClicked() {
+  public void submit() {
   }
 
   public interface CallbackResult {

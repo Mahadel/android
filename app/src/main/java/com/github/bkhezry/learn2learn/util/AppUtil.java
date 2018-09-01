@@ -1,5 +1,6 @@
 package com.github.bkhezry.learn2learn.util;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -9,6 +10,7 @@ import android.graphics.drawable.InsetDrawable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.Skill;
@@ -112,5 +114,23 @@ public class AppUtil {
     config.setLocale(locale);
     context.getResources().updateConfiguration(config,
       context.getResources().getDisplayMetrics());
+  }
+
+  /**
+   * Hide the soft input.
+   *
+   * @param activity The activity.
+   */
+  public static void hideSoftInput(final Activity activity) {
+    InputMethodManager imm =
+      (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+    if (imm == null) {
+      return;
+    }
+    View view = activity.getCurrentFocus();
+    if (view == null) {
+      view = new View(activity);
+    }
+    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
   }
 }

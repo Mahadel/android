@@ -6,14 +6,14 @@
     android:clickable="true"
     android:focusable="true"
     android:layoutDirection="locale"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_large">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/spacing_large">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <View
             android:layout_width="@dimen/spacing_large"
@@ -38,43 +38,48 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/submit_btn"
+            style="@style/StyleMaterialButtonLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="false"
             android:gravity="center"
             android:minWidth="0dp"
-            android:paddingLeft="@dimen/spacing_large"
-            android:paddingRight="@dimen/spacing_large"
-            android:text="POST" />
+            android:text="@string/submit_label" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginStart="@dimen/spacing_medium"
-        android:layout_marginEnd="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_medium"
+        android:layout_marginBottom="@dimen/spacing_medium"
         android:background="@color/grey_20" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatEditText
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_skill_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/skill_name_label">
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/skill_name_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:gravity="top"
-            android:hint="Write skill name ..."
-            android:padding="@dimen/spacing_large"
-            android:textSize="14sp" />
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_skill_description"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:hint="@string/description_label">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/skill_description_edit_text"
@@ -82,11 +87,11 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:gravity="top"
-            android:hint="Write description ..."
-            android:padding="@dimen/spacing_large"
-            android:textSize="14sp" />
-
-    </LinearLayout>
+            android:lines="4"
+            android:maxLines="4"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
 </LinearLayout>

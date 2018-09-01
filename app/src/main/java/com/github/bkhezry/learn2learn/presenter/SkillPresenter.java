@@ -84,6 +84,7 @@ public class SkillPresenter extends RecyclerViewPresenter<Skill> {
       if (isEmpty()) {
         final Skill skill = new Skill();
         skill.setName(String.valueOf(query));
+        skill.setWantCreate(true);
         holder.name.setText("Create this skill");
         holder.root.setOnClickListener(new View.OnClickListener() {
           @Override

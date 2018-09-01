@@ -38,6 +38,9 @@ dependencies {
 
     implementation 'com.github.bkhezry:prefser:v2.2.1-rx2'
 
+    //implementation 'com.blankj:utilcode:1.19.4'
+
+
     implementation 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-SNAPSHOT'
 

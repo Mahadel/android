@@ -16,6 +16,11 @@ import butterknife.ButterKnife;
 public class Skill extends AbstractItem<Skill, Skill.ViewHolder> {
   private String name;
   private String description;
+  private boolean wantCreate;
+
+  public Skill() {
+    this.wantCreate = false;
+  }
 
   public String getName() {
     return name;
@@ -31,6 +36,14 @@ public class Skill extends AbstractItem<Skill, Skill.ViewHolder> {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public boolean isWantCreate() {
+    return wantCreate;
+  }
+
+  public void setWantCreate(boolean wantCreate) {
+    this.wantCreate = wantCreate;
   }
 
   @NonNull
