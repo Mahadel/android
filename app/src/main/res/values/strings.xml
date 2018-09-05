@@ -13,4 +13,6 @@
     <string name="description_label">Description</string>
     <string name="add_skill_learn_label">Add skill want learn</string>
     <string name="add_skill_teach_label">Add skill want teach</string>
+    <string name="want_learn_label">I want to learn</string>
+    <string name="know_label">I know</string>
 </resources>
