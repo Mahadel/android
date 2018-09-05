@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
+import android.os.Build;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.Skill;
+import com.github.pwittchen.prefser.library.rx2.Prefser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,13 +110,20 @@ public class AppUtil {
     return skillList;
   }
 
-  public static void updateResources(Context context, String language) {
-    Locale locale = new Locale(language);
+  public static Context updateResources(Context context) {
+    Prefser prefser = new Prefser(context);
+    Locale locale = new Locale(prefser.get(Constant.LANGUAGE, String.class, "fa"));
     Locale.setDefault(locale);
-    Configuration config = context.getResources().getConfiguration();
-    config.setLocale(locale);
-    context.getResources().updateConfiguration(config,
-      context.getResources().getDisplayMetrics());
+    Resources res = context.getResources();
+    Configuration config = new Configuration(res.getConfiguration());
+    if (Build.VERSION.SDK_INT >= 17) {
+      config.setLocale(locale);
+      context = context.createConfigurationContext(config);
+    } else {
+      config.locale = locale;
+      res.updateConfiguration(config, res.getDisplayMetrics());
+    }
+    return context;
   }
 
   /**

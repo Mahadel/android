@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Learn2Learn</string>
+    <string name="prompt_select_kind_skill_label">انتخاب نوع مهارت</string>
+    <string name="add_want_to_learn_label">مهارتی که می‌خوام یادبگیرم</string>
+    <string name="add_want_to_teach_label">مهارتی که می‌خوام یاد بدهم</string>
+    <string name="login_with_google_label">ورود با حساب‌کاربری گوگل</string>
+    <string name="submit_label">تایید</string>
+    <string name="first_name_label">نام</string>
+    <string name="last_name_label">نام‌خانوادگی</string>
+    <string name="male_label">مرد</string>
+    <string name="female_label">زن</string>
+    <string name="skill_name_label">نام مهارت</string>
+    <string name="description_label">توضیحات</string>
+    <string name="add_skill_learn_label">قصد یادگیری دارم</string>
+    <string name="add_skill_teach_label">قصد یاددادن دارم</string>
+</resources>

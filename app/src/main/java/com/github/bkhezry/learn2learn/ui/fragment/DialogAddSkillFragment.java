@@ -32,7 +32,6 @@ import butterknife.OnClick;
 
 public class DialogAddSkillFragment extends DialogFragment {
 
-  CallbackResult callbackResult;
   @BindView(R.id.skill_type_text_view)
   AppCompatTextView skillTypeTextView;
   @BindView(R.id.skill_name_edit_text)
@@ -40,9 +39,10 @@ public class DialogAddSkillFragment extends DialogFragment {
   @BindView(R.id.skill_description_edit_text)
   AppCompatEditText skillDescriptionEditText;
   private int requestCode;
+  private CallbackResult callbackResult;
   private AppUtil.SkillType skillType;
-  private Autocomplete userAutocomplete;
   private Activity activity;
+
 
   public void setOnCallbackResult(final CallbackResult callbackResult) {
     this.callbackResult = callbackResult;
@@ -59,9 +59,9 @@ public class DialogAddSkillFragment extends DialogFragment {
     ButterKnife.bind(this, rootView);
     activity = getActivity();
     if (skillType == AppUtil.SkillType.WANT_LEARN) {
-      skillTypeTextView.setText("Add skill want learn");
+      skillTypeTextView.setText(R.string.add_skill_learn_label);
     } else {
-      skillTypeTextView.setText("Add skill want teach");
+      skillTypeTextView.setText(R.string.add_skill_teach_label);
     }
     initSkillAutoComplete();
     return rootView;
@@ -88,7 +88,7 @@ public class DialogAddSkillFragment extends DialogFragment {
       public void onPopupVisibilityChanged(boolean shown) {
       }
     };
-    userAutocomplete = Autocomplete.<Skill>on(skillNameEditText)
+    Autocomplete.<Skill>on(skillNameEditText)
       .with(elevation)
       .with(backgroundDrawable)
       .with(presenter)
@@ -117,6 +117,14 @@ public class DialogAddSkillFragment extends DialogFragment {
 
   @OnClick(R.id.submit_btn)
   public void submit() {
+  }
+
+  @OnClick(R.id.close_image_view)
+  public void close() {
+    dismiss();
+    if (getFragmentManager() != null) {
+      getFragmentManager().popBackStackImmediate();
+    }
   }
 
   public interface CallbackResult {

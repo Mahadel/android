@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
-import com.github.bkhezry.learn2learn.util.AppUtil;
+import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -19,7 +19,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatRadioButton;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -27,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LauncherActivity extends AppCompatActivity implements
+public class LauncherActivity extends BaseActivity implements
   GoogleApiClient.OnConnectionFailedListener {
   private static final int RC_SIGN_IN = 10001;
   @BindView(R.id.login_layout)
@@ -65,7 +64,6 @@ public class LauncherActivity extends AppCompatActivity implements
     setContentView(R.layout.activity_launcher);
     ButterKnife.bind(this);
     prefser = new Prefser(this);
-    submitInfo();
     setUpLocale();
     setUpGoogleSignIn();
   }
@@ -82,12 +80,10 @@ public class LauncherActivity extends AppCompatActivity implements
   }
 
   private void setUpLocale() {
-    if (prefser.contains("language")) {
-      if (prefser.get("language", Integer.class, 1) == 1) {
-        AppUtil.updateResources(getBaseContext(), "fa");
+    if (prefser.contains(Constant.LANGUAGE)) {
+      if (prefser.get(Constant.LANGUAGE, String.class, null).equals("fa")) {
         changeLanguagePersian();
       } else {
-        AppUtil.updateResources(getBaseContext(), "en");
         changeLanguageEnglish();
       }
     }
@@ -122,7 +118,6 @@ public class LauncherActivity extends AppCompatActivity implements
     emailTextView.setText(acct.getEmail());
     loginLayout.setVisibility(View.GONE);
     personalLayout.setVisibility(View.VISIBLE);
-
   }
 
 
@@ -172,19 +167,19 @@ public class LauncherActivity extends AppCompatActivity implements
   private void changeLanguagePersian() {
     persianImageView.setBackgroundResource(R.drawable.image_border);
     englishImageView.setBackgroundResource(android.R.color.transparent);
-    prefser.put("language", 1);
+    prefser.put("language", "fa");
   }
 
   private void changeLanguageEnglish() {
     englishImageView.setBackgroundResource(R.drawable.image_border);
     persianImageView.setBackgroundResource(android.R.color.transparent);
-    prefser.put("language", 2);
+    prefser.put("language", "en");
   }
 
   private void restartApp() {
-    Intent intent = getIntent();
-    finish();
-    startActivity(intent);
+    Intent i = new Intent(this, LauncherActivity.class);
+    startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
+    System.exit(0);
   }
 }
 

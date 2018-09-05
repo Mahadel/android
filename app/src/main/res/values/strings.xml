@@ -11,4 +11,6 @@
     <string name="female_label">Female</string>
     <string name="skill_name_label">Skill name</string>
     <string name="description_label">Description</string>
+    <string name="add_skill_learn_label">Add skill want learn</string>
+    <string name="add_skill_teach_label">Add skill want teach</string>
 </resources>
