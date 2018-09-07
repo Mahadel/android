@@ -15,15 +15,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
+import com.ramotion.cardslider.CardSnapHelper;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.os.ConfigurationCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,19 +96,27 @@ public class MainActivity extends BaseActivity {
     DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView_1.getContext(),
       DividerItemDecoration.HORIZONTAL);
     dividerItemDecoration.setDrawable(AppUtil.getInsetDrawable(this));
-    RecyclerView.LayoutManager mLayoutManager_1 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-    RecyclerView.LayoutManager mLayoutManager_2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-    recyclerView_1.setLayoutManager(mLayoutManager_1);
+
     mItemAdapter_1 = new ItemAdapter<>();
     mFastAdapter_1 = FastAdapter.with(mItemAdapter_1);
     recyclerView_1.setAdapter(mFastAdapter_1);
     recyclerView_1.addItemDecoration(dividerItemDecoration);
+    new CardSnapHelper().attachToRecyclerView(recyclerView_1);
 
-    recyclerView_2.setLayoutManager(mLayoutManager_2);
     mItemAdapter_2 = new ItemAdapter<>();
     mFastAdapter_2 = FastAdapter.with(mItemAdapter_2);
     recyclerView_2.setAdapter(mFastAdapter_2);
     recyclerView_2.addItemDecoration(dividerItemDecoration);
+    new CardSnapHelper().attachToRecyclerView(recyclerView_2);
+
+    handleLocaleDirection();
+  }
+
+  private void handleLocaleDirection() {
+    if (AppUtil.isRTL(ConfigurationCompat.getLocales(getResources().getConfiguration()).get(0))) {
+      AppUtil.rotateYView(recyclerView_1, 180);
+      AppUtil.rotateYView(recyclerView_2, 180);
+    }
   }
 
   @OnClick(R.id.fab)

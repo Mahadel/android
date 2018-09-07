@@ -43,6 +43,7 @@ dependencies {
     implementation 'io.github.inflationx:viewpump:1.0.0'
     implementation 'io.github.inflationx:calligraphy3:3.0.0'
 
+    implementation 'com.github.bkhezry:cardslider-android:1.0.0'
 
     implementation 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-SNAPSHOT'

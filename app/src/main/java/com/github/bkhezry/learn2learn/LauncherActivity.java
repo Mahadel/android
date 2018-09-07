@@ -65,7 +65,7 @@ public class LauncherActivity extends BaseActivity implements
     ButterKnife.bind(this);
     prefser = new Prefser(this);
     setUpLocale();
-    submitInfo();
+    //submitInfo();
     setUpGoogleSignIn();
   }
 

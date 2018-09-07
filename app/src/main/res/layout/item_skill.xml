@@ -7,7 +7,7 @@
     android:layout_width="@dimen/item_size"
     android:layout_height="@dimen/item_size"
     app:cardBackgroundColor="@android:color/white"
-    app:cardCornerRadius="5dp"
+    app:cardCornerRadius="10dp"
     app:cardElevation="5dp">
 
     <RelativeLayout

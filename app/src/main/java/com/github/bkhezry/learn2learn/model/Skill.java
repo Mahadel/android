@@ -4,12 +4,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.github.bkhezry.learn2learn.R;
+import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.os.ConfigurationCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -76,6 +78,9 @@ public class Skill extends AbstractItem<Skill, Skill.ViewHolder> {
 
     @Override
     public void bindView(@NonNull Skill item, @NonNull List<Object> payloads) {
+      if (AppUtil.isRTL(ConfigurationCompat.getLocales(view.getContext().getResources().getConfiguration()).get(0))) {
+        AppUtil.rotateYView(view, 180);
+      }
       skill.setText(item.name);
 
     }

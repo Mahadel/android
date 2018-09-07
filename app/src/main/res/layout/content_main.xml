@@ -50,7 +50,6 @@
                 android:id="@+id/layout_1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 android:layoutDirection="locale"
@@ -59,6 +58,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:background="@drawable/gradient"
                     android:text="@string/know_label"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
@@ -67,14 +67,19 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="-40dp"
+                    android:layout_marginEnd="-40dp"
+                    android:clipChildren="false"
+                    android:overScrollMode="never"
+                    app:activeCardLeftOffset="50dp"
+                    app:cardWidth="150dp"
+                    app:layoutManager="com.ramotion.cardslider.CardSliderLayoutManager" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 android:layoutDirection="locale"
@@ -83,6 +88,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:background="@drawable/gradient"
                     android:text="@string/want_learn_label"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
@@ -91,8 +97,14 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="-40dp"
+                    android:layout_marginEnd="-40dp"
+                    android:clipChildren="false"
+                    android:overScrollMode="never"
+                    app:activeCardLeftOffset="50dp"
+                    app:cardWidth="150dp"
+                    app:layoutManager="com.ramotion.cardslider.CardSliderLayoutManager" />
             </LinearLayout>
 
         </LinearLayout>
