@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    app:cardBackgroundColor="@color/grey_90"
     android:layoutDirection="locale"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp">
@@ -22,6 +22,7 @@
             android:gravity="center"
             android:text="@string/prompt_select_kind_skill_label"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColor="@android:color/white"
             android:textStyle="bold|italic" />
 
         <View
@@ -39,6 +40,7 @@
             android:layout_weight="1"
             android:text="@string/add_want_to_learn_label"
             android:textAllCaps="false"
+            android:textColor="@android:color/white"
             app:icon="@drawable/ic_add_circle_outline_black_24dp" />
 
 
@@ -50,6 +52,7 @@
             android:layout_weight="1"
             android:text="@string/add_want_to_teach_label"
             android:textAllCaps="false"
+            android:textColor="@android:color/white"
             app:icon="@drawable/ic_add_circle_outline_black_24dp" />
 
 

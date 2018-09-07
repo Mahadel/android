@@ -4,18 +4,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:icon="@drawable/ic_search_24px"
-        android:title=""
+        android:title="Search"
         app:showAsAction="ifRoom" />
     <item
         android:icon="@drawable/ic_3d_rotation_24px"
-        android:title=""
+        android:title="3D"
         app:showAsAction="ifRoom" />
     <item
         android:icon="@drawable/ic_accelerator_24px"
-        android:title=""
+        android:title="Accelerator"
         app:showAsAction="ifRoom" />
     <item
         android:icon="@drawable/ic_dashboard_24px"
-        android:title=""
+        android:title="Dashboard"
         app:showAsAction="ifRoom" />
 </menu>

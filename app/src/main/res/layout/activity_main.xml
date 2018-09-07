@@ -47,7 +47,10 @@
                     android:id="@+id/navigation_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/grey_90"
                     android:layoutDirection="locale"
+                    app:itemIconTint="@android:color/white"
+                    app:itemTextColor="@android:color/white"
                     app:menu="@menu/demo_primary" />
             </FrameLayout>
 
