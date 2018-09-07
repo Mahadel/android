@@ -6,8 +6,6 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
@@ -40,7 +38,7 @@ public class AppUtil {
     final Dialog dialog = new Dialog(context);
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
     dialog.setContentView(R.layout.dialog_skill_type);
-    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     dialog.setCancelable(true);
     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
     lp.copyFrom(dialog.getWindow().getAttributes());
