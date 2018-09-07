@@ -2,6 +2,7 @@
 <resources>
     <dimen name="item_space">5dp</dimen>
     <dimen name="item_size">150dp</dimen>
+    <dimen name="card_size">160dp</dimen>
 
     <dimen name="spacing_xxsmall">1dp</dimen>
     <dimen name="spacing_xsmall">2dp</dimen>

@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        app:cardBackgroundColor="@android:color/white"
+        app:cardBackgroundColor="@color/grey_90"
         app:cardCornerRadius="10dp"
-        app:strokeColor="#990000ff"
-        app:strokeWidth="2dp">
+        app:strokeColor="#00004b"
+        app:strokeWidth="1dp">
 
         <LinearLayout
             android:id="@+id/login_layout"
