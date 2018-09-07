@@ -8,10 +8,10 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardBackgroundColor="@android:color/white"
+        app:cardBackgroundColor="@color/grey_90"
         app:cardCornerRadius="10dp"
-        app:strokeColor="#0000ff"
-        app:strokeWidth="2dp">
+        app:strokeColor="#00004b"
+        app:strokeWidth="1dp">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/coordinator_layout"
@@ -25,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="bottom"
+                app:backgroundTint="@color/grey_90"
                 app:navigationIcon="@drawable/ic_drawer_menu_24px" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
