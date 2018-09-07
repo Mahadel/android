@@ -65,7 +65,6 @@ public class LauncherActivity extends BaseActivity implements
     ButterKnife.bind(this);
     prefser = new Prefser(this);
     setUpLocale();
-    submitInfo();
     setUpGoogleSignIn();
   }
 
@@ -92,8 +91,9 @@ public class LauncherActivity extends BaseActivity implements
 
   @OnClick(R.id.google_login_button)
   public void login() {
-    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-    startActivityForResult(signInIntent, RC_SIGN_IN);
+//    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+//    startActivityForResult(signInIntent, RC_SIGN_IN);
+    submitInfo();
   }
 
   @Override

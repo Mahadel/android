@@ -160,6 +160,11 @@ public class MainActivity extends BaseActivity {
     mItemAdapter_2.add(skillList);
   }
 
+  @OnClick(R.id.main_layout)
+  public void hideBottomDrawer() {
+    bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+  }
+
 //  @Override
 //  public boolean onCreateOptionsMenu(Menu menu) {
 //    MenuInflater inflater = getMenuInflater();
