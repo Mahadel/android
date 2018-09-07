@@ -16,7 +16,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.mikepenz.fastadapter.FastAdapter;
+import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
+import com.mikepenz.fastadapter.listeners.OnClickListener;
+import com.ramotion.cardslider.CardSliderLayoutManager;
 import com.ramotion.cardslider.CardSnapHelper;
 
 import java.util.List;
@@ -107,14 +110,44 @@ public class MainActivity extends BaseActivity {
     recyclerView_1.setAdapter(mFastAdapter_1);
     recyclerView_1.addItemDecoration(dividerItemDecoration);
     new CardSnapHelper().attachToRecyclerView(recyclerView_1);
+    mFastAdapter_1.withOnClickListener(new OnClickListener<Skill>() {
+      @Override
+      public boolean onClick(View v, @NonNull IAdapter<Skill> adapter, @NonNull Skill item, int position) {
+        return handleRecyclerViewOnClick(v, recyclerView_1);
+      }
+    });
 
     mItemAdapter_2 = new ItemAdapter<>();
     mFastAdapter_2 = FastAdapter.with(mItemAdapter_2);
     recyclerView_2.setAdapter(mFastAdapter_2);
     recyclerView_2.addItemDecoration(dividerItemDecoration);
     new CardSnapHelper().attachToRecyclerView(recyclerView_2);
-
+    mFastAdapter_2.withOnClickListener(new OnClickListener<Skill>() {
+      @Override
+      public boolean onClick(View v, @NonNull IAdapter<Skill> adapter, @NonNull Skill item, int position) {
+        return handleRecyclerViewOnClick(v, recyclerView_2);
+      }
+    });
     handleLocaleDirection();
+  }
+
+  private boolean handleRecyclerViewOnClick(View v, RecyclerView recyclerView) {
+    final CardSliderLayoutManager lm = (CardSliderLayoutManager) recyclerView.getLayoutManager();
+    if (lm.isSmoothScrolling()) {
+      return false;
+    }
+    final int activeCardPosition = lm.getActiveCardPosition();
+    if (activeCardPosition == RecyclerView.NO_POSITION) {
+      return false;
+    }
+    final int clickedPosition = recyclerView.getChildAdapterPosition(v);
+    if (clickedPosition == activeCardPosition) {
+      Toast.makeText(MainActivity.this, "Click", Toast.LENGTH_SHORT).show();
+
+    } else if (clickedPosition > activeCardPosition) {
+      recyclerView.smoothScrollToPosition(clickedPosition);
+    }
+    return false;
   }
 
   private void handleLocaleDirection() {
