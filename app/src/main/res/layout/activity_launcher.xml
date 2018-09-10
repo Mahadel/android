@@ -77,16 +77,17 @@
                 android:layout_marginTop="@dimen/spacing_middle"
                 android:layout_marginBottom="@dimen/spacing_middle"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                android:textColor="@color/grey_90"
+                android:textColor="@android:color/white"
                 android:textStyle="bold"
                 tools:text="bkhezry@gmail.com" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_first_name"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                style="@style/StyleMaterialTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/first_name_label">
+                android:hint="@string/first_name_label"
+                android:textColorHint="@android:color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/first_name_edit_text"
@@ -97,16 +98,19 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textColor="@android:color/white"
                     android:textSize="14sp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_last_name"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                style="@style/StyleMaterialTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/last_name_label">
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:hint="@string/last_name_label"
+                android:textColorHint="@android:color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/last_name_edit_text"
@@ -117,6 +121,7 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textColor="@android:color/white"
                     android:textSize="14sp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -125,6 +130,7 @@
                 android:id="@+id/radioGender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium"
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatRadioButton
@@ -132,13 +138,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="@string/male_label" />
+                    android:text="@string/male_label"
+                    android:textColor="@android:color/white"
+                    app:buttonTint="@android:color/white" />
 
                 <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/radioFemale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/female_label" />
+                    android:text="@string/female_label"
+                    android:textColor="@android:color/white"
+                    app:buttonTint="@android:color/white" />
 
             </RadioGroup>
 
@@ -148,6 +158,7 @@
                 style="@style/StyleMaterialButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium"
                 android:text="@string/submit_label"
                 android:textAllCaps="false"
                 app:icon="@drawable/ic_done_black_24dp" />

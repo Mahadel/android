@@ -27,4 +27,9 @@
         <item name="android:layout_marginEnd">20dp</item>
     </style>
 
+    <style name="StyleMaterialTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">#ffffff</item>
+        <item name="boxStrokeWidth">1dp</item>
+    </style>
+
 </resources>

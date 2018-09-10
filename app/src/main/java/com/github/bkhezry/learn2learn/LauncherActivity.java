@@ -2,6 +2,7 @@ package com.github.bkhezry.learn2learn;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -27,7 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LauncherActivity extends BaseActivity implements
-  GoogleApiClient.OnConnectionFailedListener {
+    GoogleApiClient.OnConnectionFailedListener {
   private static final int RC_SIGN_IN = 10001;
   @BindView(R.id.login_layout)
   LinearLayout loginLayout;
@@ -70,13 +71,13 @@ public class LauncherActivity extends BaseActivity implements
 
   private void setUpGoogleSignIn() {
     GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-      .requestIdToken(getString(R.string.default_web_client_id))
-      .requestEmail()
-      .build();
+        .requestIdToken(getString(R.string.default_web_client_id))
+        .requestEmail()
+        .build();
     mGoogleApiClient = new GoogleApiClient.Builder(this)
-      .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
-      .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-      .build();
+        .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+        .build();
   }
 
   private void setUpLocale() {
@@ -91,9 +92,9 @@ public class LauncherActivity extends BaseActivity implements
 
   @OnClick(R.id.google_login_button)
   public void login() {
-//    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-//    startActivityForResult(signInIntent, RC_SIGN_IN);
-    submitInfo();
+    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+    startActivityForResult(signInIntent, RC_SIGN_IN);
+    //submitInfo();
   }
 
   @Override
@@ -116,6 +117,7 @@ public class LauncherActivity extends BaseActivity implements
   }
 
   private void handleAccount(GoogleSignInAccount acct) {
+    Log.d("token", acct.getIdToken());
     emailTextView.setText(acct.getEmail());
     loginLayout.setVisibility(View.GONE);
     personalLayout.setVisibility(View.VISIBLE);
@@ -152,7 +154,7 @@ public class LauncherActivity extends BaseActivity implements
     finish();
   }
 
-  @OnClick( {R.id.persian_image_view, R.id.english_image_view})
+  @OnClick({R.id.persian_image_view, R.id.english_image_view})
   public void handleLanguage(View view) {
     switch (view.getId()) {
       case R.id.persian_image_view:
