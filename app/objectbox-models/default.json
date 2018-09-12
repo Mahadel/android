@@ -1,0 +1,77 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:6649451113731809914",
+      "lastPropertyId": "6:4834869400859879728",
+      "name": "SkillsItem",
+      "properties": [
+        {
+          "id": "1:1935411510617054693",
+          "name": "faName"
+        },
+        {
+          "id": "3:4723080058977232572",
+          "name": "enName"
+        },
+        {
+          "id": "4:5546226121616343253",
+          "name": "id"
+        },
+        {
+          "id": "5:5579806958750036266",
+          "name": "uuid"
+        },
+        {
+          "id": "6:4834869400859879728",
+          "name": "categoryUuid"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:3767205738817430246",
+      "lastPropertyId": "4:2121346716165033776",
+      "name": "Category",
+      "properties": [
+        {
+          "id": "1:6503270244296702295",
+          "name": "faName"
+        },
+        {
+          "id": "2:8155545121666908827",
+          "name": "enName"
+        },
+        {
+          "id": "3:5011038135871749335",
+          "name": "id"
+        },
+        {
+          "id": "4:2121346716165033776",
+          "name": "uuid"
+        }
+      ],
+      "relations": [
+        {
+          "id": "1:8981328351072424287",
+          "name": "skills"
+        }
+      ]
+    }
+  ],
+  "lastEntityId": "2:3767205738817430246",
+  "lastIndexId": "0:0",
+  "lastRelationId": "1:8981328351072424287",
+  "lastSequenceId": "0:0",
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    4699786210537493923
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

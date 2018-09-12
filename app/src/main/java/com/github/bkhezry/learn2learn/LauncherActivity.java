@@ -11,8 +11,10 @@ import android.widget.RadioGroup;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.ResponseMessage;
+import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.bkhezry.learn2learn.service.APIService;
 import com.github.bkhezry.learn2learn.util.Constant;
+import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.github.bkhezry.learn2learn.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.github.ybq.android.spinkit.SpinKitView;
@@ -35,6 +37,8 @@ import androidx.appcompat.widget.AppCompatTextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.objectbox.Box;
+import io.objectbox.BoxStore;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,6 +78,9 @@ public class LauncherActivity extends BaseActivity implements
   LinearLayout getDataLayout;
   private GoogleApiClient mGoogleApiClient;
   private Prefser prefser;
+  private Box<Category> categoryBox;
+  private Box<SkillsItem> skillsItemBox;
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +91,9 @@ public class LauncherActivity extends BaseActivity implements
     setContentView(R.layout.activity_launcher);
     ButterKnife.bind(this);
     prefser = new Prefser(this);
+    BoxStore boxStore = ((MyApplication) getApplication()).getBoxStore();
+    categoryBox = boxStore.boxFor(Category.class);
+    skillsItemBox = boxStore.boxFor(SkillsItem.class);
     if (prefser.contains(Constant.TOKEN)) {
       AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
       if (info.getFillInfo()) {
@@ -285,16 +295,23 @@ public class LauncherActivity extends BaseActivity implements
       public void onResponse(@NonNull Call<List<Category>> call, @NonNull Response<List<Category>> response) {
         if (response.isSuccessful()) {
           List<Category> categories = response.body();
-          hiddenLoading();
+          if (categories != null) {
+            storeCategoriesDB(categories);
+          }
+          retrieveUserData();
         }
       }
 
       @Override
       public void onFailure(@NonNull Call<List<Category>> call, @NonNull Throwable t) {
         t.printStackTrace();
-        hiddenLoading();
       }
     });
+  }
+
+  private void retrieveUserData() {
+    final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+    APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
   }
 
   private void loadingLayout() {
@@ -306,6 +323,19 @@ public class LauncherActivity extends BaseActivity implements
 
   private void hiddenLoading() {
     loadingView.setVisibility(View.GONE);
+  }
+
+  private void storeCategoriesDB(List<Category> categories) {
+    removeDBData();
+    for (Category category : categories) {
+      categoryBox.put(category);
+      skillsItemBox.put(category.getSkills());
+    }
+  }
+
+  private void removeDBData() {
+    categoryBox.removeAll();
+    skillsItemBox.removeAll();
   }
 }
 

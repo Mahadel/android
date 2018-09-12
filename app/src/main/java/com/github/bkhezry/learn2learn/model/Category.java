@@ -1,51 +1,66 @@
 package com.github.bkhezry.learn2learn.model;
 
-import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class Category{
+import java.util.List;
 
-	@SerializedName("fa_name")
-	private String faName;
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
 
-	@SerializedName("skills")
-	private List<SkillsItem> skills;
+@Entity
+public class Category {
+  @SerializedName("uuid")
+  private String uuid;
 
-	@SerializedName("en_name")
-	private String enName;
+  @SerializedName("fa_name")
+  private String faName;
 
-	@SerializedName("id")
-	private int id;
+  @SerializedName("skills")
+  private List<SkillsItem> skills;
 
-	public void setFaName(String faName){
-		this.faName = faName;
-	}
+  @SerializedName("en_name")
+  private String enName;
 
-	public String getFaName(){
-		return faName;
-	}
+  @Id
+  private Long id;
 
-	public void setSkills(List<SkillsItem> skills){
-		this.skills = skills;
-	}
+  public String getUuid() {
+    return uuid;
+  }
 
-	public List<SkillsItem> getSkills(){
-		return skills;
-	}
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
+  }
 
-	public void setEnName(String enName){
-		this.enName = enName;
-	}
+  public String getFaName() {
+    return faName;
+  }
 
-	public String getEnName(){
-		return enName;
-	}
+  public void setFaName(String faName) {
+    this.faName = faName;
+  }
 
-	public void setId(int id){
-		this.id = id;
-	}
+  public List<SkillsItem> getSkills() {
+    return skills;
+  }
 
-	public int getId(){
-		return id;
-	}
+  public void setSkills(List<SkillsItem> skills) {
+    this.skills = skills;
+  }
+
+  public String getEnName() {
+    return enName;
+  }
+
+  public void setEnName(String enName) {
+    this.enName = enName;
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
 }

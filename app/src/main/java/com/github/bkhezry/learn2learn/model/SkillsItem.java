@@ -2,20 +2,24 @@ package com.github.bkhezry.learn2learn.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
 
+@Entity
 public class SkillsItem {
 
   @SerializedName("fa_name")
   private String faName;
 
-  @SerializedName("category_id")
-  private int categoryId;
+  @SerializedName("category_uuid")
+  private String categoryUuid;
 
   @SerializedName("en_name")
   private String enName;
 
+  @Id
   @SerializedName("id")
-  private int id;
+  private Long id;
 
   @SerializedName("uuid")
   private String uuid;
@@ -28,12 +32,12 @@ public class SkillsItem {
     return faName;
   }
 
-  public void setCategoryId(int categoryId) {
-    this.categoryId = categoryId;
+  public String getCategoryUuid() {
+    return categoryUuid;
   }
 
-  public int getCategoryId() {
-    return categoryId;
+  public void setCategoryUuid(String categoryUuid) {
+    this.categoryUuid = categoryUuid;
   }
 
   public void setEnName(String enName) {
@@ -44,12 +48,12 @@ public class SkillsItem {
     return enName;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public Long getId() {
+    return id;
   }
 
-  public int getId() {
-    return id;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public void setUuid(String uuid) {
