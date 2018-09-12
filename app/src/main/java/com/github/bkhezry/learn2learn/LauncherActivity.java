@@ -2,7 +2,6 @@ package com.github.bkhezry.learn2learn;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -10,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
+import com.github.bkhezry.learn2learn.model.ResponseMessage;
 import com.github.bkhezry.learn2learn.service.APIService;
 import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.bkhezry.learn2learn.util.RetrofitUtil;
@@ -76,8 +76,17 @@ public class LauncherActivity extends BaseActivity implements
     setContentView(R.layout.activity_launcher);
     ButterKnife.bind(this);
     prefser = new Prefser(this);
-    setUpLocale();
-    setUpGoogleSignIn();
+    if (prefser.contains(Constant.TOKEN)) {
+      AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+      if (info.getFillInfo()) {
+        startMainActivity();
+      } else {
+        showGetAccountInfoLayout(info.getEmail());
+      }
+    } else {
+      setUpLocale();
+      setUpGoogleSignIn();
+    }
   }
 
   private void setUpGoogleSignIn() {
@@ -136,8 +145,14 @@ public class LauncherActivity extends BaseActivity implements
         if (response.isSuccessful()) {
           AuthenticationInfo info = response.body();
           if (info != null) {
+            info.setFillInfo(false);
+            info.setEmail(acct.getEmail());
             prefser.put(Constant.TOKEN, info);
-            handleAccount(acct);
+            if (!info.getType().equals("login")) {
+              showGetAccountInfoLayout(acct.getEmail());
+            } else {
+              startMainActivity();
+            }
           }
         }
 
@@ -150,8 +165,8 @@ public class LauncherActivity extends BaseActivity implements
     });
   }
 
-  private void handleAccount(GoogleSignInAccount acct) {
-    emailTextView.setText(acct.getEmail());
+  private void showGetAccountInfoLayout(String email) {
+    emailTextView.setText(email);
     loginLayout.setVisibility(View.GONE);
     personalLayout.setVisibility(View.VISIBLE);
   }
@@ -185,12 +200,34 @@ public class LauncherActivity extends BaseActivity implements
   public void submitInfo() {
     String firstName = firstNameEditText.getText().toString();
     String lastName = lastNameEditText.getText().toString();
-    int gender = 0;
+    int gender;
     if (radioGender.getCheckedRadioButtonId() == R.id.radioFemale) {
       gender = 2;
     } else {
       gender = 1;
     }
+    updateUser(firstName, lastName, gender);
+  }
+
+  private void updateUser(String firstName, String lastName, int gender) {
+    final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+    APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+    Call<ResponseMessage> call = apiService.updateUser(info.getUuid(), firstName, lastName, gender);
+    call.enqueue(new Callback<ResponseMessage>() {
+      @Override
+      public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
+        if (response.isSuccessful()) {
+          info.setFillInfo(true);
+          prefser.put(Constant.TOKEN, info);
+          startMainActivity();
+        }
+      }
+
+      @Override
+      public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
+        t.printStackTrace();
+      }
+    });
 
   }
 

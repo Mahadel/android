@@ -18,6 +18,9 @@ public class AuthenticationInfo {
   @SerializedName("token")
   private String token;
 
+  private String email;
+  private boolean fillInfo;
+
   public void setMessage(String message) {
     this.message = message;
   }
@@ -48,5 +51,21 @@ public class AuthenticationInfo {
 
   public String getToken() {
     return token;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public boolean getFillInfo() {
+    return fillInfo;
+  }
+
+  public void setFillInfo(boolean fillInfo) {
+    this.fillInfo = fillInfo;
   }
 }
