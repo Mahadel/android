@@ -24,7 +24,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.0-rc02'
-    implementation "androidx.recyclerview:recyclerview:1.0.0-rc02"
+    implementation 'androidx.recyclerview:recyclerview:1.0.0-rc02'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     implementation 'com.google.android.material:material:1.0.0-rc02'
@@ -44,6 +44,14 @@ dependencies {
     implementation 'io.github.inflationx:calligraphy3:3.0.0'
 
     implementation 'com.github.bkhezry:cardslider-android:1.0.0'
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.4.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.4.0"
+    //use in development
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+
+
 
     implementation 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-SNAPSHOT'
