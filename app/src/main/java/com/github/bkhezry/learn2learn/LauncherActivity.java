@@ -9,11 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
+import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.ResponseMessage;
 import com.github.bkhezry.learn2learn.service.APIService;
 import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.bkhezry.learn2learn.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -23,6 +25,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -64,6 +68,10 @@ public class LauncherActivity extends BaseActivity implements
   AppCompatImageView englishImageView;
   @BindView(R.id.submit_info_button)
   MaterialButton submitInfoButton;
+  @BindView(R.id.loading_view)
+  SpinKitView loadingView;
+  @BindView(R.id.get_data_layout)
+  LinearLayout getDataLayout;
   private GoogleApiClient mGoogleApiClient;
   private Prefser prefser;
 
@@ -79,7 +87,7 @@ public class LauncherActivity extends BaseActivity implements
     if (prefser.contains(Constant.TOKEN)) {
       AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
       if (info.getFillInfo()) {
-        startMainActivity();
+        retrieveData();
       } else {
         showGetAccountInfoLayout(info.getEmail());
       }
@@ -151,7 +159,7 @@ public class LauncherActivity extends BaseActivity implements
             if (!info.getType().equals("login")) {
               showGetAccountInfoLayout(acct.getEmail());
             } else {
-              startMainActivity();
+              retrieveData();
             }
           }
         }
@@ -219,7 +227,7 @@ public class LauncherActivity extends BaseActivity implements
         if (response.isSuccessful()) {
           info.setFillInfo(true);
           prefser.put(Constant.TOKEN, info);
-          startMainActivity();
+          retrieveData();
         }
       }
 
@@ -229,11 +237,6 @@ public class LauncherActivity extends BaseActivity implements
       }
     });
 
-  }
-
-  private void startMainActivity() {
-    startActivity(new Intent(this, MainActivity.class));
-    finish();
   }
 
   @OnClick({R.id.persian_image_view, R.id.english_image_view})
@@ -265,6 +268,44 @@ public class LauncherActivity extends BaseActivity implements
     Intent i = new Intent(this, LauncherActivity.class);
     startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
     System.exit(0);
+  }
+
+  private void startMainActivity() {
+    startActivity(new Intent(LauncherActivity.this, MainActivity.class));
+    finish();
+  }
+
+  private void retrieveData() {
+    loadingLayout();
+    final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+    APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+    Call<List<Category>> call = apiService.getCategories();
+    call.enqueue(new Callback<List<Category>>() {
+      @Override
+      public void onResponse(@NonNull Call<List<Category>> call, @NonNull Response<List<Category>> response) {
+        if (response.isSuccessful()) {
+          List<Category> categories = response.body();
+          hiddenLoading();
+        }
+      }
+
+      @Override
+      public void onFailure(@NonNull Call<List<Category>> call, @NonNull Throwable t) {
+        t.printStackTrace();
+        hiddenLoading();
+      }
+    });
+  }
+
+  private void loadingLayout() {
+    loginLayout.setVisibility(View.GONE);
+    personalLayout.setVisibility(View.GONE);
+    getDataLayout.setVisibility(View.VISIBLE);
+    loadingView.setVisibility(View.VISIBLE);
+  }
+
+  private void hiddenLoading() {
+    loadingView.setVisibility(View.GONE);
   }
 }
 

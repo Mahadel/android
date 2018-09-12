@@ -51,6 +51,8 @@ dependencies {
     //use in development
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
+    implementation 'com.github.ybq:Android-SpinKit:1.1.0'
+
 
 
     implementation 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'

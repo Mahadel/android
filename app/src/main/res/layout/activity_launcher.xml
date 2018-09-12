@@ -164,5 +164,23 @@
                 app:icon="@drawable/ic_done_black_24dp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/get_data_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/spacing_large"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/loading_view"
+                style="@style/SpinKitView.Small.DoubleBounce"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                app:SpinKit_Color="@android:color/white" />
+        </LinearLayout>
+
     </com.google.android.material.card.MaterialCardView>
 </RelativeLayout>

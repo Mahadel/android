@@ -1,11 +1,15 @@
 package com.github.bkhezry.learn2learn.service;
 
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
+import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.ResponseMessage;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -24,4 +28,8 @@ public interface APIService {
       @Field("first_name") String firstName,
       @Field("last_name") String lastName,
       @Field("gender") int gender);
+
+
+  @GET("category")
+  Call<List<Category>> getCategories();
 }
