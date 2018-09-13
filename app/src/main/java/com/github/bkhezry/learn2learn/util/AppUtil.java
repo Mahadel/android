@@ -9,6 +9,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,8 +22,15 @@ import java.util.Locale;
 
 public class AppUtil {
 
+  /**
+   * Converting dp to pixel
+   */
+  public static int dpToPx(int dp, Resources r) {
+    return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+  }
+
   public static InsetDrawable getInsetDrawable(Context context) {
-    int[] ATTRS = new int[] {android.R.attr.listDivider};
+    int[] ATTRS = new int[]{android.R.attr.listDivider};
     TypedArray a = context.obtainStyledAttributes(ATTRS);
     Drawable divider = a.getDrawable(0);
     int inset = context.getResources().getDimensionPixelSize(R.dimen.item_space);
@@ -95,7 +103,7 @@ public class AppUtil {
    */
   public static void hideSoftInput(final Activity activity) {
     InputMethodManager imm =
-      (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
     if (imm == null) {
       return;
     }
@@ -109,7 +117,7 @@ public class AppUtil {
   public static boolean isRTL(Locale locale) {
     final int directionality = Character.getDirectionality(locale.getDisplayName().charAt(0));
     return directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT ||
-      directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC;
+        directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC;
   }
 
   public static void rotateYView(View view, int degree) {

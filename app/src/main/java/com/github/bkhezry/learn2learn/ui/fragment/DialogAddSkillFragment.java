@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -89,8 +91,21 @@ public class DialogAddSkillFragment extends DialogFragment {
     }
   }
 
+  @OnClick(R.id.select_skill_button)
+  public void selectSkill() {
+    showSelectSkillDialog();
+  }
+
   public interface CallbackResult {
     void sendResult(int requestCode, Object obj);
+  }
+
+  private void showSelectSkillDialog() {
+    FragmentManager fragmentManager = getFragmentManager();
+    DialogSelectSkillFragment skillFragment = new DialogSelectSkillFragment();
+    FragmentTransaction transaction = fragmentManager.beginTransaction();
+    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+    transaction.add(android.R.id.content, skillFragment).addToBackStack(null).commit();
   }
 
 }

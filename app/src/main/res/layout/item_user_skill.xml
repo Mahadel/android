@@ -4,22 +4,22 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layoutDirection="locale"
-    app:cardBackgroundColor="@color/grey_100"
-    app:cardCornerRadius="5dp"
+    android:layout_width="@dimen/item_size"
+    android:layout_height="@dimen/item_size"
+    app:cardBackgroundColor="@color/grey_90"
+    app:cardCornerRadius="10dp"
     app:cardElevation="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/skill"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/spacing_large"
+            android:layout_margin="5dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
             android:textColor="@android:color/white"
             tools:text="One of the most thrilling scene..." />

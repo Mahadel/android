@@ -115,7 +115,7 @@ public class UserSkill extends AbstractItem<UserSkill, UserSkill.ViewHolder> {
 
   @Override
   public int getLayoutRes() {
-    return R.layout.item_skill;
+    return R.layout.item_user_skill;
   }
 
   protected static class ViewHolder extends FastAdapter.ViewHolder<UserSkill> {

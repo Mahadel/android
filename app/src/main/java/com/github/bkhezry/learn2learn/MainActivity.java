@@ -168,24 +168,28 @@ public class MainActivity extends BaseActivity {
 
       @Override
       public void selectedSkillType(AppUtil.SkillType skillType) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        DialogAddSkillFragment skillFragment = new DialogAddSkillFragment();
-        skillFragment.setRequestCode(DIALOG_QUEST_CODE);
-        skillFragment.setSkillType(skillType);
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        transaction.add(android.R.id.content, skillFragment).addToBackStack(null).commit();
-        skillFragment.setOnCallbackResult(new DialogAddSkillFragment.CallbackResult() {
-          @Override
-          public void sendResult(int requestCode, Object obj) {
-            if (requestCode == DIALOG_QUEST_CODE) {
-
-            }
-          }
-        });
+        showAddSkillDialog(skillType);
       }
     });
 
+  }
+
+  private void showAddSkillDialog(AppUtil.SkillType skillType) {
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    DialogAddSkillFragment skillFragment = new DialogAddSkillFragment();
+    skillFragment.setRequestCode(DIALOG_QUEST_CODE);
+    skillFragment.setSkillType(skillType);
+    FragmentTransaction transaction = fragmentManager.beginTransaction();
+    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+    transaction.add(android.R.id.content, skillFragment).addToBackStack(null).commit();
+    skillFragment.setOnCallbackResult(new DialogAddSkillFragment.CallbackResult() {
+      @Override
+      public void sendResult(int requestCode, Object obj) {
+        if (requestCode == DIALOG_QUEST_CODE) {
+
+        }
+      }
+    });
   }
 
 

@@ -1,12 +1,25 @@
 package com.github.bkhezry.learn2learn.model;
 
-import com.google.gson.annotations.SerializedName;
+import android.view.View;
+import android.widget.TextView;
 
+import com.github.bkhezry.learn2learn.R;
+import com.github.bkhezry.learn2learn.util.AppUtil;
+import com.google.gson.annotations.SerializedName;
+import com.mikepenz.fastadapter.FastAdapter;
+import com.mikepenz.fastadapter.items.AbstractItem;
+
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.core.os.ConfigurationCompat;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
 @Entity
-public class SkillsItem {
+public class SkillsItem extends AbstractItem<SkillsItem, SkillsItem.ViewHolder> {
 
   @SerializedName("fa_name")
   private String faName;
@@ -62,5 +75,49 @@ public class SkillsItem {
 
   public String getUuid() {
     return uuid;
+  }
+
+  @NonNull
+  @Override
+  public ViewHolder getViewHolder(@NonNull View view) {
+    return new ViewHolder(view);
+  }
+
+  @Override
+  public int getType() {
+    return R.id.fastadapter_sample_item_id;
+  }
+
+  @Override
+  public int getLayoutRes() {
+    return R.layout.item_skill;
+  }
+
+  protected static class ViewHolder extends FastAdapter.ViewHolder<SkillsItem> {
+    protected View view;
+    @BindView(R.id.skill)
+    TextView skill;
+
+    ViewHolder(View view) {
+      super(view);
+      ButterKnife.bind(this, view);
+      this.view = view;
+    }
+
+    @Override
+    public void bindView(@NonNull SkillsItem item, @NonNull List<Object> payloads) {
+      if (AppUtil.isRTL(ConfigurationCompat.getLocales(view.getContext().getResources().getConfiguration()).get(0))) {
+        skill.setText(item.getFaName());
+      } else {
+        skill.setText(item.getEnName());
+      }
+
+
+    }
+
+    @Override
+    public void unbindView(@NonNull SkillsItem item) {
+      skill.setText(null);
+    }
   }
 }
