@@ -24,8 +24,6 @@ public class DialogAddSkillFragment extends DialogFragment {
 
   @BindView(R.id.skill_type_text_view)
   AppCompatTextView skillTypeTextView;
-  @BindView(R.id.skill_name_edit_text)
-  AppCompatEditText skillNameEditText;
   @BindView(R.id.skill_description_edit_text)
   AppCompatEditText skillDescriptionEditText;
   private int requestCode;

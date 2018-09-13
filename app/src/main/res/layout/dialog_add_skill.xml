@@ -69,27 +69,12 @@
             android:background="@color/grey_40" />
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_skill_name"
-            style="@style/StyleMaterialTextInputLayout"
-            android:layout_width="match_parent"
+        <com.google.android.material.button.MaterialButton
+            style="@style/StyleMaterialButtonLarge"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/skill_name_label"
-            android:textColorHint="@color/grey_20">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/skill_name_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/grey_90"
-                android:inputType="text"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:text="@string/select_skill_label"
+            app:icon="@drawable/ic_list_black_24dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_skill_description"

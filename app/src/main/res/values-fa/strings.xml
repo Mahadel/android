@@ -15,4 +15,5 @@
     <string name="add_skill_teach_label">قصد یاددادن دارم</string>
     <string name="want_learn_label">می‌خوام یادبگیرم</string>
     <string name="know_label">بلدم</string>
+    <string name="select_skill_label">انتخاب مهارت</string>
 </resources>

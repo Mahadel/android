@@ -15,4 +15,5 @@
     <string name="add_skill_teach_label">Add skill want teach</string>
     <string name="want_learn_label">I want to learn</string>
     <string name="know_label">I know</string>
+    <string name="select_skill_label">Select skill</string>
 </resources>
