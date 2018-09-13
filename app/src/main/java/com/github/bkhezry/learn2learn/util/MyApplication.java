@@ -17,7 +17,7 @@ import io.objectbox.android.AndroidObjectBrowser;
 
 public class MyApplication extends Application {
   private Prefser prefser;
-  private BoxStore boxStore;
+  private static BoxStore boxStore;
 
   @Override
   public void onCreate() {
@@ -43,7 +43,7 @@ public class MyApplication extends Application {
     Log.d("App", "Using ObjectBox " + BoxStore.getVersion() + " (" + BoxStore.getVersionNative() + ")");
   }
 
-  public BoxStore getBoxStore() {
+  public static BoxStore getBoxStore() {
     return boxStore;
   }
 

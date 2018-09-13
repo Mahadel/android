@@ -8,9 +8,11 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
-import com.github.bkhezry.learn2learn.model.Skill;
+import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.ui.fragment.DialogAddSkillFragment;
 import com.github.bkhezry.learn2learn.util.AppUtil;
+import com.github.bkhezry.learn2learn.util.DatabaseUtil;
+import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,8 +24,6 @@ import com.mikepenz.fastadapter.listeners.OnClickListener;
 import com.ramotion.cardslider.CardSliderLayoutManager;
 import com.ramotion.cardslider.CardSnapHelper;
 
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.os.ConfigurationCompat;
@@ -34,6 +34,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.objectbox.Box;
+import io.objectbox.BoxStore;
 
 public class MainActivity extends BaseActivity {
 
@@ -53,19 +55,22 @@ public class MainActivity extends BaseActivity {
   @BindView(R.id.coordinator_layout)
   CoordinatorLayout coordinatorLayout;
   private BottomSheetBehavior<View> bottomDrawerBehavior;
-  private FastAdapter<Skill> mFastAdapter_1;
-  private ItemAdapter<Skill> mItemAdapter_1;
-  private FastAdapter<Skill> mFastAdapter_2;
-  private ItemAdapter<Skill> mItemAdapter_2;
+  private FastAdapter<UserSkill> mFastAdapter_1;
+  private ItemAdapter<UserSkill> mItemAdapter_1;
+  private FastAdapter<UserSkill> mFastAdapter_2;
+  private ItemAdapter<UserSkill> mItemAdapter_2;
+  private Box<UserSkill> userSkillBox;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-      WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        WindowManager.LayoutParams.FLAG_FULLSCREEN);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
+    BoxStore boxStore = MyApplication.getBoxStore();
+    userSkillBox = boxStore.boxFor(UserSkill.class);
     setSupportActionBar(bar);
     setUpBottomDrawer();
     initNavigationView();
@@ -75,13 +80,13 @@ public class MainActivity extends BaseActivity {
 
   private void initNavigationView() {
     navigationView.setNavigationItemSelectedListener(
-      new NavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-          Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
-          return false;
-        }
-      });
+        new NavigationView.OnNavigationItemSelectedListener() {
+          @Override
+          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
+            return false;
+          }
+        });
   }
 
   protected void setUpBottomDrawer() {
@@ -90,19 +95,19 @@ public class MainActivity extends BaseActivity {
     bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
     bar.setNavigationOnClickListener(
-      new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-          bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
-        }
-      });
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+          }
+        });
     bar.setNavigationIcon(R.drawable.ic_drawer_menu_24px);
     bar.replaceMenu(R.menu.demo_primary);
   }
 
   private void initRecyclerViews() {
     DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView_1.getContext(),
-      DividerItemDecoration.HORIZONTAL);
+        DividerItemDecoration.HORIZONTAL);
     dividerItemDecoration.setDrawable(AppUtil.getInsetDrawable(this));
 
     mItemAdapter_1 = new ItemAdapter<>();
@@ -110,9 +115,9 @@ public class MainActivity extends BaseActivity {
     recyclerView_1.setAdapter(mFastAdapter_1);
     recyclerView_1.addItemDecoration(dividerItemDecoration);
     new CardSnapHelper().attachToRecyclerView(recyclerView_1);
-    mFastAdapter_1.withOnClickListener(new OnClickListener<Skill>() {
+    mFastAdapter_1.withOnClickListener(new OnClickListener<UserSkill>() {
       @Override
-      public boolean onClick(View v, @NonNull IAdapter<Skill> adapter, @NonNull Skill item, int position) {
+      public boolean onClick(View v, @NonNull IAdapter<UserSkill> adapter, @NonNull UserSkill item, int position) {
         return handleRecyclerViewOnClick(v, recyclerView_1);
       }
     });
@@ -122,9 +127,9 @@ public class MainActivity extends BaseActivity {
     recyclerView_2.setAdapter(mFastAdapter_2);
     recyclerView_2.addItemDecoration(dividerItemDecoration);
     new CardSnapHelper().attachToRecyclerView(recyclerView_2);
-    mFastAdapter_2.withOnClickListener(new OnClickListener<Skill>() {
+    mFastAdapter_2.withOnClickListener(new OnClickListener<UserSkill>() {
       @Override
-      public boolean onClick(View v, @NonNull IAdapter<Skill> adapter, @NonNull Skill item, int position) {
+      public boolean onClick(View v, @NonNull IAdapter<UserSkill> adapter, @NonNull UserSkill item, int position) {
         return handleRecyclerViewOnClick(v, recyclerView_2);
       }
     });
@@ -185,12 +190,11 @@ public class MainActivity extends BaseActivity {
 
 
   private void requestSkills() {
-    List<Skill> skillList = AppUtil.getSkills();
     mItemAdapter_1.clear();
-    mItemAdapter_1.add(skillList);
+    mItemAdapter_1.add(DatabaseUtil.getUserSkillWithType(userSkillBox, 1).find());
 
     mItemAdapter_2.clear();
-    mItemAdapter_2.add(skillList);
+    mItemAdapter_2.add(DatabaseUtil.getUserSkillWithType(userSkillBox, 2).find());
   }
 
   @OnClick(R.id.main_layout)

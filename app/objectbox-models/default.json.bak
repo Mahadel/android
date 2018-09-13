@@ -5,16 +5,12 @@
   "entities": [
     {
       "id": "1:6649451113731809914",
-      "lastPropertyId": "5:5579806958750036266",
+      "lastPropertyId": "6:4834869400859879728",
       "name": "SkillsItem",
       "properties": [
         {
           "id": "1:1935411510617054693",
           "name": "faName"
-        },
-        {
-          "id": "2:4699786210537493923",
-          "name": "categoryId"
         },
         {
           "id": "3:4723080058977232572",
@@ -27,13 +23,17 @@
         {
           "id": "5:5579806958750036266",
           "name": "uuid"
+        },
+        {
+          "id": "6:4834869400859879728",
+          "name": "categoryUuid"
         }
       ],
       "relations": []
     },
     {
       "id": "2:3767205738817430246",
-      "lastPropertyId": "3:5011038135871749335",
+      "lastPropertyId": "4:2121346716165033776",
       "name": "Category",
       "properties": [
         {
@@ -47,6 +47,10 @@
         {
           "id": "3:5011038135871749335",
           "name": "id"
+        },
+        {
+          "id": "4:2121346716165033776",
+          "name": "uuid"
         }
       ],
       "relations": [
@@ -65,7 +69,9 @@
   "modelVersionParserMinimum": 4,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    4699786210537493923
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

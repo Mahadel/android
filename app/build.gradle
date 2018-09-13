@@ -32,8 +32,7 @@ dependencies {
 
     implementation 'com.mikepenz:fastadapter:3.3.0-rc01'
     implementation 'com.mikepenz:fastadapter-commons:3.3.0-rc01'
-
-    implementation 'com.github.bkhezry:Autocomplete:1.2.0'
+    
 
     implementation 'com.google.android.gms:play-services-auth:16.0.0'
 

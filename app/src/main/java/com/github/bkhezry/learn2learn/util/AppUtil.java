@@ -15,11 +15,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import com.github.bkhezry.learn2learn.R;
-import com.github.bkhezry.learn2learn.model.Skill;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class AppUtil {
@@ -73,42 +70,6 @@ public class AppUtil {
 
   public interface DialogClickListener {
     void selectedSkillType(SkillType skillType);
-  }
-
-  public static List<Skill> getSkills() {
-    List<Skill> skillList = new ArrayList<>();
-
-    Skill skill = new Skill();
-    skill.setName("Android developer");
-    skillList.add(skill);
-    skill = new Skill();
-    skill.setName("iOS developer");
-    skillList.add(skill);
-    skill = new Skill();
-    skill.setName("Laravel");
-    skillList.add(skill);
-    skill = new Skill();
-    skill.setName("Dev ops");
-    skillList.add(skill);
-    skill = new Skill();
-    skill.setName("NodeJs");
-    skillList.add(skill);
-    skill = new Skill();
-    skill.setName("UI design");
-    skillList.add(skill);
-    skill = new Skill();
-    skill.setName("Python Django");
-    skillList.add(skill);
-    skill = new Skill();
-    skill.setName("C++");
-    skillList.add(skill);
-    skill = new Skill();
-    skill.setName("SQL");
-    skillList.add(skill);
-    skill = new Skill();
-    skill.setName("Material design");
-    skillList.add(skill);
-    return skillList;
   }
 
   public static Context updateResources(Context context) {

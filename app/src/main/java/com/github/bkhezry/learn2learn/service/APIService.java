@@ -3,6 +3,7 @@ package com.github.bkhezry.learn2learn.service;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.ResponseMessage;
+import com.github.bkhezry.learn2learn.model.UserSkill;
 
 import java.util.List;
 
@@ -32,4 +33,7 @@ public interface APIService {
 
   @GET("category")
   Call<List<Category>> getCategories();
+
+  @GET("user/{uuid}/skills")
+  Call<List<UserSkill>> getUserSkills(@Path("uuid") String uuid);
 }

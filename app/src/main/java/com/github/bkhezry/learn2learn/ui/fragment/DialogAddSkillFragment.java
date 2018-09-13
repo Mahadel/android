@@ -2,29 +2,19 @@ package com.github.bkhezry.learn2learn.ui.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.github.bkhezry.learn2learn.R;
-import com.github.bkhezry.learn2learn.model.Skill;
-import com.github.bkhezry.learn2learn.presenter.SkillPresenter;
 import com.github.bkhezry.learn2learn.util.AppUtil;
-import com.otaliastudios.autocomplete.Autocomplete;
-import com.otaliastudios.autocomplete.AutocompleteCallback;
-import com.otaliastudios.autocomplete.AutocompletePresenter;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,32 +58,6 @@ public class DialogAddSkillFragment extends DialogFragment {
   }
 
   private void initSkillAutoComplete() {
-    float elevation = 6f;
-    Drawable backgroundDrawable = new ColorDrawable(ContextCompat.getColor(activity, R.color.grey_10));
-    AutocompletePresenter<Skill> presenter = new SkillPresenter(activity);
-    AutocompleteCallback<Skill> callback = new AutocompleteCallback<Skill>() {
-      @Override
-      public boolean onPopupItemClicked(Editable editable, Skill item) {
-        AppUtil.hideSoftInput(activity);
-        if (item.isWantCreate()) {
-          editable.clear();
-          Toast.makeText(activity, item.getName(), Toast.LENGTH_SHORT).show();
-        } else {
-          editable.clear();
-          editable.append(item.getName());
-        }
-        return true;
-      }
-
-      public void onPopupVisibilityChanged(boolean shown) {
-      }
-    };
-    Autocomplete.<Skill>on(skillNameEditText)
-      .with(elevation)
-      .with(backgroundDrawable)
-      .with(presenter)
-      .with(callback)
-      .build();
   }
 
 

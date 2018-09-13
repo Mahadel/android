@@ -12,6 +12,7 @@ import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.ResponseMessage;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
+import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.service.APIService;
 import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.bkhezry.learn2learn.util.MyApplication;
@@ -80,6 +81,7 @@ public class LauncherActivity extends BaseActivity implements
   private Prefser prefser;
   private Box<Category> categoryBox;
   private Box<SkillsItem> skillsItemBox;
+  private Box<UserSkill> userSkillBox;
 
 
   @Override
@@ -91,9 +93,10 @@ public class LauncherActivity extends BaseActivity implements
     setContentView(R.layout.activity_launcher);
     ButterKnife.bind(this);
     prefser = new Prefser(this);
-    BoxStore boxStore = ((MyApplication) getApplication()).getBoxStore();
+    BoxStore boxStore = MyApplication.getBoxStore();
     categoryBox = boxStore.boxFor(Category.class);
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
+    userSkillBox = boxStore.boxFor(UserSkill.class);
     if (prefser.contains(Constant.TOKEN)) {
       AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
       if (info.getFillInfo()) {
@@ -298,7 +301,7 @@ public class LauncherActivity extends BaseActivity implements
           if (categories != null) {
             storeCategoriesDB(categories);
           }
-          retrieveUserData();
+          retrieveUserSkillsData();
         }
       }
 
@@ -309,9 +312,30 @@ public class LauncherActivity extends BaseActivity implements
     });
   }
 
-  private void retrieveUserData() {
+  private void retrieveUserSkillsData() {
     final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+    Call<List<UserSkill>> call = apiService.getUserSkills(info.getUuid());
+    call.enqueue(new Callback<List<UserSkill>>() {
+      @Override
+      public void onResponse(@NonNull Call<List<UserSkill>> call, @NonNull Response<List<UserSkill>> response) {
+        if (response.isSuccessful()) {
+          List<UserSkill> userSkills = response.body();
+          storeUserSkill(userSkills);
+          startMainActivity();
+        }
+      }
+
+      @Override
+      public void onFailure(@NonNull Call<List<UserSkill>> call, @NonNull Throwable t) {
+
+      }
+    });
+  }
+
+  private void storeUserSkill(List<UserSkill> userSkills) {
+    userSkillBox.removeAll();
+    userSkillBox.put(userSkills);
   }
 
   private void loadingLayout() {
