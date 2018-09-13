@@ -11,20 +11,25 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.github.bkhezry.learn2learn.R;
+import com.github.bkhezry.learn2learn.StickyHeaderAdapter;
+import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.bkhezry.learn2learn.util.AppUtil;
-import com.github.bkhezry.learn2learn.util.GridSpacingItemDecoration;
+import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
+import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.os.ConfigurationCompat;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,9 +41,9 @@ public class DialogSelectSkillFragment extends DialogFragment {
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
   private Activity activity;
-  private FastAdapter<SkillsItem> mFastAdapter;
-  private ItemAdapter<SkillsItem> mItemAdapter;
   private Box<SkillsItem> skillsItemBox;
+  private Box<Category> categoryBox;
+  private FastAdapter<SkillsItem> fastAdapter;
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,31 +52,54 @@ public class DialogSelectSkillFragment extends DialogFragment {
     activity = getActivity();
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
+    categoryBox = boxStore.boxFor(Category.class);
     initRecyclerViews();
     return rootView;
   }
 
   private void initRecyclerViews() {
-    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(activity, 1);
+    //create our adapters
+    final StickyHeaderAdapter<SkillsItem> stickyHeaderAdapter = new StickyHeaderAdapter<>();
+    final ItemAdapter headerAdapter = new ItemAdapter();
+    final ItemAdapter<SkillsItem> itemAdapter = new ItemAdapter<>();
+    fastAdapter = FastAdapter.with(Arrays.asList(headerAdapter, itemAdapter));
+    fastAdapter.withSelectable(true);
+    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity);
     recyclerView.setLayoutManager(mLayoutManager);
-    recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, AppUtil.dpToPx(1, getResources()), true));
-    mItemAdapter = new ItemAdapter<>();
-    mFastAdapter = FastAdapter.with(mItemAdapter);
-    recyclerView.setAdapter(mFastAdapter);
-    mFastAdapter.withOnClickListener(new OnClickListener<SkillsItem>() {
+    recyclerView.setAdapter(stickyHeaderAdapter.wrap(fastAdapter));
+    //this adds the Sticky Headers within our list
+    final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(stickyHeaderAdapter);
+    recyclerView.addItemDecoration(decoration);
+    List<SkillsItem> skillsItems = skillsItemBox.getAll();
+    if (AppUtil.isRTL(ConfigurationCompat.getLocales(getResources().getConfiguration()).get(0))) {
+      for (SkillsItem skillsItem : skillsItems) {
+        Category category = DatabaseUtil.getCategoryWithUUID(categoryBox, skillsItem.getCategoryUuid());
+        skillsItem.setCategoryName(category.getFaName());
+        skillsItem.withIdentifier(category.getId());
+      }
+    } else {
+      for (SkillsItem skillsItem : skillsItems) {
+        Category category = DatabaseUtil.getCategoryWithUUID(categoryBox, skillsItem.getCategoryUuid());
+        skillsItem.setCategoryName(category.getEnName());
+        skillsItem.withIdentifier(category.getId());
+      }
+    }
+    itemAdapter.add(skillsItems);
+    //so the headers are aware of changes
+    stickyHeaderAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+      @Override
+      public void onChanged() {
+        decoration.invalidateHeaders();
+      }
+    });
+    fastAdapter.withOnClickListener(new OnClickListener<SkillsItem>() {
       @Override
       public boolean onClick(View v, @NonNull IAdapter<SkillsItem> adapter, @NonNull SkillsItem item, int position) {
         Toast.makeText(activity, "Click", Toast.LENGTH_SHORT).show();
         return true;
       }
     });
-    getSkillsFromDB();
-  }
 
-  private void getSkillsFromDB() {
-    List<SkillsItem> skillsItems = skillsItemBox.getAll();
-    mItemAdapter.clear();
-    mItemAdapter.add(skillsItems);
   }
 
   @NonNull

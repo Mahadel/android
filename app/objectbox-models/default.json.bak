@@ -59,9 +59,45 @@
           "name": "skills"
         }
       ]
+    },
+    {
+      "id": "3:3817669123125379166",
+      "lastPropertyId": "7:400816236324596330",
+      "name": "UserSkill",
+      "properties": [
+        {
+          "id": "1:2115942951785124270",
+          "name": "id"
+        },
+        {
+          "id": "2:5899342086986849200",
+          "name": "userUuid"
+        },
+        {
+          "id": "3:2395552697686257328",
+          "name": "updatedAt"
+        },
+        {
+          "id": "4:5504855514496621447",
+          "name": "skillUuid"
+        },
+        {
+          "id": "5:1901101044516691525",
+          "name": "description"
+        },
+        {
+          "id": "6:8510231762725423951",
+          "name": "skillType"
+        },
+        {
+          "id": "7:400816236324596330",
+          "name": "createdAt"
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "2:3767205738817430246",
+  "lastEntityId": "3:3817669123125379166",
   "lastIndexId": "0:0",
   "lastRelationId": "1:8981328351072424287",
   "lastSequenceId": "0:0",

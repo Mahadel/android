@@ -37,6 +37,8 @@ public class SkillsItem extends AbstractItem<SkillsItem, SkillsItem.ViewHolder> 
   @SerializedName("uuid")
   private String uuid;
 
+  private String categoryName;
+
   public void setFaName(String faName) {
     this.faName = faName;
   }
@@ -75,6 +77,14 @@ public class SkillsItem extends AbstractItem<SkillsItem, SkillsItem.ViewHolder> 
 
   public String getUuid() {
     return uuid;
+  }
+
+  public String getCategoryName() {
+    return categoryName;
+  }
+
+  public void setCategoryName(String categoryName) {
+    this.categoryName = categoryName;
   }
 
   @NonNull

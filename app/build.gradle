@@ -53,7 +53,7 @@ dependencies {
 
     implementation 'com.github.ybq:Android-SpinKit:1.1.0'
 
-
+    implementation 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
 
     implementation 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-SNAPSHOT'

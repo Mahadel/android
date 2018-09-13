@@ -1,5 +1,7 @@
 package com.github.bkhezry.learn2learn.util;
 
+import com.github.bkhezry.learn2learn.model.Category;
+import com.github.bkhezry.learn2learn.model.Category_;
 import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.model.UserSkill_;
 
@@ -13,6 +15,13 @@ public class DatabaseUtil {
         .equal(UserSkill_.skillType, skillType)
         .orderDesc(UserSkill_.id)
         .build();
+  }
+
+  public static Category getCategoryWithUUID(Box<Category> categoryBox, String uuid) {
+    Query<Category> query = categoryBox.query()
+        .equal(Category_.uuid, uuid)
+        .build();
+    return query.findFirst();
   }
 
 }
