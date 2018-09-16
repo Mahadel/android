@@ -34,6 +34,13 @@ public interface APIService {
   @GET("category")
   Call<List<Category>> getCategories();
 
-  @GET("user/{uuid}/skills")
+  @GET("user/{uuid}/skill")
   Call<List<UserSkill>> getUserSkills(@Path("uuid") String uuid);
+
+  @POST("user/{uuid}/skill")
+  @FormUrlEncoded
+  Call<UserSkill> addUserSkill(@Path("uuid") String uuid,
+                               @Field("skill_uuid") String skillUUID,
+                               @Field("description") String description,
+                               @Field("skill_type") int skillType);
 }

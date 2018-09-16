@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.github.bkhezry.learn2learn.listener.CallbackResult;
 import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.ui.fragment.DialogAddSkillFragment;
 import com.github.bkhezry.learn2learn.util.AppUtil;
@@ -26,7 +27,6 @@ import com.ramotion.cardslider.CardSnapHelper;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.os.ConfigurationCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -39,7 +39,6 @@ import io.objectbox.BoxStore;
 
 public class MainActivity extends BaseActivity {
 
-  private static final int DIALOG_QUEST_CODE = 1001;
   @BindView(R.id.recycler_view_1)
   RecyclerView recyclerView_1;
   @BindView(R.id.recycler_view_2)
@@ -156,7 +155,7 @@ public class MainActivity extends BaseActivity {
   }
 
   private void handleLocaleDirection() {
-    if (AppUtil.isRTL(ConfigurationCompat.getLocales(getResources().getConfiguration()).get(0))) {
+    if (AppUtil.isRTL(this)) {
       AppUtil.rotateYView(recyclerView_1, 180);
       AppUtil.rotateYView(recyclerView_2, 180);
     }
@@ -177,17 +176,23 @@ public class MainActivity extends BaseActivity {
   private void showAddSkillDialog(AppUtil.SkillType skillType) {
     FragmentManager fragmentManager = getSupportFragmentManager();
     DialogAddSkillFragment skillFragment = new DialogAddSkillFragment();
-    skillFragment.setRequestCode(DIALOG_QUEST_CODE);
     skillFragment.setSkillType(skillType);
+    skillFragment.setOnCallbackResult(new CallbackResult() {
+      @Override
+      public void sendResult(Object obj) {
+        //TODO check return object from fragment and isAdd to DB or get it.
+        UserSkill userSkill = (UserSkill) obj;
+        userSkillBox.put(userSkill);
+        requestSkills();
+      }
+    });
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
     transaction.add(android.R.id.content, skillFragment).addToBackStack(null).commit();
-    skillFragment.setOnCallbackResult(new DialogAddSkillFragment.CallbackResult() {
+    skillFragment.setOnCallbackResult(new CallbackResult() {
       @Override
-      public void sendResult(int requestCode, Object obj) {
-        if (requestCode == DIALOG_QUEST_CODE) {
+      public void sendResult(Object obj) {
 
-        }
       }
     });
   }

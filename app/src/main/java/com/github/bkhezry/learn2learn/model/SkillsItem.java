@@ -12,7 +12,6 @@ import com.mikepenz.fastadapter.items.AbstractItem;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.core.os.ConfigurationCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.objectbox.annotation.Entity;
@@ -116,7 +115,7 @@ public class SkillsItem extends AbstractItem<SkillsItem, SkillsItem.ViewHolder> 
 
     @Override
     public void bindView(@NonNull SkillsItem item, @NonNull List<Object> payloads) {
-      if (AppUtil.isRTL(ConfigurationCompat.getLocales(view.getContext().getResources().getConfiguration()).get(0))) {
+      if (AppUtil.isRTL(view.getContext())) {
         skill.setText(item.getFaName());
       } else {
         skill.setText(item.getEnName());

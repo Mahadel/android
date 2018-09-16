@@ -10,7 +10,16 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.github.bkhezry.learn2learn.R;
+import com.github.bkhezry.learn2learn.listener.CallbackResult;
+import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
+import com.github.bkhezry.learn2learn.model.SkillsItem;
+import com.github.bkhezry.learn2learn.model.UserSkill;
+import com.github.bkhezry.learn2learn.service.APIService;
 import com.github.bkhezry.learn2learn.util.AppUtil;
+import com.github.bkhezry.learn2learn.util.Constant;
+import com.github.bkhezry.learn2learn.util.RetrofitUtil;
+import com.github.pwittchen.prefser.library.rx2.Prefser;
+import com.google.android.material.button.MaterialButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -21,6 +30,9 @@ import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DialogAddSkillFragment extends DialogFragment {
 
@@ -28,10 +40,13 @@ public class DialogAddSkillFragment extends DialogFragment {
   AppCompatTextView skillTypeTextView;
   @BindView(R.id.skill_description_edit_text)
   AppCompatEditText skillDescriptionEditText;
-  private int requestCode;
+  @BindView(R.id.select_skill_button)
+  MaterialButton selectSkillButton;
   private CallbackResult callbackResult;
   private AppUtil.SkillType skillType;
   private Activity activity;
+  private SkillsItem skillsItem;
+  private Prefser prefser;
 
 
   public void setOnCallbackResult(final CallbackResult callbackResult) {
@@ -48,6 +63,7 @@ public class DialogAddSkillFragment extends DialogFragment {
     View rootView = inflater.inflate(R.layout.dialog_add_skill, container, false);
     ButterKnife.bind(this, rootView);
     activity = getActivity();
+    prefser = new Prefser(activity);
     if (skillType == AppUtil.SkillType.WANT_LEARN) {
       skillTypeTextView.setText(R.string.add_skill_learn_label);
     } else {
@@ -75,12 +91,40 @@ public class DialogAddSkillFragment extends DialogFragment {
     return dialog;
   }
 
-  public void setRequestCode(int request_code) {
-    this.requestCode = request_code;
+  @OnClick(R.id.submit_btn)
+  void submit() {
+    String description = skillDescriptionEditText.getText().toString();
+    int skillTypeInt;
+    if (skillType == AppUtil.SkillType.WANT_TEACH) {
+      skillTypeInt = 1;
+    } else {
+      skillTypeInt = 2;
+    }
+    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+    APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+    Call<UserSkill> call = apiService.addUserSkill(info.getUuid(), skillsItem.getUuid(), description, skillTypeInt);
+    call.enqueue(new Callback<UserSkill>() {
+      @Override
+      public void onResponse(@NonNull Call<UserSkill> call, @NonNull Response<UserSkill> response) {
+        if (response.isSuccessful()) {
+          UserSkill userSkill = response.body();
+          handleUserSkill(userSkill);
+        }
+      }
+
+      @Override
+      public void onFailure(@NonNull Call<UserSkill> call, @NonNull Throwable t) {
+        t.printStackTrace();
+      }
+    });
   }
 
-  @OnClick(R.id.submit_btn)
-  public void submit() {
+  private void handleUserSkill(UserSkill userSkill) {
+    if (callbackResult != null) {
+      callbackResult.sendResult(userSkill);
+      close();
+    }
+
   }
 
   @OnClick(R.id.close_image_view)
@@ -92,17 +136,24 @@ public class DialogAddSkillFragment extends DialogFragment {
   }
 
   @OnClick(R.id.select_skill_button)
-  public void selectSkill() {
+  void selectSkill() {
     showSelectSkillDialog();
-  }
-
-  public interface CallbackResult {
-    void sendResult(int requestCode, Object obj);
   }
 
   private void showSelectSkillDialog() {
     FragmentManager fragmentManager = getFragmentManager();
     DialogSelectSkillFragment skillFragment = new DialogSelectSkillFragment();
+    skillFragment.setCallbackListener(new CallbackResult() {
+      @Override
+      public void sendResult(Object obj) {
+        skillsItem = (SkillsItem) obj;
+        if (AppUtil.isRTL(activity)) {
+          selectSkillButton.setText(skillsItem.getFaName());
+        } else {
+          selectSkillButton.setText(skillsItem.getEnName());
+        }
+      }
+    });
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
     transaction.add(android.R.id.content, skillFragment).addToBackStack(null).commit();

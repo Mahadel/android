@@ -13,7 +13,6 @@ import com.mikepenz.fastadapter.items.AbstractItem;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.core.os.ConfigurationCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.objectbox.Box;
@@ -27,6 +26,9 @@ public class UserSkill extends AbstractItem<UserSkill, UserSkill.ViewHolder> {
 
   @Id
   private Long id;
+
+  @SerializedName("uuid")
+  private String uuid;
 
   @SerializedName("user_uuid")
   private String userUuid;
@@ -45,6 +47,14 @@ public class UserSkill extends AbstractItem<UserSkill, UserSkill.ViewHolder> {
 
   @SerializedName("created_at")
   private String createdAt;
+
+  public String getUuid() {
+    return uuid;
+  }
+
+  public void setUuid(String uuid) {
+    this.uuid = uuid;
+  }
 
   public Long getId() {
     return id;
@@ -135,7 +145,7 @@ public class UserSkill extends AbstractItem<UserSkill, UserSkill.ViewHolder> {
     @Override
     public void bindView(@NonNull UserSkill item, @NonNull List<Object> payloads) {
       SkillsItem skillsItem = getSkill(item.skillUuid);
-      if (AppUtil.isRTL(ConfigurationCompat.getLocales(view.getContext().getResources().getConfiguration()).get(0))) {
+      if (AppUtil.isRTL(view.getContext())) {
         AppUtil.rotateYView(view, 180);
         skill.setText(skillsItem.getFaName());
       } else {

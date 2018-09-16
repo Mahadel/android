@@ -8,10 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.StickyHeaderAdapter;
+import com.github.bkhezry.learn2learn.listener.CallbackResult;
 import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.bkhezry.learn2learn.util.AppUtil;
@@ -27,7 +27,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.core.os.ConfigurationCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +43,7 @@ public class DialogSelectSkillFragment extends DialogFragment {
   private Box<SkillsItem> skillsItemBox;
   private Box<Category> categoryBox;
   private FastAdapter<SkillsItem> fastAdapter;
+  private CallbackResult callbackListener;
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,7 +71,7 @@ public class DialogSelectSkillFragment extends DialogFragment {
     final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(stickyHeaderAdapter);
     recyclerView.addItemDecoration(decoration);
     List<SkillsItem> skillsItems = skillsItemBox.getAll();
-    if (AppUtil.isRTL(ConfigurationCompat.getLocales(getResources().getConfiguration()).get(0))) {
+    if (AppUtil.isRTL(activity)) {
       for (SkillsItem skillsItem : skillsItems) {
         Category category = DatabaseUtil.getCategoryWithUUID(categoryBox, skillsItem.getCategoryUuid());
         skillsItem.setCategoryName(category.getFaName());
@@ -95,7 +95,10 @@ public class DialogSelectSkillFragment extends DialogFragment {
     fastAdapter.withOnClickListener(new OnClickListener<SkillsItem>() {
       @Override
       public boolean onClick(View v, @NonNull IAdapter<SkillsItem> adapter, @NonNull SkillsItem item, int position) {
-        Toast.makeText(activity, "Click", Toast.LENGTH_SHORT).show();
+        if (callbackListener != null) {
+          callbackListener.sendResult(item);
+          closeDialog();
+        }
         return true;
       }
     });
@@ -117,6 +120,15 @@ public class DialogSelectSkillFragment extends DialogFragment {
   }
 
   @OnClick(R.id.close_image_view)
-  public void closeDialog() {
+  void closeDialog() {
+    dismiss();
+    if (getFragmentManager() != null) {
+      getFragmentManager().popBackStackImmediate();
+    }
+  }
+
+  void setCallbackListener(CallbackResult callbackResult) {
+    this.callbackListener = callbackResult;
+
   }
 }

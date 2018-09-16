@@ -20,6 +20,8 @@ import com.github.pwittchen.prefser.library.rx2.Prefser;
 
 import java.util.Locale;
 
+import androidx.core.os.ConfigurationCompat;
+
 public class AppUtil {
 
   /**
@@ -114,7 +116,8 @@ public class AppUtil {
     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
   }
 
-  public static boolean isRTL(Locale locale) {
+  public static boolean isRTL(Context context) {
+    Locale locale = ConfigurationCompat.getLocales(context.getResources().getConfiguration()).get(0);
     final int directionality = Character.getDirectionality(locale.getDisplayName().charAt(0));
     return directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT ||
         directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC;

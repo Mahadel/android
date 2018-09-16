@@ -60,7 +60,7 @@ public class StickyHeaderAdapter<Item extends IItem> extends RecyclerView.Adapte
 
   //just to prettify things a bit
   private int getColor() {
-    return Color.argb(200, 0, 31, 63);
+    return Color.argb(200, 100, 31, 63);
   }
 
   /**
