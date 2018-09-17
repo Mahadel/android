@@ -8,12 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.StickyHeaderAdapter;
 import com.github.bkhezry.learn2learn.listener.CallbackResult;
 import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
+import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.MyApplication;
@@ -42,6 +44,7 @@ public class DialogSelectSkillFragment extends DialogFragment {
   private Activity activity;
   private Box<SkillsItem> skillsItemBox;
   private Box<Category> categoryBox;
+  private Box<UserSkill> userSkillBox;
   private FastAdapter<SkillsItem> fastAdapter;
   private CallbackResult callbackListener;
 
@@ -53,6 +56,7 @@ public class DialogSelectSkillFragment extends DialogFragment {
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
     categoryBox = boxStore.boxFor(Category.class);
+    userSkillBox = boxStore.boxFor(UserSkill.class);
     initRecyclerViews();
     return rootView;
   }
@@ -95,14 +99,23 @@ public class DialogSelectSkillFragment extends DialogFragment {
     fastAdapter.withOnClickListener(new OnClickListener<SkillsItem>() {
       @Override
       public boolean onClick(View v, @NonNull IAdapter<SkillsItem> adapter, @NonNull SkillsItem item, int position) {
-        if (callbackListener != null) {
-          callbackListener.sendResult(item);
-          closeDialog();
+        if (!isUserSkillDuplicate(item)) {
+          if (callbackListener != null) {
+            callbackListener.sendResult(item);
+            closeDialog();
+          }
+        } else {
+          Toast.makeText(activity, getString(R.string.skill_exists_warning), Toast.LENGTH_SHORT).show();
         }
         return true;
       }
     });
 
+  }
+
+  private boolean isUserSkillDuplicate(SkillsItem item) {
+    UserSkill userSkill = DatabaseUtil.getUserSkillWithUUID(userSkillBox, item.getUuid());
+    return userSkill != null;
   }
 
   @NonNull

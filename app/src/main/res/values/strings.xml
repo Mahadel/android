@@ -16,4 +16,5 @@
     <string name="want_learn_label">I want to learn</string>
     <string name="know_label">I know</string>
     <string name="select_skill_label">Select skill</string>
+    <string name="skill_exists_warning">This skill already exists.</string>
 </resources>

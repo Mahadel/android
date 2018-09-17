@@ -16,4 +16,5 @@
     <string name="want_learn_label">می‌خوام یادبگیرم</string>
     <string name="know_label">بلدم</string>
     <string name="select_skill_label">انتخاب مهارت</string>
+    <string name="skill_exists_warning">این مهارت قبلا اضافه شده است.</string>
 </resources>
