@@ -17,4 +17,7 @@
     <string name="know_label">بلدم</string>
     <string name="select_skill_label">انتخاب مهارت</string>
     <string name="skill_exists_warning">این مهارت قبلا اضافه شده است.</string>
+    <string name="profile_label">پروفایل</string>
+    <string name="settings_label">تنظیمات</string>
+    <string name="about_label">درباره</string>
 </resources>

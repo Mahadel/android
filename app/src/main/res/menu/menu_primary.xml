@@ -4,14 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:icon="@drawable/ic_person_24dp"
-        android:title="Profile"
+        android:title="@string/profile_label"
         app:showAsAction="ifRoom" />
     <item
         android:icon="@drawable/ic_settings_white_24dp"
-        android:title="Settings"
+        android:title="@string/settings_label"
         app:showAsAction="ifRoom" />
     <item
         android:icon="@drawable/ic_info_white_24dp"
-        android:title="About"
+        android:title="@string/about_label"
         app:showAsAction="ifRoom" />
 </menu>
