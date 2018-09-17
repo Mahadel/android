@@ -52,7 +52,7 @@
                     android:layoutDirection="locale"
                     app:itemIconTint="@android:color/white"
                     app:itemTextColor="@android:color/white"
-                    app:menu="@menu/demo_primary" />
+                    app:menu="@menu/menu_primary" />
             </FrameLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>

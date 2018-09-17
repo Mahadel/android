@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:icon="@drawable/ic_person_24dp"
+        android:title="Profile"
+        app:showAsAction="ifRoom" />
+    <item
+        android:icon="@drawable/ic_settings_white_24dp"
+        android:title="Settings"
+        app:showAsAction="ifRoom" />
+    <item
+        android:icon="@drawable/ic_info_white_24dp"
+        android:title="About"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -19,6 +19,8 @@ public class AuthenticationInfo {
   private String token;
 
   private String email;
+
+  @SerializedName("fill_info")
   private boolean fillInfo;
 
   public void setMessage(String message) {

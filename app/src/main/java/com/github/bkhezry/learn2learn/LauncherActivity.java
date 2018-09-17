@@ -166,10 +166,9 @@ public class LauncherActivity extends BaseActivity implements
         if (response.isSuccessful()) {
           AuthenticationInfo info = response.body();
           if (info != null) {
-            info.setFillInfo(false);
             info.setEmail(acct.getEmail());
             prefser.put(Constant.TOKEN, info);
-            if (!info.getType().equals("login")) {
+            if (!info.getFillInfo()) {
               showGetAccountInfoLayout(acct.getEmail());
             } else {
               retrieveData();

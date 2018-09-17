@@ -1,6 +1,8 @@
 package com.github.bkhezry.learn2learn;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -101,7 +103,7 @@ public class MainActivity extends BaseActivity {
           }
         });
     bar.setNavigationIcon(R.drawable.ic_drawer_menu_24px);
-    bar.replaceMenu(R.menu.demo_primary);
+    bar.replaceMenu(R.menu.menu_primary);
   }
 
   private void initRecyclerViews() {
@@ -213,17 +215,17 @@ public class MainActivity extends BaseActivity {
     bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
   }
 
-//  @Override
-//  public boolean onCreateOptionsMenu(Menu menu) {
-//    MenuInflater inflater = getMenuInflater();
-//    inflater.inflate(R.menu.demo_primary, menu);
-//    return super.onCreateOptionsMenu(menu);
-//  }
-//
-//  @Override
-//  public boolean onOptionsItemSelected(MenuItem menuItem) {
-//    Toast.makeText(this, menuItem.getTitle(), Toast.LENGTH_SHORT).show();
-//    return true;
-//  }
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.menu_appbar, menu);
+    return super.onCreateOptionsMenu(menu);
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem menuItem) {
+    Toast.makeText(this, menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+    return true;
+  }
 }
 
