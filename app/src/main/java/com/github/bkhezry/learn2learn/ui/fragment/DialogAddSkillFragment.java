@@ -129,6 +129,7 @@ public class DialogAddSkillFragment extends DialogFragment {
 
   @OnClick(R.id.close_image_view)
   public void close() {
+    AppUtil.hideSoftInput(activity);
     dismiss();
     if (getFragmentManager() != null) {
       getFragmentManager().popBackStackImmediate();

@@ -182,19 +182,21 @@ public class MainActivity extends BaseActivity {
       public void sendResult(Object obj) {
         //TODO check return object from fragment and isAdd to DB or get it.
         UserSkill userSkill = (UserSkill) obj;
-        userSkillBox.put(userSkill);
-        requestSkills();
+        handleUserSkill(userSkill);
       }
     });
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
     transaction.add(android.R.id.content, skillFragment).addToBackStack(null).commit();
-    skillFragment.setOnCallbackResult(new CallbackResult() {
-      @Override
-      public void sendResult(Object obj) {
+  }
 
-      }
-    });
+  private void handleUserSkill(UserSkill userSkill) {
+    userSkillBox.put(userSkill);
+    if (userSkill.getSkillType() == 1) {
+      mItemAdapter_1.add(0, userSkill);
+    } else {
+      mItemAdapter_2.add(0, userSkill);
+    }
   }
 
 
