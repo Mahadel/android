@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.util.AppUtil;
+import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.google.gson.annotations.SerializedName;
 import com.mikepenz.fastadapter.FastAdapter;
@@ -156,11 +157,7 @@ public class UserSkill extends AbstractItem<UserSkill, UserSkill.ViewHolder> {
     }
 
     private SkillsItem getSkill(String skillUuid) {
-      Query<SkillsItem> query =
-          skillsItemBox.query()
-              .equal(SkillsItem_.uuid, skillUuid)
-              .build();
-      return query.findFirst();
+      return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
 
     }
 

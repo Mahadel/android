@@ -43,4 +43,10 @@ public interface APIService {
                                @Field("skill_uuid") String skillUUID,
                                @Field("description") String description,
                                @Field("skill_type") int skillType);
+
+  @PUT("user/{uuid}/skill")
+  @FormUrlEncoded
+  Call<UserSkill> editUserSkill(@Path("uuid") String uuid,
+                                @Field("uuid") String userSkillUUID,
+                                @Field("description") String description);
 }

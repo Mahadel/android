@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.github.bkhezry.learn2learn.listener.CallbackResult;
 import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.ui.fragment.DialogAddSkillFragment;
+import com.github.bkhezry.learn2learn.ui.fragment.DialogSkillDetailFragment;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.MyApplication;
@@ -119,7 +120,7 @@ public class MainActivity extends BaseActivity {
     mFastAdapter_1.withOnClickListener(new OnClickListener<UserSkill>() {
       @Override
       public boolean onClick(View v, @NonNull IAdapter<UserSkill> adapter, @NonNull UserSkill item, int position) {
-        return handleRecyclerViewOnClick(v, recyclerView_1);
+        return handleRecyclerViewOnClick(v, recyclerView_1, item, AppUtil.SkillType.WANT_TEACH);
       }
     });
 
@@ -131,13 +132,13 @@ public class MainActivity extends BaseActivity {
     mFastAdapter_2.withOnClickListener(new OnClickListener<UserSkill>() {
       @Override
       public boolean onClick(View v, @NonNull IAdapter<UserSkill> adapter, @NonNull UserSkill item, int position) {
-        return handleRecyclerViewOnClick(v, recyclerView_2);
+        return handleRecyclerViewOnClick(v, recyclerView_2, item, AppUtil.SkillType.WANT_LEARN);
       }
     });
     handleLocaleDirection();
   }
 
-  private boolean handleRecyclerViewOnClick(View v, RecyclerView recyclerView) {
+  private boolean handleRecyclerViewOnClick(View v, RecyclerView recyclerView, UserSkill item, AppUtil.SkillType skillType) {
     final CardSliderLayoutManager lm = (CardSliderLayoutManager) recyclerView.getLayoutManager();
     if (lm.isSmoothScrolling()) {
       return false;
@@ -148,12 +149,29 @@ public class MainActivity extends BaseActivity {
     }
     final int clickedPosition = recyclerView.getChildAdapterPosition(v);
     if (clickedPosition == activeCardPosition) {
-      Toast.makeText(MainActivity.this, "Click", Toast.LENGTH_SHORT).show();
-
+      showSkillDetail(item,skillType);
     } else if (clickedPosition > activeCardPosition) {
       recyclerView.smoothScrollToPosition(clickedPosition);
     }
     return false;
+  }
+
+  private void showSkillDetail(UserSkill item, AppUtil.SkillType skillType) {
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    DialogSkillDetailFragment skillFragment = new DialogSkillDetailFragment();
+    skillFragment.setSkillType(skillType);
+    skillFragment.setSkillItem(item);
+    skillFragment.setOnCallbackResult(new CallbackResult() {
+      @Override
+      public void sendResult(Object obj) {
+        //TODO check return object from fragment and isAdd to DB or get it.
+        UserSkill userSkill = (UserSkill) obj;
+        handleUserSkill(userSkill);
+      }
+    });
+    FragmentTransaction transaction = fragmentManager.beginTransaction();
+    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+    transaction.add(android.R.id.content, skillFragment).addToBackStack(null).commit();
   }
 
   private void handleLocaleDirection() {
