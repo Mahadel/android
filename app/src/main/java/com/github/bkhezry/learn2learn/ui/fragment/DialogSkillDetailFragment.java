@@ -126,7 +126,7 @@ public class DialogSkillDetailFragment extends DialogFragment {
 
   private void handleUserSkill(UserSkill userSkill) {
     if (callbackResult != null) {
-      callbackResult.sendResult(userSkill);
+      callbackResult.sendResult(userSkill, skillType);
       close();
     }
 

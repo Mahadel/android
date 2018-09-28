@@ -19,9 +19,14 @@ public class DatabaseUtil {
         .build();
   }
 
-  public static UserSkill getUserSkillWithUUID(Box<UserSkill> userSkillBox, String uuid) {
+  public static UserSkill getUserSkillWithSkillUUID(Box<UserSkill> userSkillBox, String uuid) {
     return userSkillBox.query()
         .equal(UserSkill_.skillUuid, uuid)
+        .build().findFirst();
+  }
+  public static UserSkill getUserSkillWithUUID(Box<UserSkill> userSkillBox, String uuid) {
+    return userSkillBox.query()
+        .equal(UserSkill_.uuid, uuid)
         .build().findFirst();
   }
 

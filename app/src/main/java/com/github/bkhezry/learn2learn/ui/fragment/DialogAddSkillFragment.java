@@ -116,7 +116,7 @@ public class DialogAddSkillFragment extends DialogFragment {
 
   private void handleUserSkill(UserSkill userSkill) {
     if (callbackResult != null) {
-      callbackResult.sendResult(userSkill);
+      callbackResult.sendResult(userSkill, skillType);
       close();
     }
 
@@ -141,7 +141,7 @@ public class DialogAddSkillFragment extends DialogFragment {
     DialogSelectSkillFragment skillFragment = new DialogSelectSkillFragment();
     skillFragment.setCallbackListener(new CallbackResult() {
       @Override
-      public void sendResult(Object obj) {
+      public void sendResult(Object obj, AppUtil.SkillType skillType) {
         skillsItem = (SkillsItem) obj;
         if (AppUtil.isRTL(activity)) {
           selectSkillButton.setText(skillsItem.getFaName());

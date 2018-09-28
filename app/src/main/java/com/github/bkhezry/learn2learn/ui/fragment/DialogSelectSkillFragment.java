@@ -101,7 +101,7 @@ public class DialogSelectSkillFragment extends DialogFragment {
       public boolean onClick(View v, @NonNull IAdapter<SkillsItem> adapter, @NonNull SkillsItem item, int position) {
         if (!isUserSkillDuplicate(item)) {
           if (callbackListener != null) {
-            callbackListener.sendResult(item);
+            callbackListener.sendResult(item, null);
             closeDialog();
           }
         } else {
@@ -114,7 +114,7 @@ public class DialogSelectSkillFragment extends DialogFragment {
   }
 
   private boolean isUserSkillDuplicate(SkillsItem item) {
-    UserSkill userSkill = DatabaseUtil.getUserSkillWithUUID(userSkillBox, item.getUuid());
+    UserSkill userSkill = DatabaseUtil.getUserSkillWithSkillUUID(userSkillBox, item.getUuid());
     return userSkill != null;
   }
 

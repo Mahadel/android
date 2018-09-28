@@ -62,6 +62,7 @@ public class MainActivity extends BaseActivity {
   private FastAdapter<UserSkill> mFastAdapter_2;
   private ItemAdapter<UserSkill> mItemAdapter_2;
   private Box<UserSkill> userSkillBox;
+  private int lastPositionClicked;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +121,7 @@ public class MainActivity extends BaseActivity {
     mFastAdapter_1.withOnClickListener(new OnClickListener<UserSkill>() {
       @Override
       public boolean onClick(View v, @NonNull IAdapter<UserSkill> adapter, @NonNull UserSkill item, int position) {
+        lastPositionClicked = position;
         return handleRecyclerViewOnClick(v, recyclerView_1, item, AppUtil.SkillType.WANT_TEACH);
       }
     });
@@ -132,6 +134,7 @@ public class MainActivity extends BaseActivity {
     mFastAdapter_2.withOnClickListener(new OnClickListener<UserSkill>() {
       @Override
       public boolean onClick(View v, @NonNull IAdapter<UserSkill> adapter, @NonNull UserSkill item, int position) {
+        lastPositionClicked = position;
         return handleRecyclerViewOnClick(v, recyclerView_2, item, AppUtil.SkillType.WANT_LEARN);
       }
     });
@@ -149,7 +152,7 @@ public class MainActivity extends BaseActivity {
     }
     final int clickedPosition = recyclerView.getChildAdapterPosition(v);
     if (clickedPosition == activeCardPosition) {
-      showSkillDetail(item,skillType);
+      showSkillDetail(item, skillType);
     } else if (clickedPosition > activeCardPosition) {
       recyclerView.smoothScrollToPosition(clickedPosition);
     }
@@ -163,15 +166,30 @@ public class MainActivity extends BaseActivity {
     skillFragment.setSkillItem(item);
     skillFragment.setOnCallbackResult(new CallbackResult() {
       @Override
-      public void sendResult(Object obj) {
-        //TODO check return object from fragment and isAdd to DB or get it.
+      public void sendResult(Object obj, AppUtil.SkillType skillType) {
         UserSkill userSkill = (UserSkill) obj;
-        handleUserSkill(userSkill);
+        updateUserSkill(userSkill, skillType);
       }
     });
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
     transaction.add(android.R.id.content, skillFragment).addToBackStack(null).commit();
+  }
+
+  private void updateUserSkill(UserSkill userSkill, AppUtil.SkillType skillType) {
+    UserSkill userSkill1DB = DatabaseUtil.getUserSkillWithUUID(userSkillBox, userSkill.getUuid());
+    userSkill1DB.setDescription(userSkill.getDescription());
+    userSkill1DB.setUpdatedAt(userSkill.getUpdatedAt());
+    userSkillBox.put(userSkill1DB);
+    if (skillType == AppUtil.SkillType.WANT_TEACH) {
+      mItemAdapter_1.remove(lastPositionClicked);
+      mItemAdapter_1.add(lastPositionClicked, userSkill1DB);
+      mFastAdapter_1.notifyAdapterItemChanged(lastPositionClicked);
+    } else {
+      mItemAdapter_2.remove(lastPositionClicked);
+      mItemAdapter_2.add(lastPositionClicked, userSkill1DB);
+      mFastAdapter_2.notifyAdapterItemChanged(lastPositionClicked);
+    }
   }
 
   private void handleLocaleDirection() {
@@ -199,7 +217,7 @@ public class MainActivity extends BaseActivity {
     skillFragment.setSkillType(skillType);
     skillFragment.setOnCallbackResult(new CallbackResult() {
       @Override
-      public void sendResult(Object obj) {
+      public void sendResult(Object obj, AppUtil.SkillType skillType) {
         //TODO check return object from fragment and isAdd to DB or get it.
         UserSkill userSkill = (UserSkill) obj;
         handleUserSkill(userSkill);
