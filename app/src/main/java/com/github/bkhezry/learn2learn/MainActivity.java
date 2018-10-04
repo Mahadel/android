@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.github.bkhezry.learn2learn.listener.CallbackResult;
+import com.github.bkhezry.learn2learn.listener.SkillDetailCallbackResult;
 import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.ui.fragment.DialogAddSkillFragment;
 import com.github.bkhezry.learn2learn.ui.fragment.DialogSkillDetailFragment;
@@ -164,16 +165,34 @@ public class MainActivity extends BaseActivity {
     DialogSkillDetailFragment skillFragment = new DialogSkillDetailFragment();
     skillFragment.setSkillType(skillType);
     skillFragment.setSkillItem(item);
-    skillFragment.setOnCallbackResult(new CallbackResult() {
+    skillFragment.setOnCallbackResult(new SkillDetailCallbackResult() {
       @Override
-      public void sendResult(Object obj, AppUtil.SkillType skillType) {
+      public void update(Object obj, AppUtil.SkillType skillType) {
         UserSkill userSkill = (UserSkill) obj;
         updateUserSkill(userSkill, skillType);
+      }
+
+      @Override
+      public void remove(Object obj, AppUtil.SkillType skillType) {
+        UserSkill userSkill = (UserSkill) obj;
+        removeUserSkill(userSkill, skillType);
+
       }
     });
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
     transaction.add(android.R.id.content, skillFragment).addToBackStack(null).commit();
+  }
+
+  private void removeUserSkill(UserSkill userSkill, AppUtil.SkillType skillType) {
+    UserSkill userSkill1DB = DatabaseUtil.getUserSkillWithUUID(userSkillBox, userSkill.getUuid());
+    userSkillBox.remove(userSkill1DB);
+    if (skillType == AppUtil.SkillType.WANT_TEACH) {
+      mItemAdapter_1.remove(lastPositionClicked);
+    } else {
+      mItemAdapter_2.remove(lastPositionClicked);
+    }
+
   }
 
   private void updateUserSkill(UserSkill userSkill, AppUtil.SkillType skillType) {

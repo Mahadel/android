@@ -98,6 +98,13 @@
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/remove_btn"
+            style="@style/StyleMaterialButtonLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/remove_label" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

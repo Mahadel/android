@@ -8,6 +8,7 @@ import com.github.bkhezry.learn2learn.model.UserSkill;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -49,4 +50,8 @@ public interface APIService {
   Call<UserSkill> editUserSkill(@Path("uuid") String uuid,
                                 @Field("uuid") String userSkillUUID,
                                 @Field("description") String description);
+
+  @DELETE("user/{uuid}/skill/{user_skill_uuid}")
+  Call<ResponseMessage> deleteUserSkill(@Path("uuid") String uuid,
+                                        @Path("user_skill_uuid") String userSkillUUID);
 }

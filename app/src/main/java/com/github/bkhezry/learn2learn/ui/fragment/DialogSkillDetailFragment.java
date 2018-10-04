@@ -10,8 +10,9 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.github.bkhezry.learn2learn.R;
-import com.github.bkhezry.learn2learn.listener.CallbackResult;
+import com.github.bkhezry.learn2learn.listener.SkillDetailCallbackResult;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
+import com.github.bkhezry.learn2learn.model.ResponseMessage;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.service.APIService;
@@ -43,7 +44,7 @@ public class DialogSkillDetailFragment extends DialogFragment {
   AppCompatEditText skillDescriptionEditText;
   @BindView(R.id.skill_name_text_view)
   AppCompatTextView skillNameTextView;
-  private CallbackResult callbackResult;
+  private SkillDetailCallbackResult callbackResult;
   private AppUtil.SkillType skillType;
   private Activity activity;
   private UserSkill userSkill;
@@ -51,7 +52,7 @@ public class DialogSkillDetailFragment extends DialogFragment {
   private Box<SkillsItem> skillsItemBox;
 
 
-  public void setOnCallbackResult(final CallbackResult callbackResult) {
+  public void setOnCallbackResult(SkillDetailCallbackResult callbackResult) {
     this.callbackResult = callbackResult;
   }
 
@@ -79,10 +80,13 @@ public class DialogSkillDetailFragment extends DialogFragment {
     }
     skillDescriptionEditText.setText(userSkill.getDescription());
     SkillsItem skillItem = DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, userSkill.getSkillUuid()).findFirst();
-    if (AppUtil.isRTL(activity)) {
-      skillNameTextView.setText(skillItem.getFaName());
-    } else {
-      skillNameTextView.setText(skillItem.getEnName());
+    if (skillItem != null) {
+      if (AppUtil.isRTL(activity)) {
+
+        skillNameTextView.setText(skillItem.getFaName());
+      } else {
+        skillNameTextView.setText(skillItem.getEnName());
+      }
     }
     return rootView;
   }
@@ -126,7 +130,7 @@ public class DialogSkillDetailFragment extends DialogFragment {
 
   private void handleUserSkill(UserSkill userSkill) {
     if (callbackResult != null) {
-      callbackResult.sendResult(userSkill, skillType);
+      callbackResult.update(userSkill, skillType);
       close();
     }
 
@@ -139,5 +143,29 @@ public class DialogSkillDetailFragment extends DialogFragment {
     if (getFragmentManager() != null) {
       getFragmentManager().popBackStackImmediate();
     }
+  }
+
+  @OnClick(R.id.remove_btn)
+  void removeSkill() {
+    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+    APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+    Call<ResponseMessage> call = apiService.deleteUserSkill(info.getUuid(), userSkill.getUuid());
+    call.enqueue(new Callback<ResponseMessage>() {
+      @Override
+      public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
+        if (response.isSuccessful()) {
+          if (callbackResult != null) {
+            callbackResult.remove(userSkill, skillType);
+            close();
+          }
+        }
+
+      }
+
+      @Override
+      public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
+        t.printStackTrace();
+      }
+    });
   }
 }
