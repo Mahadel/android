@@ -13,8 +13,8 @@
     <string name="description_label">توضیحات</string>
     <string name="add_skill_learn_label">قصد یادگیری دارم</string>
     <string name="add_skill_teach_label">قصد یاددادن دارم</string>
-    <string name="want_learn_label">می‌خوام یادبگیرم</string>
-    <string name="know_label">بلدم</string>
+    <string name="want_learn_label">می‌خوام یاد بگیرم</string>
+    <string name="know_label">می‌خوام یاد بدم</string>
     <string name="select_skill_label">انتخاب مهارت</string>
     <string name="skill_exists_warning">این مهارت قبلا اضافه شده است.</string>
     <string name="profile_label">پروفایل</string>
