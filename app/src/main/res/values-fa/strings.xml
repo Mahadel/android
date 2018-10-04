@@ -22,4 +22,7 @@
     <string name="about_label">درباره</string>
     <string name="edit_label">ویرایش</string>
     <string name="remove_label">حذف</string>
+    <string name="confirm_remove_skill_label">از حذف مهارت مطمئن هستید؟</string>
+    <string name="cancel_label">لغو</string>
+    <string name="yes_label">بله</string>
 </resources>

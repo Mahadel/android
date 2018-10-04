@@ -147,6 +147,21 @@ public class DialogSkillDetailFragment extends DialogFragment {
 
   @OnClick(R.id.remove_btn)
   void removeSkill() {
+    AppUtil.showConfirmDialog(getString(R.string.confirm_remove_skill_label), activity, new AppUtil.ConfirmDialogClickListener() {
+      @Override
+      public void ok() {
+        removeSkillServer();
+      }
+
+      @Override
+      public void cancel() {
+
+      }
+    });
+
+  }
+
+  private void removeSkillServer() {
     AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.deleteUserSkill(info.getUuid(), userSkill.getUuid());

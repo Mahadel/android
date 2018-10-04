@@ -20,6 +20,7 @@ import com.github.pwittchen.prefser.library.rx2.Prefser;
 
 import java.util.Locale;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.os.ConfigurationCompat;
 
 public class AppUtil {
@@ -73,6 +74,40 @@ public class AppUtil {
     dialog.getWindow().setAttributes(lp);
   }
 
+  public static void showConfirmDialog(String message, Context context, final ConfirmDialogClickListener listener) {
+    final Dialog dialog = new Dialog(context);
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+    dialog.setContentView(R.layout.dialog_confirm);
+    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+    dialog.setCancelable(true);
+    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+    lp.copyFrom(dialog.getWindow().getAttributes());
+    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+    lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+    dialog.findViewById(R.id.ok_button).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (listener != null) {
+          listener.ok();
+          dialog.dismiss();
+        }
+      }
+    });
+    dialog.findViewById(R.id.cancel_button).setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (listener != null) {
+          listener.cancel();
+          dialog.dismiss();
+        }
+      }
+    });
+    AppCompatTextView messageTextView = dialog.findViewById(R.id.message_text_view);
+    messageTextView.setText(message);
+    dialog.show();
+    dialog.getWindow().setAttributes(lp);
+  }
+
   public enum SkillType {
     WANT_LEARN,
     WANT_TEACH
@@ -80,6 +115,12 @@ public class AppUtil {
 
   public interface DialogClickListener {
     void selectedSkillType(SkillType skillType);
+  }
+
+  public interface ConfirmDialogClickListener {
+    void ok();
+
+    void cancel();
   }
 
   public static Context updateResources(Context context) {

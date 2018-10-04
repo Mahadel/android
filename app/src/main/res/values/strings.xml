@@ -22,4 +22,7 @@
     <string name="about_label">About</string>
     <string name="edit_label">Edit</string>
     <string name="remove_label">Remove</string>
+    <string name="confirm_remove_skill_label">Are you sure want remove skill?</string>
+    <string name="cancel_label">Cancel</string>
+    <string name="yes_label">Yes</string>
 </resources>
