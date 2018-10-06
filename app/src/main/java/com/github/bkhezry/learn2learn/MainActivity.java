@@ -282,5 +282,13 @@ public class MainActivity extends BaseActivity {
     Toast.makeText(this, menuItem.getTitle(), Toast.LENGTH_SHORT).show();
     return true;
   }
-}
 
+  @Override
+  public void onBackPressed() {
+    if (bottomDrawerBehavior.getState() != BottomSheetBehavior.STATE_HIDDEN) {
+      bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    } else {
+      finish();
+    }
+  }
+}
