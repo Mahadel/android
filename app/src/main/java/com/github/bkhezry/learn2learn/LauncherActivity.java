@@ -229,7 +229,7 @@ public class LauncherActivity extends BaseActivity implements
     updateUser(firstName, lastName, gender);
   }
 
-  private void updateUser(String firstName, String lastName, int gender) {
+  private void updateUser(final String firstName, final String lastName, final int gender) {
     final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.updateUser(info.getUuid(), firstName, lastName, gender);
@@ -238,6 +238,9 @@ public class LauncherActivity extends BaseActivity implements
       public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
         if (response.isSuccessful()) {
           info.setFillInfo(true);
+          info.setFirstName(firstName);
+          info.setLastName(lastName);
+          info.setGender(gender);
           prefser.put(Constant.TOKEN, info);
           retrieveData();
         }

@@ -11,17 +11,25 @@ import android.view.WindowManager;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.listener.CallbackResult;
+import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.util.AppUtil;
+import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.DialogFragment;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ProfileFragment extends DialogFragment {
 
 
+  @BindView(R.id.email_text_view)
+  AppCompatTextView emailTextView;
+  @BindView(R.id.name_text_view)
+  AppCompatTextView nameTextView;
   private CallbackResult callbackResult;
   private Activity activity;
   private Prefser prefser;
@@ -38,6 +46,9 @@ public class ProfileFragment extends DialogFragment {
     ButterKnife.bind(this, rootView);
     activity = getActivity();
     prefser = new Prefser(activity);
+    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+    emailTextView.setText(info.getEmail());
+    //nameTextView.setText(String.format("%s %s", info.getFirstName(), info.getLastName()));
     return rootView;
   }
 
