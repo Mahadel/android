@@ -139,6 +139,7 @@ public class ProfileFragment extends DialogFragment implements
             prefser.remove(Constant.TOKEN);
             if (callbackResult != null) {
               callbackResult.logout();
+              close();
             }
           }
         });
@@ -164,4 +165,12 @@ public class ProfileFragment extends DialogFragment implements
     void logout();
   }
 
+  @Override
+  public void onPause() {
+    super.onPause();
+    if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+      mGoogleApiClient.stopAutoManage(getActivity());
+      mGoogleApiClient.disconnect();
+    }
+  }
 }
