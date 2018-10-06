@@ -3,6 +3,7 @@ package com.github.bkhezry.learn2learn.service;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.ResponseMessage;
+import com.github.bkhezry.learn2learn.model.UserInfo;
 import com.github.bkhezry.learn2learn.model.UserSkill;
 
 import java.util.List;
@@ -54,4 +55,7 @@ public interface APIService {
   @DELETE("user/{uuid}/skill/{user_skill_uuid}")
   Call<ResponseMessage> deleteUserSkill(@Path("uuid") String uuid,
                                         @Path("user_skill_uuid") String userSkillUUID);
+
+  @GET("user/{uuid}/info")
+  Call<UserInfo> getUserInfo(@Path("uuid") String uuid);
 }

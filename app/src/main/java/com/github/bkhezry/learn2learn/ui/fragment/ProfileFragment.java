@@ -12,8 +12,11 @@ import android.view.WindowManager;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.listener.CallbackResult;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
+import com.github.bkhezry.learn2learn.model.UserInfo;
+import com.github.bkhezry.learn2learn.service.APIService;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
+import com.github.bkhezry.learn2learn.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 
 import androidx.annotation.NonNull;
@@ -22,6 +25,9 @@ import androidx.fragment.app.DialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProfileFragment extends DialogFragment {
 
@@ -48,8 +54,32 @@ public class ProfileFragment extends DialogFragment {
     prefser = new Prefser(activity);
     AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     emailTextView.setText(info.getEmail());
-    //nameTextView.setText(String.format("%s %s", info.getFirstName(), info.getLastName()));
+    requestProfileInfo();
+
     return rootView;
+  }
+
+  private void requestProfileInfo() {
+    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+    APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+    Call<UserInfo> call = apiService.getUserInfo(info.getUuid());
+    call.enqueue(new Callback<UserInfo>() {
+      @Override
+      public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
+        if (response.isSuccessful()) {
+          UserInfo userInfo = response.body();
+          if (userInfo != null) {
+            nameTextView.setText(String.format("%s %s", userInfo.getFirstName(), userInfo.getLastName()));
+          }
+        }
+      }
+
+      @Override
+      public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
+        t.printStackTrace();
+
+      }
+    });
   }
 
   @NonNull

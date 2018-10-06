@@ -238,9 +238,6 @@ public class LauncherActivity extends BaseActivity implements
       public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
         if (response.isSuccessful()) {
           info.setFillInfo(true);
-          info.setFirstName(firstName);
-          info.setLastName(lastName);
-          info.setGender(gender);
           prefser.put(Constant.TOKEN, info);
           retrieveData();
         }
