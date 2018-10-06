@@ -15,6 +15,7 @@ import com.github.bkhezry.learn2learn.listener.SkillDetailCallbackResult;
 import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.ui.fragment.DialogAddSkillFragment;
 import com.github.bkhezry.learn2learn.ui.fragment.DialogSkillDetailFragment;
+import com.github.bkhezry.learn2learn.ui.fragment.ProfileFragment;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.MyApplication;
@@ -87,6 +88,10 @@ public class MainActivity extends BaseActivity {
         new NavigationView.OnNavigationItemSelectedListener() {
           @Override
           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            if (item.getItemId() == R.id.profile_item) {
+              showProfileFragment();
+              hideBottomDrawer();
+            }
             Toast.makeText(MainActivity.this, item.getTitle(), Toast.LENGTH_SHORT).show();
             return false;
           }
@@ -247,6 +252,14 @@ public class MainActivity extends BaseActivity {
     transaction.add(android.R.id.content, skillFragment).addToBackStack(null).commit();
   }
 
+  private void showProfileFragment() {
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    ProfileFragment profileFragment = new ProfileFragment();
+    FragmentTransaction transaction = fragmentManager.beginTransaction();
+    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+    transaction.add(android.R.id.content, profileFragment).addToBackStack(null).commit();
+  }
+
   private void handleUserSkill(UserSkill userSkill) {
     userSkillBox.put(userSkill);
     if (userSkill.getSkillType() == 1) {
@@ -286,9 +299,9 @@ public class MainActivity extends BaseActivity {
   @Override
   public void onBackPressed() {
     if (bottomDrawerBehavior.getState() != BottomSheetBehavior.STATE_HIDDEN) {
-      bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+      hideBottomDrawer();
     } else {
-      finish();
+      super.onBackPressed();
     }
   }
 }
