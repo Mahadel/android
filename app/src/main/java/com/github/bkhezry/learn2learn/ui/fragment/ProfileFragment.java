@@ -3,12 +3,14 @@ package com.github.bkhezry.learn2learn.ui.fragment;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.bumptech.glide.Glide;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.listener.CallbackResult;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
@@ -18,6 +20,7 @@ import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.bkhezry.learn2learn.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -29,6 +32,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static org.greenrobot.essentials.StringUtils.md5;
+
 public class ProfileFragment extends DialogFragment {
 
 
@@ -36,6 +41,8 @@ public class ProfileFragment extends DialogFragment {
   AppCompatTextView emailTextView;
   @BindView(R.id.name_text_view)
   AppCompatTextView nameTextView;
+  @BindView(R.id.profile_pic)
+  CircularImageView profilePic;
   private CallbackResult callbackResult;
   private Activity activity;
   private Prefser prefser;
@@ -54,8 +61,10 @@ public class ProfileFragment extends DialogFragment {
     prefser = new Prefser(activity);
     AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     emailTextView.setText(info.getEmail());
+    String profilePicURL = Constant.GRAVATAR_URL + md5(info.getEmail()).toLowerCase() + "?size=400";
+    Log.d("bkhezry: ", profilePicURL);
+    Glide.with(activity).load(profilePicURL).into(profilePic);
     requestProfileInfo();
-
     return rootView;
   }
 
@@ -102,6 +111,18 @@ public class ProfileFragment extends DialogFragment {
     dismiss();
     if (getFragmentManager() != null) {
       getFragmentManager().popBackStackImmediate();
+    }
+  }
+
+  @OnClick({R.id.edit_profile_button, R.id.logout_profile_button, R.id.delete_profile_button})
+  public void handleButtonClick(View view) {
+    switch (view.getId()) {
+      case R.id.edit_profile_button:
+        break;
+      case R.id.logout_profile_button:
+        break;
+      case R.id.delete_profile_button:
+        break;
     }
   }
 }

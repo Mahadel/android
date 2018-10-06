@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layoutDirection="locale"
     app:cardBackgroundColor="@color/grey_100"
     app:cardCornerRadius="5dp"
@@ -52,28 +52,33 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/profile_pic"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_marginTop="@dimen/spacing_xlarge"
-                        android:src="@drawable/ic_persian" />
+                        app:civ_border_color="#EEEEEE"
+                        app:civ_border_width="2dp"
+                        app:civ_shadow="true"
+                        app:civ_shadow_color="#8BC34A"
+                        app:civ_shadow_radius="5" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/name_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_large"
-                        tools:text="Behrouz Khezry"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                        android:textColor="@android:color/white" />
+                        android:textColor="@android:color/white"
+                        tools:text="Behrouz Khezry" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/email_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="bkhezry@gmail.com"
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textColor="@color/grey_20" />
+                        android:textColor="@color/grey_20"
+                        tools:text="bkhezry@gmail.com" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -83,6 +88,7 @@
                         android:orientation="horizontal">
 
                         <ImageButton
+                            android:id="@+id/edit_profile_button"
                             android:layout_width="?attr/actionBarSize"
                             android:layout_height="?attr/actionBarSize"
                             android:background="?attr/selectableItemBackgroundBorderless"
@@ -94,6 +100,7 @@
                             android:layout_height="0dp" />
 
                         <ImageButton
+                            android:id="@+id/logout_profile_button"
                             android:layout_width="?attr/actionBarSize"
                             android:layout_height="?attr/actionBarSize"
                             android:background="?attr/selectableItemBackgroundBorderless"
@@ -105,6 +112,7 @@
                             android:layout_height="0dp" />
 
                         <ImageButton
+                            android:id="@+id/delete_profile_button"
                             android:layout_width="?attr/actionBarSize"
                             android:layout_height="?attr/actionBarSize"
                             android:background="?attr/selectableItemBackgroundBorderless"
