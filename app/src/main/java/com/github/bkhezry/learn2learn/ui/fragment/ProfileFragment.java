@@ -3,7 +3,6 @@ package com.github.bkhezry.learn2learn.ui.fragment;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +11,18 @@ import android.view.WindowManager;
 
 import com.bumptech.glide.Glide;
 import com.github.bkhezry.learn2learn.R;
-import com.github.bkhezry.learn2learn.listener.CallbackResult;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.UserInfo;
 import com.github.bkhezry.learn2learn.service.APIService;
-import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.bkhezry.learn2learn.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import androidx.annotation.NonNull;
@@ -34,7 +37,8 @@ import retrofit2.Response;
 
 import static org.greenrobot.essentials.StringUtils.md5;
 
-public class ProfileFragment extends DialogFragment {
+public class ProfileFragment extends DialogFragment implements
+    GoogleApiClient.OnConnectionFailedListener {
 
 
   @BindView(R.id.email_text_view)
@@ -43,12 +47,13 @@ public class ProfileFragment extends DialogFragment {
   AppCompatTextView nameTextView;
   @BindView(R.id.profile_pic)
   CircularImageView profilePic;
-  private CallbackResult callbackResult;
+  private ProfileCallbackResult callbackResult;
   private Activity activity;
   private Prefser prefser;
+  private GoogleApiClient mGoogleApiClient;
 
 
-  public void setOnCallbackResult(final CallbackResult callbackResult) {
+  public void setOnCallbackResult(ProfileCallbackResult callbackResult) {
     this.callbackResult = callbackResult;
   }
 
@@ -59,10 +64,10 @@ public class ProfileFragment extends DialogFragment {
     ButterKnife.bind(this, rootView);
     activity = getActivity();
     prefser = new Prefser(activity);
+    setUpGoogleSignIn();
     AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     emailTextView.setText(info.getEmail());
     String profilePicURL = Constant.GRAVATAR_URL + md5(info.getEmail()).toLowerCase() + "?size=400";
-    Log.d("bkhezry: ", profilePicURL);
     Glide.with(activity).load(profilePicURL).into(profilePic);
     requestProfileInfo();
     return rootView;
@@ -107,7 +112,6 @@ public class ProfileFragment extends DialogFragment {
 
   @OnClick(R.id.close_image_view)
   public void close() {
-    AppUtil.hideSoftInput(activity);
     dismiss();
     if (getFragmentManager() != null) {
       getFragmentManager().popBackStackImmediate();
@@ -120,9 +124,44 @@ public class ProfileFragment extends DialogFragment {
       case R.id.edit_profile_button:
         break;
       case R.id.logout_profile_button:
+        revokeAccess();
         break;
       case R.id.delete_profile_button:
         break;
     }
   }
+
+  private void revokeAccess() {
+    Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
+        new ResultCallback<Status>() {
+          @Override
+          public void onResult(@NonNull Status status) {
+            prefser.remove(Constant.TOKEN);
+            if (callbackResult != null) {
+              callbackResult.logout();
+            }
+          }
+        });
+  }
+
+  private void setUpGoogleSignIn() {
+    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestIdToken(getString(R.string.default_web_client_id))
+        .requestEmail()
+        .build();
+    mGoogleApiClient = new GoogleApiClient.Builder(activity)
+        .enableAutoManage(getActivity() /* FragmentActivity */, this /* OnConnectionFailedListener */)
+        .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+        .build();
+  }
+
+  @Override
+  public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+  }
+
+  public interface ProfileCallbackResult {
+    void logout();
+  }
+
 }

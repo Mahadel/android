@@ -14,7 +14,7 @@
     <string name="add_skill_learn_label">Add skill want learn</string>
     <string name="add_skill_teach_label">Add skill want teach</string>
     <string name="want_learn_label">I want to learn</string>
-    <string name="know_label">I know</string>
+    <string name="know_label">I want to teach</string>
     <string name="select_skill_label">Select skill</string>
     <string name="skill_exists_warning">This skill already exists.</string>
     <string name="profile_label">Profile</string>
