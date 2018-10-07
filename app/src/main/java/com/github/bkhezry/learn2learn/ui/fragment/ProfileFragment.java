@@ -28,6 +28,8 @@ import com.mikhaellopez.circularimageview.CircularImageView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -51,6 +53,7 @@ public class ProfileFragment extends DialogFragment implements
   private Activity activity;
   private Prefser prefser;
   private GoogleApiClient mGoogleApiClient;
+  private UserInfo userInfo;
 
 
   public void setOnCallbackResult(ProfileCallbackResult callbackResult) {
@@ -81,7 +84,7 @@ public class ProfileFragment extends DialogFragment implements
       @Override
       public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
         if (response.isSuccessful()) {
-          UserInfo userInfo = response.body();
+          userInfo = response.body();
           if (userInfo != null) {
             nameTextView.setText(String.format("%s %s", userInfo.getFirstName(), userInfo.getLastName()));
           }
@@ -111,7 +114,7 @@ public class ProfileFragment extends DialogFragment implements
   }
 
   @OnClick(R.id.close_image_view)
-  public void close() {
+  void close() {
     dismiss();
     if (getFragmentManager() != null) {
       getFragmentManager().popBackStackImmediate();
@@ -119,9 +122,10 @@ public class ProfileFragment extends DialogFragment implements
   }
 
   @OnClick({R.id.edit_profile_button, R.id.logout_profile_button, R.id.delete_profile_button})
-  public void handleButtonClick(View view) {
+  void handleButtonClick(View view) {
     switch (view.getId()) {
       case R.id.edit_profile_button:
+        editProfileInfo();
         break;
       case R.id.logout_profile_button:
         revokeAccess();
@@ -129,6 +133,15 @@ public class ProfileFragment extends DialogFragment implements
       case R.id.delete_profile_button:
         break;
     }
+  }
+
+  private void editProfileInfo() {
+    FragmentManager fragmentManager = getFragmentManager();
+    DialogEditProfileFragment editProfileFragment = new DialogEditProfileFragment();
+    editProfileFragment.setUserInfo(userInfo);
+    FragmentTransaction transaction = fragmentManager.beginTransaction();
+    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+    transaction.add(android.R.id.content, editProfileFragment).addToBackStack(null).commit();
   }
 
   private void revokeAccess() {
