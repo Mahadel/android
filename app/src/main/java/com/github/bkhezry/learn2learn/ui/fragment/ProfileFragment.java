@@ -139,9 +139,19 @@ public class ProfileFragment extends DialogFragment implements
     FragmentManager fragmentManager = getFragmentManager();
     DialogEditProfileFragment editProfileFragment = new DialogEditProfileFragment();
     editProfileFragment.setUserInfo(userInfo);
+    editProfileFragment.setOnCallbackResult(new DialogEditProfileFragment.CallbackListener() {
+      @Override
+      public void sendResult(UserInfo userInfo) {
+        updateUI(userInfo);
+      }
+    });
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
     transaction.add(android.R.id.content, editProfileFragment).addToBackStack(null).commit();
+  }
+
+  private void updateUI(UserInfo userInfoResult) {
+    nameTextView.setText(String.format("%s %s", userInfoResult.getFirstName(), userInfoResult.getLastName()));
   }
 
   private void revokeAccess() {

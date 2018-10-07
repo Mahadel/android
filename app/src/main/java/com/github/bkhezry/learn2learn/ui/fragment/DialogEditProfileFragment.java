@@ -50,9 +50,10 @@ public class DialogEditProfileFragment extends DialogFragment {
   private Activity activity;
   private Prefser prefser;
   private UserInfo userInfo;
+  private CallbackListener listener;
 
-  public void setOnCallbackResult() {
-
+  void setOnCallbackResult(CallbackListener listener) {
+    this.listener = listener;
   }
 
   @Override
@@ -91,7 +92,7 @@ public class DialogEditProfileFragment extends DialogFragment {
   }
 
   @OnClick(R.id.submit_info_button)
-  public void editProfileInfo() {
+  void editProfileInfo() {
     int gender;
     String firstName = firstNameEditText.getText().toString();
     String lastName = lastNameEditText.getText().toString();
@@ -111,7 +112,13 @@ public class DialogEditProfileFragment extends DialogFragment {
       @Override
       public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
         if (response.isSuccessful()) {
-          //TODO return user info to profile fragment.
+          userInfo.setFirstName(firstName);
+          userInfo.setGender(gender);
+          userInfo.setLastName(lastName);
+          if (listener != null) {
+            listener.sendResult(userInfo);
+            close();
+          }
         }
       }
 
@@ -121,5 +128,16 @@ public class DialogEditProfileFragment extends DialogFragment {
       }
     });
 
+  }
+
+  void close() {
+    dismiss();
+    if (getFragmentManager() != null) {
+      getFragmentManager().popBackStackImmediate();
+    }
+  }
+
+  public interface CallbackListener {
+    void sendResult(UserInfo userInfo);
   }
 }
