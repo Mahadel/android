@@ -27,4 +27,6 @@
     <string name="yes_label">Yes</string>
     <string name="language_label">Language</string>
     <string name="theme_label">Theme</string>
+    <string name="light_label">Light</string>
+    <string name="dark_label">Dark</string>
 </resources>

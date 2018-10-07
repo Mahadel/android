@@ -25,6 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xlarge"
+                android:minHeight="@dimen/min_height"
                 android:visibility="visible"
                 app:cardBackgroundColor="@color/grey_90"
                 app:cardCornerRadius="10dp"
@@ -33,6 +34,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="@dimen/spacing_large">
 
@@ -75,7 +77,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xlarge"
-                android:visibility="visible"
+                android:minHeight="@dimen/min_height"
                 app:cardBackgroundColor="@color/grey_90"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="2dp">
@@ -83,6 +85,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:orientation="vertical"
                     android:padding="@dimen/spacing_large">
 
@@ -107,7 +110,7 @@
                             android:layout_width="0dp"
                             android:layout_height="64dp"
                             android:layout_weight="1"
-                            android:text="Dark"
+                            android:text="@string/dark_label"
                             android:textColor="@android:color/white"
                             app:backgroundTint="@android:color/black" />
 
@@ -120,7 +123,7 @@
                             android:layout_width="0dp"
                             android:layout_height="64dp"
                             android:layout_weight="1"
-                            android:text="Light"
+                            android:text="@string/light_label"
                             android:textColor="@color/grey_90"
                             app:backgroundTint="@android:color/white" />
                     </LinearLayout>

@@ -27,4 +27,6 @@
     <string name="yes_label">بله</string>
     <string name="language_label">زبان</string>
     <string name="theme_label">تم</string>
+    <string name="light_label">روشن</string>
+    <string name="dark_label">تاریک</string>
 </resources>
