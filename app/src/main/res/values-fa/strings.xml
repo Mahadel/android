@@ -25,4 +25,6 @@
     <string name="confirm_remove_skill_label">از حذف مهارت مطمئن هستید؟</string>
     <string name="cancel_label">لغو</string>
     <string name="yes_label">بله</string>
+    <string name="language_label">زبان</string>
+    <string name="theme_label">تم</string>
 </resources>

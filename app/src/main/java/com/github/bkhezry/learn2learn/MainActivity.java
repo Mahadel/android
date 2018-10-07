@@ -17,6 +17,7 @@ import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.ui.fragment.DialogAddSkillFragment;
 import com.github.bkhezry.learn2learn.ui.fragment.DialogSkillDetailFragment;
 import com.github.bkhezry.learn2learn.ui.fragment.ProfileFragment;
+import com.github.bkhezry.learn2learn.ui.fragment.SettingsFragment;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.MyApplication;
@@ -91,6 +92,9 @@ public class MainActivity extends BaseActivity {
           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             if (item.getItemId() == R.id.profile_item) {
               showProfileFragment();
+              hideBottomDrawer();
+            } else if (item.getItemId() == R.id.settings_item) {
+              showSettingsFragment();
               hideBottomDrawer();
             }
             return false;
@@ -262,6 +266,14 @@ public class MainActivity extends BaseActivity {
         finish();
       }
     });
+    FragmentTransaction transaction = fragmentManager.beginTransaction();
+    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+    transaction.add(android.R.id.content, profileFragment).addToBackStack(null).commit();
+  }
+
+  private void showSettingsFragment() {
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    SettingsFragment profileFragment = new SettingsFragment();
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
     transaction.add(android.R.id.content, profileFragment).addToBackStack(null).commit();

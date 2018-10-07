@@ -63,7 +63,7 @@ public class ProfileFragment extends DialogFragment implements
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.profile_fragment, container, false);
+    View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
     ButterKnife.bind(this, rootView);
     activity = getActivity();
     prefser = new Prefser(activity);

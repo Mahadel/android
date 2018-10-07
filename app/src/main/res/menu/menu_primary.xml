@@ -8,6 +8,7 @@
         android:title="@string/profile_label"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/settings_item"
         android:icon="@drawable/ic_settings_white_24dp"
         android:title="@string/settings_label"
         app:showAsAction="ifRoom" />

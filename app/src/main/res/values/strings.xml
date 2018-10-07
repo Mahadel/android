@@ -25,4 +25,6 @@
     <string name="confirm_remove_skill_label">Are you sure want remove skill?</string>
     <string name="cancel_label">Cancel</string>
     <string name="yes_label">Yes</string>
+    <string name="language_label">Language</string>
+    <string name="theme_label">Theme</string>
 </resources>
