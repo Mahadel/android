@@ -57,6 +57,7 @@ public class SettingsFragment extends DialogFragment {
     return dialog;
   }
 
+  @OnClick(R.id.close_image_view)
   void close() {
     dismiss();
     if (getFragmentManager() != null) {
