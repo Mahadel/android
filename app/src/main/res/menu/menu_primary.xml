@@ -13,6 +13,7 @@
         android:title="@string/settings_label"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/about_item"
         android:icon="@drawable/ic_info_white_24dp"
         android:title="@string/about_label"
         app:showAsAction="ifRoom" />
