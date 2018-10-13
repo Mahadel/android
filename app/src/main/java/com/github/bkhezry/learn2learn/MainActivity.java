@@ -16,9 +16,9 @@ import com.github.bkhezry.learn2learn.listener.SkillDetailCallbackResult;
 import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.ui.fragment.AboutFragment;
 import com.github.bkhezry.learn2learn.ui.fragment.DialogAddSkillFragment;
-import com.github.bkhezry.learn2learn.ui.fragment.DialogSkillDetailFragment;
 import com.github.bkhezry.learn2learn.ui.fragment.ProfileFragment;
 import com.github.bkhezry.learn2learn.ui.fragment.SettingsFragment;
+import com.github.bkhezry.learn2learn.ui.fragment.SkillDetailFragment;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.MyApplication;
@@ -35,6 +35,7 @@ import com.ramotion.cardslider.CardSnapHelper;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -70,7 +71,7 @@ public class MainActivity extends BaseActivity {
   private ItemAdapter<UserSkill> mItemAdapter_2;
   private Box<UserSkill> userSkillBox;
   private int lastPositionClicked;
-  private BottomSheetBehavior sheetBehavior;
+  private BottomSheetBehavior bottomSheetBehavior;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +92,8 @@ public class MainActivity extends BaseActivity {
   }
 
   private void setUpBottomSheet() {
-    sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
-    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+    bottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
   }
 
   private void initNavigationView() {
@@ -182,8 +183,13 @@ public class MainActivity extends BaseActivity {
   }
 
   private void showSkillDetail(UserSkill item, AppUtil.SkillType skillType) {
-    FragmentManager fragmentManager = getSupportFragmentManager();
-    DialogSkillDetailFragment skillFragment = new DialogSkillDetailFragment();
+    Fragment fragment = createSkillDetailFragment(item, skillType);
+    AppUtil.showFragmentInBottomSheet(fragment, getSupportFragmentManager());
+    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+  }
+
+  private SkillDetailFragment createSkillDetailFragment(UserSkill item, AppUtil.SkillType skillType) {
+    SkillDetailFragment skillFragment = new SkillDetailFragment();
     skillFragment.setSkillType(skillType);
     skillFragment.setSkillItem(item);
     skillFragment.setOnCallbackResult(new SkillDetailCallbackResult() {
@@ -191,18 +197,17 @@ public class MainActivity extends BaseActivity {
       public void update(Object obj, AppUtil.SkillType skillType) {
         UserSkill userSkill = (UserSkill) obj;
         updateUserSkill(userSkill, skillType);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
       }
 
       @Override
       public void remove(Object obj, AppUtil.SkillType skillType) {
         UserSkill userSkill = (UserSkill) obj;
         removeUserSkill(userSkill, skillType);
-
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
       }
     });
-    FragmentTransaction transaction = fragmentManager.beginTransaction();
-    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-    transaction.add(android.R.id.content, skillFragment).addToBackStack(null).commit();
+    return skillFragment;
   }
 
   private void removeUserSkill(UserSkill userSkill, AppUtil.SkillType skillType) {
@@ -320,6 +325,7 @@ public class MainActivity extends BaseActivity {
   @OnClick(R.id.main_layout)
   public void hideBottomDrawer() {
     bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
   }
 
   @Override
@@ -337,7 +343,7 @@ public class MainActivity extends BaseActivity {
 
   @Override
   public void onBackPressed() {
-    if (bottomDrawerBehavior.getState() != BottomSheetBehavior.STATE_HIDDEN) {
+    if (bottomDrawerBehavior.getState() != BottomSheetBehavior.STATE_HIDDEN || bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_HIDDEN) {
       hideBottomDrawer();
     } else {
       super.onBackPressed();

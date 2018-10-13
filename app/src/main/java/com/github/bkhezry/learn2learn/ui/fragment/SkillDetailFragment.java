@@ -1,13 +1,10 @@
 package com.github.bkhezry.learn2learn.ui.fragment;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.listener.SkillDetailCallbackResult;
@@ -26,7 +23,7 @@ import com.github.pwittchen.prefser.library.rx2.Prefser;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DialogSkillDetailFragment extends DialogFragment {
+public class SkillDetailFragment extends Fragment {
 
   @BindView(R.id.skill_type_text_view)
   AppCompatTextView skillTypeTextView;
@@ -64,10 +61,14 @@ public class DialogSkillDetailFragment extends DialogFragment {
     userSkill = item;
   }
 
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+  }
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.dialog_skill_detail, container, false);
+    View rootView = inflater.inflate(R.layout.fragment_skill_detail, container, false);
     ButterKnife.bind(this, rootView);
     activity = getActivity();
     BoxStore boxStore = MyApplication.getBoxStore();
@@ -89,21 +90,6 @@ public class DialogSkillDetailFragment extends DialogFragment {
       }
     }
     return rootView;
-  }
-
-
-  @NonNull
-  @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
-    Dialog dialog = super.onCreateDialog(savedInstanceState);
-    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-    dialog.setCancelable(true);
-    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-    lp.copyFrom(dialog.getWindow().getAttributes());
-    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-    dialog.getWindow().setAttributes(lp);
-    return dialog;
   }
 
   @OnClick(R.id.submit_btn)
@@ -131,18 +117,9 @@ public class DialogSkillDetailFragment extends DialogFragment {
   private void handleUserSkill(UserSkill userSkill) {
     if (callbackResult != null) {
       callbackResult.update(userSkill, skillType);
-      close();
+
     }
 
-  }
-
-  @OnClick(R.id.close_image_view)
-  void close() {
-    AppUtil.hideSoftInput(activity);
-    dismiss();
-    if (getFragmentManager() != null) {
-      getFragmentManager().popBackStackImmediate();
-    }
   }
 
   @OnClick(R.id.remove_btn)
@@ -171,7 +148,6 @@ public class DialogSkillDetailFragment extends DialogFragment {
         if (response.isSuccessful()) {
           if (callbackResult != null) {
             callbackResult.remove(userSkill, skillType);
-            close();
           }
         }
 

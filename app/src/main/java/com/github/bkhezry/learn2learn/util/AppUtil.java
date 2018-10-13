@@ -22,6 +22,9 @@ import java.util.Locale;
 
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.os.ConfigurationCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 public class AppUtil {
 
@@ -166,5 +169,11 @@ public class AppUtil {
 
   public static void rotateYView(View view, int degree) {
     view.setRotationY(degree);
+  }
+
+  public static void showFragmentInBottomSheet(Fragment fragment, FragmentManager supportFragmentManager) {
+    FragmentTransaction ft = supportFragmentManager.beginTransaction();
+    ft.replace(R.id.contentFrameLayout, fragment);
+    ft.commit();
   }
 }

@@ -60,7 +60,7 @@
             <LinearLayout
                 android:id="@+id/bottom_sheet"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:elevation="16dp"
                 android:orientation="vertical"
                 app:behavior_hideable="true"
@@ -69,6 +69,7 @@
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:background="@color/grey_90"
                     android:orientation="vertical">
 
