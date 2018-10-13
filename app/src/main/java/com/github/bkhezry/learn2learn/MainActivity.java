@@ -61,6 +61,8 @@ public class MainActivity extends BaseActivity {
   FrameLayout bottomDrawer;
   @BindView(R.id.coordinator_layout)
   CoordinatorLayout coordinatorLayout;
+  @BindView(R.id.bottom_sheet)
+  View layoutBottomSheet;
   private BottomSheetBehavior<View> bottomDrawerBehavior;
   private FastAdapter<UserSkill> mFastAdapter_1;
   private ItemAdapter<UserSkill> mItemAdapter_1;
@@ -68,6 +70,7 @@ public class MainActivity extends BaseActivity {
   private ItemAdapter<UserSkill> mItemAdapter_2;
   private Box<UserSkill> userSkillBox;
   private int lastPositionClicked;
+  private BottomSheetBehavior sheetBehavior;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +84,15 @@ public class MainActivity extends BaseActivity {
     userSkillBox = boxStore.boxFor(UserSkill.class);
     setSupportActionBar(bar);
     setUpBottomDrawer();
+    setUpBottomSheet();
     initNavigationView();
     initRecyclerViews();
     requestSkills();
+  }
+
+  private void setUpBottomSheet() {
+    sheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+    sheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
   }
 
   private void initNavigationView() {

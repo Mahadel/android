@@ -21,6 +21,7 @@
 
             <include layout="@layout/content_main" />
 
+
             <com.google.android.material.bottomappbar.BottomAppBar
                 android:id="@+id/bar"
                 android:layout_width="match_parent"
@@ -54,6 +55,30 @@
                     app:itemTextColor="@android:color/white"
                     app:menu="@menu/menu_primary" />
             </FrameLayout>
+
+
+            <LinearLayout
+                android:id="@+id/bottom_sheet"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:elevation="16dp"
+                android:orientation="vertical"
+                app:behavior_hideable="true"
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/grey_90"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:id="@+id/contentFrameLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </androidx.core.widget.NestedScrollView>
+            </LinearLayout>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </com.google.android.material.card.MaterialCardView>
