@@ -117,9 +117,7 @@ public class SkillDetailFragment extends Fragment {
   private void handleUserSkill(UserSkill userSkill) {
     if (callbackResult != null) {
       callbackResult.update(userSkill, skillType);
-
     }
-
   }
 
   @OnClick(R.id.remove_btn)

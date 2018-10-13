@@ -6,7 +6,9 @@
     android:layoutDirection="locale"
     app:cardBackgroundColor="@color/grey_90"
     app:cardCornerRadius="5dp"
-    app:cardElevation="5dp">
+    app:cardElevation="10dp"
+    app:strokeColor="@color/grey_60"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
