@@ -29,4 +29,11 @@
     <string name="theme_label">تم</string>
     <string name="light_label">روشن</string>
     <string name="dark_label">تاریک</string>
+    <string name="behrouz_khezry_label">بهروز خضری</string>
+    <string name="developer_label">توسعه‌دهنده</string>
+    <string name="sponsor_website_label">وب‌سایت</string>
+    <string name="sponsor_label">اسپانسر</string>
+    <string name="license_label">لایسنس</string>
+    <string name="changelog_label">تغییرات برنامه</string>
+    <string name="version_label">نسخه‌برنامه</string>
 </resources>

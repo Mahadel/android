@@ -29,4 +29,12 @@
     <string name="theme_label">Theme</string>
     <string name="light_label">Light</string>
     <string name="dark_label">Dark</string>
+    <string name="bkhezry_twitter_label" translatable="false">\@bkhezry</string>
+    <string name="behrouz_khezry_label">Behrouz Khezry</string>
+    <string name="developer_label">Developer</string>
+    <string name="sponsor_website_label">Access Website</string>
+    <string name="sponsor_label">Sponsor</string>
+    <string name="license_label">License</string>
+    <string name="changelog_label">Changelog</string>
+    <string name="version_label">Version</string>
 </resources>

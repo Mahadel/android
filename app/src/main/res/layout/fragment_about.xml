@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey_100"
+    android:layoutDirection="locale"
     android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
@@ -48,11 +50,12 @@
                             android:layout_width="@dimen/spacing_large"
                             android:layout_height="wrap_content" />
 
-                        <ImageView
+                        <androidx.appcompat.widget.AppCompatImageButton
                             android:layout_width="@dimen/spacing_xxlarge"
                             android:layout_height="@dimen/spacing_xxlarge"
+                            android:background="@android:color/transparent"
                             android:tint="@color/grey_10"
-                            app:srcCompat="@drawable/ic_launcher_background" />
+                            app:srcCompat="@drawable/ic_settings_white_24dp" />
 
                         <View
                             android:layout_width="@dimen/spacing_large"
@@ -91,7 +94,7 @@
                             android:layout_width="@dimen/spacing_mlarge"
                             android:layout_height="wrap_content" />
 
-                        <ImageButton
+                        <androidx.appcompat.widget.AppCompatImageButton
                             android:layout_width="@dimen/spacing_xmlarge"
                             android:layout_height="@dimen/spacing_xmlarge"
                             android:background="@android:color/transparent"
@@ -110,17 +113,18 @@
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Version"
+                                android:text="@string/version_label"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                                 android:textColor="@android:color/white"
                                 app:fontFamily="sans-serif-medium" />
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/version_app_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="4.2"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                                android:textColor="@color/grey_10" />
+                                android:textColor="@color/grey_10"
+                                tools:text="4.2" />
 
                         </LinearLayout>
 
@@ -143,12 +147,12 @@
                             android:layout_width="@dimen/spacing_mlarge"
                             android:layout_height="wrap_content" />
 
-                        <ImageButton
+                        <androidx.appcompat.widget.AppCompatImageButton
                             android:layout_width="@dimen/spacing_xmlarge"
                             android:layout_height="@dimen/spacing_xmlarge"
                             android:background="@android:color/transparent"
                             android:tint="@color/grey_40"
-                            app:srcCompat="@drawable/ic_done_black_24dp" />
+                            app:srcCompat="@drawable/ic_sync_black_24dp" />
 
                         <View
                             android:layout_width="@dimen/spacing_mlarge"
@@ -157,7 +161,7 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Changelog"
+                            android:text="@string/changelog_label"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             android:textColor="@color/grey_10" />
 
@@ -179,12 +183,12 @@
                             android:layout_width="@dimen/spacing_mlarge"
                             android:layout_height="wrap_content" />
 
-                        <ImageButton
+                        <androidx.appcompat.widget.AppCompatImageButton
                             android:layout_width="@dimen/spacing_xmlarge"
                             android:layout_height="@dimen/spacing_xmlarge"
                             android:background="@android:color/transparent"
                             android:tint="@color/grey_40"
-                            app:srcCompat="@drawable/ic_add_24px" />
+                            app:srcCompat="@drawable/ic_book_black_24dp" />
 
                         <View
                             android:layout_width="@dimen/spacing_mlarge"
@@ -193,7 +197,7 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="License"
+                            android:text="@string/license_label"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             android:textColor="@color/grey_10" />
 
@@ -230,7 +234,7 @@
                         android:layout_marginTop="@dimen/spacing_middle"
                         android:layout_marginRight="@dimen/spacing_mlarge"
                         android:layout_marginBottom="@dimen/spacing_middle"
-                        android:text="Sponsor"
+                        android:text="@string/sponsor_label"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                         android:textColor="@color/grey_10" />
 
@@ -238,7 +242,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
                         android:gravity="center_vertical"
                         android:minHeight="@dimen/spacing_xxlarge"
                         android:orientation="horizontal"
@@ -249,7 +252,7 @@
                             android:layout_width="@dimen/spacing_mlarge"
                             android:layout_height="wrap_content" />
 
-                        <ImageButton
+                        <androidx.appcompat.widget.AppCompatImageButton
                             android:layout_width="@dimen/spacing_xmlarge"
                             android:layout_height="@dimen/spacing_xmlarge"
                             android:background="@android:color/transparent"
@@ -266,19 +269,21 @@
                             android:orientation="vertical">
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/sponsor_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Sponsor Name"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                                 android:textColor="@color/grey_10"
-                                app:fontFamily="sans-serif-medium" />
+                                android:textStyle="bold"
+                                tools:text="Sponsor Name" />
 
-                            <TextView
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/sponsor_description_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Sponsor Description"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                                android:textColor="@color/grey_20" />
+                                android:textColor="@color/grey_20"
+                                tools:text="Sponsor Description" />
 
                         </LinearLayout>
 
@@ -301,12 +306,12 @@
                             android:layout_width="@dimen/spacing_mlarge"
                             android:layout_height="wrap_content" />
 
-                        <ImageButton
+                        <androidx.appcompat.widget.AppCompatImageButton
                             android:layout_width="@dimen/spacing_xmlarge"
                             android:layout_height="@dimen/spacing_xmlarge"
                             android:background="@android:color/transparent"
                             android:tint="@color/grey_40"
-                            app:srcCompat="@drawable/ic_exit_to_app_black_24dp" />
+                            app:srcCompat="@drawable/ic_language_black_24dp" />
 
                         <View
                             android:layout_width="@dimen/spacing_mlarge"
@@ -315,7 +320,7 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Access Website"
+                            android:text="@string/sponsor_website_label"
                             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                             android:textColor="@color/grey_10" />
 
@@ -352,7 +357,7 @@
                         android:layout_marginTop="@dimen/spacing_middle"
                         android:layout_marginEnd="@dimen/spacing_mlarge"
                         android:layout_marginBottom="@dimen/spacing_middle"
-                        android:text="Author"
+                        android:text="@string/developer_label"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                         android:textColor="@color/grey_10" />
 
@@ -372,7 +377,7 @@
                             android:layout_width="@dimen/spacing_mlarge"
                             android:layout_height="wrap_content" />
 
-                        <ImageButton
+                        <androidx.appcompat.widget.AppCompatImageButton
                             android:layout_width="@dimen/spacing_xmlarge"
                             android:layout_height="@dimen/spacing_xmlarge"
                             android:background="@android:color/transparent"
@@ -391,14 +396,14 @@
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Behrouz Khezry"
+                                android:text="@string/behrouz_khezry_label"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                                 android:textColor="@color/grey_10" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="\u0040bkhezry"
+                                android:text="@string/bkhezry_twitter_label"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                                 android:textColor="@color/grey_40" />
 
