@@ -1,13 +1,10 @@
 package com.github.bkhezry.learn2learn.ui.fragment;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.listener.CallbackResult;
@@ -24,7 +21,7 @@ import com.google.android.material.button.MaterialButton;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
@@ -34,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DialogAddSkillFragment extends DialogFragment {
+public class AddSkillFragment extends Fragment {
 
   @BindView(R.id.skill_type_text_view)
   AppCompatTextView skillTypeTextView;
@@ -60,7 +57,7 @@ public class DialogAddSkillFragment extends DialogFragment {
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.dialog_add_skill, container, false);
+    View rootView = inflater.inflate(R.layout.fragment_add_skill, container, false);
     ButterKnife.bind(this, rootView);
     activity = getActivity();
     prefser = new Prefser(activity);
@@ -70,20 +67,6 @@ public class DialogAddSkillFragment extends DialogFragment {
       skillTypeTextView.setText(R.string.add_skill_teach_label);
     }
     return rootView;
-  }
-
-  @NonNull
-  @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
-    Dialog dialog = super.onCreateDialog(savedInstanceState);
-    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-    dialog.setCancelable(true);
-    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-    lp.copyFrom(dialog.getWindow().getAttributes());
-    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-    dialog.getWindow().setAttributes(lp);
-    return dialog;
   }
 
   @OnClick(R.id.submit_btn)
@@ -117,18 +100,9 @@ public class DialogAddSkillFragment extends DialogFragment {
   private void handleUserSkill(UserSkill userSkill) {
     if (callbackResult != null) {
       callbackResult.sendResult(userSkill, skillType);
-      close();
+      AppUtil.hideSoftInput(activity);
     }
 
-  }
-
-  @OnClick(R.id.close_image_view)
-  public void close() {
-    AppUtil.hideSoftInput(activity);
-    dismiss();
-    if (getFragmentManager() != null) {
-      getFragmentManager().popBackStackImmediate();
-    }
   }
 
   @OnClick(R.id.select_skill_button)

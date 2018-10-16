@@ -15,7 +15,7 @@ import com.github.bkhezry.learn2learn.listener.CallbackResult;
 import com.github.bkhezry.learn2learn.listener.SkillDetailCallbackResult;
 import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.ui.fragment.AboutFragment;
-import com.github.bkhezry.learn2learn.ui.fragment.DialogAddSkillFragment;
+import com.github.bkhezry.learn2learn.ui.fragment.AddSkillFragment;
 import com.github.bkhezry.learn2learn.ui.fragment.ProfileFragment;
 import com.github.bkhezry.learn2learn.ui.fragment.SettingsFragment;
 import com.github.bkhezry.learn2learn.ui.fragment.SkillDetailFragment;
@@ -62,8 +62,8 @@ public class MainActivity extends BaseActivity {
   FrameLayout bottomDrawer;
   @BindView(R.id.coordinator_layout)
   CoordinatorLayout coordinatorLayout;
-  @BindView(R.id.bottom_sheet)
-  View layoutBottomSheet;
+  @BindView(R.id.contentFrameLayout)
+  View contentFrameLayout;
   private BottomSheetBehavior<View> bottomDrawerBehavior;
   private FastAdapter<UserSkill> mFastAdapter_1;
   private ItemAdapter<UserSkill> mItemAdapter_1;
@@ -92,7 +92,7 @@ public class MainActivity extends BaseActivity {
   }
 
   private void setUpBottomSheet() {
-    bottomSheetBehavior = BottomSheetBehavior.from(layoutBottomSheet);
+    bottomSheetBehavior = BottomSheetBehavior.from(contentFrameLayout);
     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
   }
 
@@ -247,7 +247,6 @@ public class MainActivity extends BaseActivity {
   @OnClick(R.id.fab)
   void fabClick() {
     AppUtil.showSkillTypeDialog(this, new AppUtil.DialogClickListener() {
-
       @Override
       public void selectedSkillType(AppUtil.SkillType skillType) {
         showAddSkillDialog(skillType);
@@ -257,8 +256,13 @@ public class MainActivity extends BaseActivity {
   }
 
   private void showAddSkillDialog(AppUtil.SkillType skillType) {
-    FragmentManager fragmentManager = getSupportFragmentManager();
-    DialogAddSkillFragment skillFragment = new DialogAddSkillFragment();
+    Fragment fragment = createAddSkillFragment(skillType);
+    AppUtil.showFragmentInBottomSheet(fragment, getSupportFragmentManager());
+    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+  }
+
+  private AddSkillFragment createAddSkillFragment(AppUtil.SkillType skillType) {
+    AddSkillFragment skillFragment = new AddSkillFragment();
     skillFragment.setSkillType(skillType);
     skillFragment.setOnCallbackResult(new CallbackResult() {
       @Override
@@ -266,11 +270,10 @@ public class MainActivity extends BaseActivity {
         //TODO check return object from fragment and isAdd to DB or get it.
         UserSkill userSkill = (UserSkill) obj;
         handleUserSkill(userSkill);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
       }
     });
-    FragmentTransaction transaction = fragmentManager.beginTransaction();
-    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-    transaction.add(android.R.id.content, skillFragment).addToBackStack(null).commit();
+    return skillFragment;
   }
 
   private void showProfileFragment() {

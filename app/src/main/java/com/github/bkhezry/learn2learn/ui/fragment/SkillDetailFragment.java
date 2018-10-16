@@ -117,6 +117,7 @@ public class SkillDetailFragment extends Fragment {
   private void handleUserSkill(UserSkill userSkill) {
     if (callbackResult != null) {
       callbackResult.update(userSkill, skillType);
+      AppUtil.hideSoftInput(activity);
     }
   }
 
@@ -146,6 +147,7 @@ public class SkillDetailFragment extends Fragment {
         if (response.isSuccessful()) {
           if (callbackResult != null) {
             callbackResult.remove(userSkill, skillType);
+            AppUtil.hideSoftInput(activity);
           }
         }
 

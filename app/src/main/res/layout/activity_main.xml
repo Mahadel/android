@@ -57,29 +57,15 @@
             </FrameLayout>
 
 
-            <LinearLayout
-                android:id="@+id/bottom_sheet"
+            <FrameLayout
+                android:id="@+id/contentFrameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/grey_90"
                 android:elevation="16dp"
                 android:orientation="vertical"
                 app:behavior_hideable="true"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-                <androidx.core.widget.NestedScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:background="@color/grey_90"
-                    android:orientation="vertical">
-
-                    <FrameLayout
-                        android:id="@+id/contentFrameLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </androidx.core.widget.NestedScrollView>
-            </LinearLayout>
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </com.google.android.material.card.MaterialCardView>
