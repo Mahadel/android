@@ -4,7 +4,7 @@
     <style name="BaseAppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- color palette -->
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/grey_20</item>
+        <item name="colorPrimaryDark">@color/grey_10</item>
         <item name="colorAccent">@color/redA200</item>
         <item name="colorSecondary">@color/grey_80</item>
         <item name="android:textColorPrimary">@android:color/black</item>
@@ -19,9 +19,9 @@
         <item name="colorPrimary">@color/grey_90</item>
         <item name="colorPrimaryDark">@color/grey_100</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorSecondary">@android:color/white</item>
+        <item name="colorSecondary">@color/grey_10</item>
         <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="android:textColorSecondary">@color/grey_10</item>
+        <item name="android:textColorSecondary">@color/grey_20</item>
         <!---->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
