@@ -101,12 +101,12 @@ public class MainActivity extends BaseActivity {
         new NavigationView.OnNavigationItemSelectedListener() {
           @Override
           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            hideBottomDrawer();
             if (item.getItemId() == R.id.profile_item) {
               showProfileFragment();
-              hideBottomDrawer();
             } else if (item.getItemId() == R.id.settings_item) {
               showSettingsFragment();
-              hideBottomDrawer();
+
             } else if (item.getItemId() == R.id.about_item) {
               showAboutFragment();
             }
