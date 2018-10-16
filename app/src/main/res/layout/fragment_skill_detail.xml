@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="350dp"
     android:layoutDirection="locale"
-    app:cardBackgroundColor="@color/grey_90"
+    app:cardBackgroundColor="?attr/colorPrimary"
     app:cardCornerRadius="5dp"
     app:cardElevation="10dp"
     app:strokeColor="@color/grey_60"
@@ -41,7 +41,6 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textColor="@android:color/white"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -52,7 +51,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/edit_label" />
+                android:text="@string/edit_label"
+                android:textColor="?attr/colorSecondary" />
 
         </LinearLayout>
 
@@ -69,7 +69,6 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@android:color/white"
             android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -78,17 +77,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/description_label"
-            android:textColorHint="@color/grey_20">
+            android:textColorHint="?attr/colorSecondary">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/skill_description_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/grey_90"
                 android:gravity="top"
                 android:lines="4"
                 android:maxLines="4"
-                android:textColor="@android:color/white"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -99,7 +97,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/remove_label" />
+            android:text="@string/remove_label"
+            android:textColor="?attr/colorSecondary" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

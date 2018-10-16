@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="locale"
-    app:cardBackgroundColor="@color/grey_90"
+    app:cardBackgroundColor="?attr/colorPrimary"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp">
 
@@ -20,7 +20,7 @@
             android:id="@+id/close_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tint="@color/grey_10"
+            android:tint="@color/grey_20"
             app:srcCompat="@drawable/ic_close_black_24dp" />
 
         <androidx.recyclerview.widget.RecyclerView

@@ -7,7 +7,7 @@
     android:clickable="true"
     android:focusable="true"
     android:layoutDirection="locale"
-    app:cardBackgroundColor="@color/grey_100"
+    app:cardBackgroundColor="?attr/colorPrimaryDark"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp">
 
@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_large"
-        android:tint="@color/grey_10"
+        android:tint="@color/grey_60"
         app:srcCompat="@drawable/ic_close_black_24dp" />
 
     <LinearLayout
@@ -42,7 +42,7 @@
                 android:layout_marginTop="@dimen/spacing_middle"
                 android:layout_marginRight="@dimen/spacing_large"
                 android:layout_marginBottom="@dimen/spacing_middle"
-                app:cardBackgroundColor="@color/grey_90"
+                app:cardBackgroundColor="?attr/colorPrimary"
                 app:cardCornerRadius="3dp"
                 app:cardElevation="2dp">
 
@@ -69,15 +69,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_large"
                         android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                        android:textColor="@android:color/white"
                         tools:text="Behrouz Khezry" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/email_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textColor="@color/grey_20"
+                        android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Subtitle"
                         tools:text="bkhezry@gmail.com" />
 
                     <LinearLayout
@@ -92,7 +90,7 @@
                             android:layout_width="?attr/actionBarSize"
                             android:layout_height="?attr/actionBarSize"
                             android:background="?attr/selectableItemBackgroundBorderless"
-                            android:tint="@color/grey_20"
+                            android:tint="?attr/colorSecondary"
                             app:srcCompat="@drawable/ic_create_black_24dp" />
 
                         <View
@@ -104,7 +102,7 @@
                             android:layout_width="?attr/actionBarSize"
                             android:layout_height="?attr/actionBarSize"
                             android:background="?attr/selectableItemBackgroundBorderless"
-                            android:tint="@color/grey_20"
+                            android:tint="?attr/colorSecondary"
                             app:srcCompat="@drawable/ic_exit_to_app_black_24dp" />
 
                         <View
@@ -116,7 +114,7 @@
                             android:layout_width="?attr/actionBarSize"
                             android:layout_height="?attr/actionBarSize"
                             android:background="?attr/selectableItemBackgroundBorderless"
-                            android:tint="@color/grey_20"
+                            android:tint="?attr/colorSecondary"
                             app:srcCompat="@drawable/ic_delete_black_24dp" />
 
                     </LinearLayout>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layoutDirection="locale"
-    app:cardBackgroundColor="@color/grey_90"
+    app:cardBackgroundColor="?attr/colorPrimary"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp">
 
@@ -22,7 +22,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@android:color/white"
             android:textStyle="bold|italic" />
 
         <View
@@ -44,8 +43,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/cancel_label"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                app:icon="@drawable/ic_close_black_24dp" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="?attr/colorSecondary"
+                app:icon="@drawable/ic_close_black_24dp"
+                app:iconTint="?attr/colorSecondary" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ok_button"
@@ -54,8 +55,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/yes_label"
                 android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                app:icon="@drawable/ic_done_black_24dp" />
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="?attr/colorSecondary"
+                app:icon="@drawable/ic_done_black_24dp"
+                app:iconTint="?attr/colorSecondary" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

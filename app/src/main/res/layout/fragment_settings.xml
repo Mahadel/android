@@ -13,7 +13,7 @@
         android:clickable="true"
         android:focusable="true"
         android:padding="@dimen/spacing_large"
-        app:cardBackgroundColor="@color/grey_100"
+        app:cardBackgroundColor="?attr/colorPrimaryDark"
         app:cardCornerRadius="10dp"
         app:strokeColor="#00004b"
         app:strokeWidth="1dp">
@@ -37,7 +37,7 @@
                 android:layout_marginTop="@dimen/spacing_xlarge"
                 android:minHeight="@dimen/min_height"
                 android:visibility="visible"
-                app:cardBackgroundColor="@color/grey_90"
+                app:cardBackgroundColor="?attr/colorPrimary"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="2dp">
 
@@ -52,8 +52,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/language_label"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                        android:textColor="@android:color/white" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Title" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -88,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xlarge"
                 android:minHeight="@dimen/min_height"
-                app:cardBackgroundColor="@color/grey_90"
+                app:cardBackgroundColor="?attr/colorPrimary"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="2dp">
 
@@ -103,8 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/theme_label"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                        android:textColor="@android:color/white" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Title" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -123,7 +121,9 @@
                             android:text="@string/dark_label"
                             android:textColor="@android:color/white"
                             app:backgroundTint="@android:color/black"
-                            app:cornerRadius="10dp" />
+                            app:cornerRadius="10dp"
+                            app:strokeColor="@color/grey_10"
+                            app:strokeWidth="2dp" />
 
                         <View
                             android:layout_width="@dimen/spacing_large"
@@ -137,7 +137,9 @@
                             android:text="@string/light_label"
                             android:textColor="@color/grey_90"
                             app:backgroundTint="@android:color/white"
-                            app:cornerRadius="10dp" />
+                            app:cornerRadius="10dp"
+                            app:strokeColor="@color/grey_10"
+                            app:strokeWidth="2dp" />
                     </LinearLayout>
                 </LinearLayout>
 

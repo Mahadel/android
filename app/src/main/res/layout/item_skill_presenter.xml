@@ -6,7 +6,7 @@
     android:background="?attr/selectableItemBackground"
     android:orientation="horizontal">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/skill"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

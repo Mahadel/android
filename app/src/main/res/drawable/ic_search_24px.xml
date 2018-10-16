@@ -12,10 +12,11 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-  --><!--android:tint="?attr/colorControlNormal"-->
+  -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
+    android:tint="?attr/colorSecondary"
     android:viewportWidth="24.0"
     android:viewportHeight="24.0">
     <path

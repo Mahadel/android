@@ -5,7 +5,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey_100">
+        android:background="?attr/colorPrimaryDark">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:clipToPadding="false"
-                app:cardBackgroundColor="@color/grey_90"
+                app:cardBackgroundColor="?attr/colorPrimary"
                 app:cardCornerRadius="3dp"
                 app:cardElevation="3dp"
                 app:cardUseCompatPadding="false"
@@ -32,14 +32,13 @@
                     android:gravity="start|center_vertical"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/app_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:text="@string/app_name"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                        android:textColor="@android:color/white" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
 
                 </LinearLayout>
 
@@ -60,8 +59,7 @@
                     android:layout_marginStart="16dp"
                     android:background="@drawable/gradient"
                     android:text="@string/know_label"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    android:textColor="@android:color/white" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_1"
@@ -90,8 +88,7 @@
                     android:layout_marginStart="16dp"
                     android:background="@drawable/gradient"
                     android:text="@string/want_learn_label"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                    android:textColor="@android:color/white" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_2"

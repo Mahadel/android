@@ -6,7 +6,7 @@
     android:clickable="true"
     android:focusable="true"
     android:layoutDirection="locale"
-    app:cardBackgroundColor="@color/grey_90"
+    app:cardBackgroundColor="?attr/colorPrimary"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp">
 
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/first_name_label"
-            android:textColorHint="@android:color/white">
+            android:textColorHint="?attr/colorSecondary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/first_name_edit_text"
@@ -36,7 +36,6 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textColor="@android:color/white"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -48,7 +47,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_medium"
             android:hint="@string/last_name_label"
-            android:textColorHint="@android:color/white">
+            android:textColorHint="?attr/colorSecondary"
+            app:boxStrokeColor="@color/grey_10"
+            app:boxStrokeWidth="2dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/last_name_edit_text"
@@ -59,7 +60,6 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textColor="@android:color/white"
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -76,16 +76,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/male_label"
-                android:textColor="@android:color/white"
-                app:buttonTint="@android:color/white" />
+                android:textColor="?attr/colorSecondary"
+                app:buttonTint="?attr/colorSecondary" />
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/radioFemale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/female_label"
-                android:textColor="@android:color/white"
-                app:buttonTint="@android:color/white" />
+                android:textColor="?attr/colorSecondary"
+                app:buttonTint="?attr/colorSecondary" />
 
         </RadioGroup>
 
@@ -98,6 +98,8 @@
             android:layout_marginTop="@dimen/spacing_medium"
             android:text="@string/edit_label"
             android:textAllCaps="false"
-            app:icon="@drawable/ic_done_black_24dp" />
+            android:textColor="?attr/colorSecondary"
+            app:icon="@drawable/ic_done_black_24dp"
+            app:iconTint="?attr/colorSecondary" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

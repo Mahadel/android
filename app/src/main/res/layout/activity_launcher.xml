@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        app:cardBackgroundColor="@color/grey_90"
+        app:cardBackgroundColor="?attr/colorPrimary"
         app:cardCornerRadius="10dp"
         app:strokeColor="#00004b"
         app:strokeWidth="1dp">
@@ -179,7 +179,7 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_gravity="center"
-                app:SpinKit_Color="@android:color/white" />
+                app:SpinKit_Color="?attr/colorSecondary" />
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

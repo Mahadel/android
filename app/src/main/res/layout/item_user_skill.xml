@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/item_size"
     android:layout_height="@dimen/item_size"
-    app:cardBackgroundColor="@color/grey_90"
+    app:cardBackgroundColor="?attr/colorPrimary"
     app:cardCornerRadius="10dp"
     app:cardElevation="5dp">
 
@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@android:color/white"
             tools:text="One of the most thrilling scene..." />
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

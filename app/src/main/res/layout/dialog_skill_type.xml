@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layoutDirection="locale"
-    app:cardBackgroundColor="@color/grey_90"
+    app:cardBackgroundColor="?attr/colorPrimary"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp">
 
@@ -22,7 +22,6 @@
             android:gravity="center"
             android:text="@string/prompt_select_kind_skill_label"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-            android:textColor="@android:color/white"
             android:textStyle="bold|italic" />
 
         <View
@@ -40,8 +39,9 @@
             android:layout_weight="1"
             android:text="@string/add_want_to_teach_label"
             android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            app:icon="@drawable/ic_add_circle_outline_black_24dp" />
+            android:textColor="?attr/colorSecondary"
+            app:icon="@drawable/ic_add_circle_outline_black_24dp"
+            app:iconTint="?attr/colorSecondary" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_skill_want_learn_btn"
@@ -51,8 +51,9 @@
             android:layout_weight="1"
             android:text="@string/add_want_to_learn_label"
             android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            app:icon="@drawable/ic_add_circle_outline_black_24dp" />
+            android:textColor="?attr/colorSecondary"
+            app:icon="@drawable/ic_add_circle_outline_black_24dp"
+            app:iconTint="?attr/colorSecondary" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
