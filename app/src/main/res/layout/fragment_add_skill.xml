@@ -2,8 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="350dp"
+    android:layout_height="350dp"
     android:layoutDirection="locale"
     app:cardBackgroundColor="@color/grey_90"
     app:cardCornerRadius="5dp"
@@ -93,14 +92,6 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/remove_btn"
-            style="@style/StyleMaterialButtonLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/cancel_label" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
