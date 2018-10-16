@@ -103,4 +103,25 @@ public class SettingsFragment extends DialogFragment {
     englishImageView.setBackgroundResource(R.drawable.image_border);
     persianImageView.setBackgroundResource(android.R.color.transparent);
   }
+
+  @OnClick({R.id.dark_theme_button, R.id.light_theme_button})
+  public void handleThemeClick(View view) {
+    switch (view.getId()) {
+      case R.id.dark_theme_button:
+        prefser.put(Constant.IS_DARK_THEME, true);
+        restartActivity();
+        break;
+      case R.id.light_theme_button:
+        prefser.put(Constant.IS_DARK_THEME, false);
+        restartActivity();
+        break;
+    }
+  }
+
+  private void restartActivity() {
+    activity.finish();
+    final Intent intent = activity.getIntent();
+    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+    activity.startActivity(intent);
+  }
 }
