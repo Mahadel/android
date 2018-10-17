@@ -21,7 +21,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/prompt_select_kind_skill_label"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textColor="?attr/colorSecondary"
             android:textStyle="bold|italic" />
 
         <View
