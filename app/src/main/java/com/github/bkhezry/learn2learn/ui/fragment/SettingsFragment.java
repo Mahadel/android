@@ -105,7 +105,7 @@ public class SettingsFragment extends DialogFragment {
   }
 
   @OnClick({R.id.dark_theme_button, R.id.light_theme_button})
-  public void handleThemeClick(View view) {
+  void handleThemeClick(View view) {
     switch (view.getId()) {
       case R.id.dark_theme_button:
         prefser.put(Constant.IS_DARK_THEME, true);
