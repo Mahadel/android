@@ -1,18 +1,11 @@
-package com.github.bkhezry.learn2learn.ui.fragment;
+package com.github.bkhezry.learn2learn;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.github.bkhezry.learn2learn.R;
-import com.github.bkhezry.learn2learn.StickyHeaderAdapter;
-import com.github.bkhezry.learn2learn.listener.CallbackResult;
 import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.bkhezry.learn2learn.model.UserSkill;
@@ -29,7 +22,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -38,27 +30,27 @@ import butterknife.OnClick;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 
-public class DialogSelectSkillFragment extends DialogFragment {
+public class SelectSkillActivity extends BaseActivity {
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
-  private Activity activity;
   private Box<SkillsItem> skillsItemBox;
   private Box<Category> categoryBox;
   private Box<UserSkill> userSkillBox;
   private FastAdapter<SkillsItem> fastAdapter;
-  private CallbackResult callbackListener;
 
   @Override
-  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.dialog_select_skill, container, false);
-    ButterKnife.bind(this, rootView);
-    activity = getActivity();
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    requestWindowFeature(Window.FEATURE_NO_TITLE);
+    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    setContentView(R.layout.activity_select_skill);
+    ButterKnife.bind(this);
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
     categoryBox = boxStore.boxFor(Category.class);
     userSkillBox = boxStore.boxFor(UserSkill.class);
     initRecyclerViews();
-    return rootView;
   }
 
   private void initRecyclerViews() {
@@ -68,14 +60,14 @@ public class DialogSelectSkillFragment extends DialogFragment {
     final ItemAdapter<SkillsItem> itemAdapter = new ItemAdapter<>();
     fastAdapter = FastAdapter.with(Arrays.asList(headerAdapter, itemAdapter));
     fastAdapter.withSelectable(true);
-    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(activity);
+    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
     recyclerView.setLayoutManager(mLayoutManager);
     recyclerView.setAdapter(stickyHeaderAdapter.wrap(fastAdapter));
     //this adds the Sticky Headers within our list
     final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(stickyHeaderAdapter);
     recyclerView.addItemDecoration(decoration);
     List<SkillsItem> skillsItems = skillsItemBox.getAll();
-    if (AppUtil.isRTL(activity)) {
+    if (AppUtil.isRTL(this)) {
       for (SkillsItem skillsItem : skillsItems) {
         Category category = DatabaseUtil.getCategoryWithUUID(categoryBox, skillsItem.getCategoryUuid());
         skillsItem.setCategoryName(category.getFaName());
@@ -100,12 +92,9 @@ public class DialogSelectSkillFragment extends DialogFragment {
       @Override
       public boolean onClick(View v, @NonNull IAdapter<SkillsItem> adapter, @NonNull SkillsItem item, int position) {
         if (!isUserSkillDuplicate(item)) {
-          if (callbackListener != null) {
-            callbackListener.sendResult(item, null);
-            closeDialog();
-          }
+
         } else {
-          Toast.makeText(activity, getString(R.string.skill_exists_warning), Toast.LENGTH_SHORT).show();
+          Toast.makeText(SelectSkillActivity.this, getString(R.string.skill_exists_warning), Toast.LENGTH_SHORT).show();
         }
         return true;
       }
@@ -118,30 +107,9 @@ public class DialogSelectSkillFragment extends DialogFragment {
     return userSkill != null;
   }
 
-  @NonNull
-  @Override
-  public Dialog onCreateDialog(Bundle savedInstanceState) {
-    Dialog dialog = super.onCreateDialog(savedInstanceState);
-    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-    dialog.setCancelable(true);
-    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-    lp.copyFrom(dialog.getWindow().getAttributes());
-    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-    dialog.getWindow().setAttributes(lp);
-    return dialog;
-  }
 
   @OnClick(R.id.close_image_view)
   void closeDialog() {
-    dismiss();
-    if (getFragmentManager() != null) {
-      getFragmentManager().popBackStackImmediate();
-    }
-  }
-
-  void setCallbackListener(CallbackResult callbackResult) {
-    this.callbackListener = callbackResult;
-
+    finish();
   }
 }

@@ -1,12 +1,14 @@
 package com.github.bkhezry.learn2learn.ui.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.bkhezry.learn2learn.R;
+import com.github.bkhezry.learn2learn.SelectSkillActivity;
 import com.github.bkhezry.learn2learn.listener.CallbackResult;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
@@ -22,8 +24,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -111,22 +111,8 @@ public class AddSkillFragment extends Fragment {
   }
 
   private void showSelectSkillDialog() {
-    FragmentManager fragmentManager = getFragmentManager();
-    DialogSelectSkillFragment skillFragment = new DialogSelectSkillFragment();
-    skillFragment.setCallbackListener(new CallbackResult() {
-      @Override
-      public void sendResult(Object obj, AppUtil.SkillType skillType) {
-        skillsItem = (SkillsItem) obj;
-        if (AppUtil.isRTL(activity)) {
-          selectSkillButton.setText(skillsItem.getFaName());
-        } else {
-          selectSkillButton.setText(skillsItem.getEnName());
-        }
-      }
-    });
-    FragmentTransaction transaction = fragmentManager.beginTransaction();
-    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-    transaction.add(android.R.id.content, skillFragment).addToBackStack(null).commit();
+    Intent intent = new Intent(activity, SelectSkillActivity.class);
+    startActivity(intent);
   }
 
 }
