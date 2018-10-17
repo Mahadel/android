@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.github.bkhezry.learn2learn.LauncherActivity;
+import com.github.bkhezry.learn2learn.MainActivity;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
@@ -89,7 +89,7 @@ public class SettingsFragment extends DialogFragment {
   }
 
   private void restartApp() {
-    Intent i = new Intent(activity, LauncherActivity.class);
+    Intent i = new Intent(activity, MainActivity.class);
     startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
     System.exit(0);
   }
