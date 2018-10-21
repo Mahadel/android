@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.github.bkhezry.learn2learn.MainActivity;
 import com.github.bkhezry.learn2learn.R;
+import com.github.bkhezry.learn2learn.ui.activity.MainActivity;
 import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 

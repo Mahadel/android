@@ -1,4 +1,4 @@
-package com.github.bkhezry.learn2learn;
+package com.github.bkhezry.learn2learn.ui.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -6,6 +6,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.github.bkhezry.learn2learn.R;
+import com.github.bkhezry.learn2learn.StickyHeaderAdapter;
 import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.bkhezry.learn2learn.model.UserSkill;

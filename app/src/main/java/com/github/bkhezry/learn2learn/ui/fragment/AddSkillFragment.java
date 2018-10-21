@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.bkhezry.learn2learn.R;
-import com.github.bkhezry.learn2learn.SelectSkillActivity;
 import com.github.bkhezry.learn2learn.listener.CallbackResult;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.service.APIService;
+import com.github.bkhezry.learn2learn.ui.activity.SelectSkillActivity;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.bkhezry.learn2learn.util.RetrofitUtil;

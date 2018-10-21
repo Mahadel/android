@@ -1,4 +1,4 @@
-package com.github.bkhezry.learn2learn;
+package com.github.bkhezry.learn2learn.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
+import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.ResponseMessage;

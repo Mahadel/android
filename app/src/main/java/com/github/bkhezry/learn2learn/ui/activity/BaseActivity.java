@@ -1,8 +1,9 @@
-package com.github.bkhezry.learn2learn;
+package com.github.bkhezry.learn2learn.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
 
+import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.pwittchen.prefser.library.rx2.Prefser;

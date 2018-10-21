@@ -1,4 +1,4 @@
-package com.github.bkhezry.learn2learn;
+package com.github.bkhezry.learn2learn.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.listener.CallbackResult;
 import com.github.bkhezry.learn2learn.listener.SkillDetailCallbackResult;
 import com.github.bkhezry.learn2learn.model.UserSkill;
