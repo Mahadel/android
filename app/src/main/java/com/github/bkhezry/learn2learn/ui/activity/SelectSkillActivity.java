@@ -1,5 +1,7 @@
 package com.github.bkhezry.learn2learn.ui.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -12,6 +14,7 @@ import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.util.AppUtil;
+import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.mikepenz.fastadapter.FastAdapter;
@@ -94,7 +97,10 @@ public class SelectSkillActivity extends BaseActivity {
       @Override
       public boolean onClick(View v, @NonNull IAdapter<SkillsItem> adapter, @NonNull SkillsItem item, int position) {
         if (!isUserSkillDuplicate(item)) {
-
+          Intent resultIntent = new Intent();
+          resultIntent.putExtra(Constant.SKILL_ITEM, item);
+          setResult(Activity.RESULT_OK, resultIntent);
+          finish();
         } else {
           Toast.makeText(SelectSkillActivity.this, getString(R.string.skill_exists_warning), Toast.LENGTH_SHORT).show();
         }

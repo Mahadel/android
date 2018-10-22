@@ -31,8 +31,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
+
 public class AddSkillFragment extends Fragment {
 
+  private static final int REQUEST_SELECT_SKILL = 10001;
   @BindView(R.id.skill_type_text_view)
   AppCompatTextView skillTypeTextView;
   @BindView(R.id.skill_description_edit_text)
@@ -112,7 +115,21 @@ public class AddSkillFragment extends Fragment {
 
   private void showSelectSkillDialog() {
     Intent intent = new Intent(activity, SelectSkillActivity.class);
-    startActivity(intent);
+    startActivityForResult(intent, REQUEST_SELECT_SKILL);
+  }
+
+  @Override
+  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == REQUEST_SELECT_SKILL && resultCode == RESULT_OK) {
+      skillsItem = data.getParcelableExtra(Constant.SKILL_ITEM);
+      if (AppUtil.isRTL(activity)) {
+        selectSkillButton.setText(skillsItem.getFaName());
+      } else {
+        selectSkillButton.setText(skillsItem.getEnName());
+      }
+
+    }
   }
 
 }

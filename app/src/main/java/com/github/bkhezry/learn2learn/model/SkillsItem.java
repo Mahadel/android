@@ -1,5 +1,7 @@
 package com.github.bkhezry.learn2learn.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,7 +20,7 @@ import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
 @Entity
-public class SkillsItem extends AbstractItem<SkillsItem, SkillsItem.ViewHolder> {
+public class SkillsItem extends AbstractItem<SkillsItem, SkillsItem.ViewHolder> implements Parcelable {
 
   @SerializedName("fa_name")
   private String faName;
@@ -128,5 +130,45 @@ public class SkillsItem extends AbstractItem<SkillsItem, SkillsItem.ViewHolder> 
     public void unbindView(@NonNull SkillsItem item) {
       skill.setText(null);
     }
+  }
+
+
+  public static final Parcelable.Creator<SkillsItem> CREATOR = new Parcelable.Creator<SkillsItem>() {
+    @Override
+    public SkillsItem createFromParcel(Parcel source) {
+      return new SkillsItem(source);
+    }
+
+    @Override
+    public SkillsItem[] newArray(int size) {
+      return new SkillsItem[size];
+    }
+  };
+
+  public SkillsItem() {
+  }
+
+  protected SkillsItem(Parcel in) {
+    this.faName = in.readString();
+    this.categoryUuid = in.readString();
+    this.enName = in.readString();
+    this.id = (Long) in.readValue(Long.class.getClassLoader());
+    this.uuid = in.readString();
+    this.categoryName = in.readString();
+  }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.faName);
+    dest.writeString(this.categoryUuid);
+    dest.writeString(this.enName);
+    dest.writeValue(this.id);
+    dest.writeString(this.uuid);
+    dest.writeString(this.categoryName);
   }
 }
