@@ -183,7 +183,7 @@ public class AppUtil {
     SnackbarUtils.with(view)
         .setBottomMargin(20)
         .setMessage(context.getString(R.string.no_internet_label))
-        .setMessageColor(context.getResources().getColor(R.color.grey_10))
+        .setMessageColor(context.getResources().getColor(R.color.white))
         .setBgColor(context.getResources().getColor(R.color.colorAccent))
         .setDuration(SnackbarUtils.LENGTH_LONG)
         .setAction(context.getString(R.string.ok_label), Color.YELLOW, new View.OnClickListener() {
