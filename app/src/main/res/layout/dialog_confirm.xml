@@ -45,9 +45,9 @@
                 android:text="@string/cancel_label"
                 android:textAllCaps="false"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                android:textColor="?attr/colorSecondary"
+                android:textColor="@color/grey_10"
                 app:icon="@drawable/ic_close_black_24dp"
-                app:iconTint="?attr/colorSecondary" />
+                app:iconTint="@color/grey_10" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ok_button"
@@ -57,9 +57,9 @@
                 android:text="@string/yes_label"
                 android:textAllCaps="false"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
-                android:textColor="?attr/colorSecondary"
+                android:textColor="@color/grey_10"
                 app:icon="@drawable/ic_done_black_24dp"
-                app:iconTint="?attr/colorSecondary" />
+                app:iconTint="@color/grey_10" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

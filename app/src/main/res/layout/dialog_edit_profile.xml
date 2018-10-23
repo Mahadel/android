@@ -98,8 +98,8 @@
             android:layout_marginTop="@dimen/spacing_medium"
             android:text="@string/edit_label"
             android:textAllCaps="false"
-            android:textColor="?attr/colorSecondary"
+            android:textColor="@color/grey_10"
             app:icon="@drawable/ic_done_black_24dp"
-            app:iconTint="?attr/colorSecondary" />
+            app:iconTint="@color/grey_10" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

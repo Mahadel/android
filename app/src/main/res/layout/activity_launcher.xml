@@ -31,10 +31,10 @@
                 android:layout_height="70dp"
                 android:text="@string/login_with_google_label"
                 android:textAllCaps="false"
-                android:textColor="?attr/colorSecondary"
+                android:textColor="@color/grey_10"
                 app:icon="@drawable/ic_google_plus_32px"
                 app:iconSize="@dimen/spacing_xlarge"
-                app:iconTint="?attr/colorSecondary" />
+                app:iconTint="@color/grey_10" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -160,9 +160,9 @@
                 android:layout_marginTop="@dimen/spacing_medium"
                 android:text="@string/submit_label"
                 android:textAllCaps="false"
-                android:textColor="?attr/colorSecondary"
+                android:textColor="@color/grey_10"
                 app:icon="@drawable/ic_done_black_24dp"
-                app:iconTint="?attr/colorSecondary" />
+                app:iconTint="@color/grey_10" />
         </LinearLayout>
 
         <LinearLayout

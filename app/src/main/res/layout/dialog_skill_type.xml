@@ -40,9 +40,9 @@
             android:layout_weight="1"
             android:text="@string/add_want_to_teach_label"
             android:textAllCaps="false"
-            android:textColor="?attr/colorSecondary"
+            android:textColor="@color/grey_10"
             app:icon="@drawable/ic_add_circle_outline_black_24dp"
-            app:iconTint="?attr/colorSecondary" />
+            app:iconTint="@color/grey_10" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/add_skill_want_learn_btn"
@@ -52,9 +52,9 @@
             android:layout_weight="1"
             android:text="@string/add_want_to_learn_label"
             android:textAllCaps="false"
-            android:textColor="?attr/colorSecondary"
+            android:textColor="@color/grey_10"
             app:icon="@drawable/ic_add_circle_outline_black_24dp"
-            app:iconTint="?attr/colorSecondary" />
+            app:iconTint="@color/grey_10" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

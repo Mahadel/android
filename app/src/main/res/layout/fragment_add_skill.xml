@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/submit_label"
-                android:textColor="?attr/colorSecondary" />
+                android:textColor="@color/grey_10" />
 
         </LinearLayout>
 
@@ -70,9 +70,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/select_skill_label"
-            android:textColor="?attr/colorSecondary"
+            android:textColor="@color/grey_10"
             app:icon="@drawable/ic_list_black_24dp"
-            app:iconTint="?attr/colorSecondary" />
+            app:iconTint="@color/grey_10" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_skill_description"
