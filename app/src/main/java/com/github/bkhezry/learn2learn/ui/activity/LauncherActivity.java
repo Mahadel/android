@@ -78,6 +78,10 @@ public class LauncherActivity extends BaseActivity implements
   SpinKitView loadingView;
   @BindView(R.id.get_data_layout)
   LinearLayout getDataLayout;
+  @BindView(R.id.loading_login_view)
+  SpinKitView loadingLoginView;
+  @BindView(R.id.google_login_button)
+  MaterialButton googleLoginButton;
   private GoogleApiClient mGoogleApiClient;
   private Prefser prefser;
   private Box<Category> categoryBox;
@@ -159,11 +163,13 @@ public class LauncherActivity extends BaseActivity implements
   }
 
   private void storeUser(final GoogleSignInAccount acct) {
+    showLoading();
     APIService apiService = RetrofitUtil.getRetrofit("").create(APIService.class);
     Call<AuthenticationInfo> call = apiService.storeUser(acct.getIdToken());
     call.enqueue(new Callback<AuthenticationInfo>() {
       @Override
       public void onResponse(@NonNull Call<AuthenticationInfo> call, @NonNull Response<AuthenticationInfo> response) {
+        hideLoading();
         if (response.isSuccessful()) {
           AuthenticationInfo info = response.body();
           if (info != null) {
@@ -184,6 +190,16 @@ public class LauncherActivity extends BaseActivity implements
         t.printStackTrace();
       }
     });
+  }
+
+  private void hideLoading() {
+    googleLoginButton.setVisibility(View.VISIBLE);
+    loadingLoginView.setVisibility(View.GONE);
+  }
+
+  private void showLoading() {
+    googleLoginButton.setVisibility(View.GONE);
+    loadingLoginView.setVisibility(View.VISIBLE);
   }
 
   private void showGetAccountInfoLayout(String email) {
