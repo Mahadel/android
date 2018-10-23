@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.Category;
@@ -15,6 +16,7 @@ import com.github.bkhezry.learn2learn.model.ResponseMessage;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.service.APIService;
+import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.github.bkhezry.learn2learn.util.RetrofitUtil;
@@ -27,6 +29,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -82,6 +85,10 @@ public class LauncherActivity extends BaseActivity implements
   SpinKitView loadingLoginView;
   @BindView(R.id.google_login_button)
   MaterialButton googleLoginButton;
+  @BindView(R.id.error_get_data_layout)
+  MaterialCardView errorGetDataLayout;
+  @BindView(R.id.retry_button)
+  MaterialButton retryButton;
   private GoogleApiClient mGoogleApiClient;
   private Prefser prefser;
   private Box<Category> categoryBox;
@@ -105,7 +112,7 @@ public class LauncherActivity extends BaseActivity implements
     if (prefser.contains(Constant.TOKEN)) {
       AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
       if (info.getFillInfo()) {
-        retrieveData();
+        retrieveData(retryButton);
       } else {
         showGetAccountInfoLayout(info.getEmail());
       }
@@ -137,10 +144,13 @@ public class LauncherActivity extends BaseActivity implements
   }
 
   @OnClick(R.id.google_login_button)
-  public void login() {
-    Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-    startActivityForResult(signInIntent, RC_SIGN_IN);
-
+  public void login(View view) {
+    if (NetworkUtils.isConnected()) {
+      Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+      startActivityForResult(signInIntent, RC_SIGN_IN);
+    } else {
+      AppUtil.showSnackbar(view, this);
+    }
   }
 
   @Override
@@ -154,7 +164,6 @@ public class LauncherActivity extends BaseActivity implements
 
   private void handleSignInResult(GoogleSignInResult result) {
     if (result.isSuccess()) {
-      // Signed in successfully, show authenticated UI.
       GoogleSignInAccount acct = result.getSignInAccount();
       if (acct != null) {
         storeUser(acct);
@@ -178,7 +187,7 @@ public class LauncherActivity extends BaseActivity implements
             if (!info.getFillInfo()) {
               showGetAccountInfoLayout(acct.getEmail());
             } else {
-              retrieveData();
+              retrieveData(retryButton);
             }
           }
         }
@@ -187,6 +196,7 @@ public class LauncherActivity extends BaseActivity implements
 
       @Override
       public void onFailure(@NonNull Call<AuthenticationInfo> call, @NonNull Throwable t) {
+        hideLoading();
         t.printStackTrace();
       }
     });
@@ -256,7 +266,7 @@ public class LauncherActivity extends BaseActivity implements
         if (response.isSuccessful()) {
           info.setFillInfo(true);
           prefser.put(Constant.TOKEN, info);
-          retrieveData();
+          retrieveData(retryButton);
         }
       }
 
@@ -304,7 +314,16 @@ public class LauncherActivity extends BaseActivity implements
     finish();
   }
 
-  private void retrieveData() {
+  private void retrieveData(View view) {
+    if (NetworkUtils.isConnected()) {
+      retrieveUserData();
+    } else {
+      hiddenLoadingLayout();
+      AppUtil.showSnackbar(view, this);
+    }
+  }
+
+  private void retrieveUserData() {
     loadingLayout();
     final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
@@ -323,6 +342,7 @@ public class LauncherActivity extends BaseActivity implements
 
       @Override
       public void onFailure(@NonNull Call<List<Category>> call, @NonNull Throwable t) {
+        hiddenLoadingLayout();
         t.printStackTrace();
       }
     });
@@ -344,7 +364,7 @@ public class LauncherActivity extends BaseActivity implements
 
       @Override
       public void onFailure(@NonNull Call<List<UserSkill>> call, @NonNull Throwable t) {
-
+        t.printStackTrace();
       }
     });
   }
@@ -359,10 +379,12 @@ public class LauncherActivity extends BaseActivity implements
     personalLayout.setVisibility(View.GONE);
     getDataLayout.setVisibility(View.VISIBLE);
     loadingView.setVisibility(View.VISIBLE);
+    errorGetDataLayout.setVisibility(View.GONE);
   }
 
-  private void hiddenLoading() {
+  private void hiddenLoadingLayout() {
     loadingView.setVisibility(View.GONE);
+    errorGetDataLayout.setVisibility(View.VISIBLE);
   }
 
   private void storeCategoriesDB(List<Category> categories) {
@@ -376,6 +398,11 @@ public class LauncherActivity extends BaseActivity implements
   private void removeDBData() {
     categoryBox.removeAll();
     skillsItemBox.removeAll();
+  }
+
+  @OnClick(R.id.retry_button)
+  public void retry(View view) {
+    retrieveData(view);
   }
 }
 

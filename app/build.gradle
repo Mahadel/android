@@ -42,7 +42,7 @@ dependencies {
 
     implementation 'com.github.bkhezry:prefser:v2.2.1-rx2'
 
-    //implementation 'com.blankj:utilcode:1.19.4'
+    implementation 'com.blankj:utilcode:1.21.0'
 
     implementation 'io.github.inflationx:viewpump:1.0.0'
     implementation 'io.github.inflationx:calligraphy3:3.0.0'

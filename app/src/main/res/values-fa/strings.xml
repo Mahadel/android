@@ -36,4 +36,8 @@
     <string name="license_label">لایسنس</string>
     <string name="changelog_label">تغییرات برنامه</string>
     <string name="version_label">نسخه‌برنامه</string>
+    <string name="no_internet_label">لطفا ارتباط اینترنت را چک کنید</string>
+    <string name="ok_label">باشه</string>
+    <string name="error_get_data_label">خطا در حین دریافت اطلاعات</string>
+    <string name="retry_label">تلاش مجدد</string>
 </resources>

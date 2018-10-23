@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
@@ -15,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.blankj.utilcode.util.SnackbarUtils;
 import com.github.bkhezry.learn2learn.R;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 
@@ -175,5 +177,20 @@ public class AppUtil {
     FragmentTransaction ft = supportFragmentManager.beginTransaction();
     ft.replace(R.id.contentFrameLayout, fragment);
     ft.commit();
+  }
+
+  public static void showSnackbar(View view, Context context) {
+    SnackbarUtils.with(view)
+        .setBottomMargin(20)
+        .setMessage(context.getString(R.string.no_internet_label))
+        .setMessageColor(context.getResources().getColor(R.color.grey_10))
+        .setBgColor(context.getResources().getColor(R.color.colorAccent))
+        .setDuration(SnackbarUtils.LENGTH_LONG)
+        .setAction(context.getString(R.string.ok_label), Color.YELLOW, new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+          }
+        })
+        .show();
   }
 }
