@@ -179,10 +179,10 @@ public class AppUtil {
     ft.commit();
   }
 
-  public static void showSnackbar(View view, Context context) {
+  public static void showSnackbar(View view, String message, Context context) {
     SnackbarUtils.with(view)
         .setBottomMargin(20)
-        .setMessage(context.getString(R.string.no_internet_label))
+        .setMessage(message)
         .setMessageColor(context.getResources().getColor(R.color.white))
         .setBgColor(context.getResources().getColor(R.color.colorAccent))
         .setDuration(SnackbarUtils.LENGTH_LONG)

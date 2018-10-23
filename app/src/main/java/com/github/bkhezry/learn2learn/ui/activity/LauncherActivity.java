@@ -149,7 +149,7 @@ public class LauncherActivity extends BaseActivity implements
       Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
       startActivityForResult(signInIntent, RC_SIGN_IN);
     } else {
-      AppUtil.showSnackbar(view, this);
+      AppUtil.showSnackbar(view, "", this);
     }
   }
 
@@ -247,16 +247,25 @@ public class LauncherActivity extends BaseActivity implements
   public void submitInfo() {
     String firstName = firstNameEditText.getText().toString();
     String lastName = lastNameEditText.getText().toString();
-    int gender;
-    if (radioGender.getCheckedRadioButtonId() == R.id.radioFemale) {
-      gender = 2;
+    if (!firstName.equals("") && !lastName.equals("")) {
+      int gender;
+      if (radioGender.getCheckedRadioButtonId() == R.id.radioFemale) {
+        gender = 2;
+      } else {
+        gender = 1;
+      }
+      if (NetworkUtils.isConnected()) {
+        updateUser(firstName, lastName, gender);
+      } else {
+        AppUtil.showSnackbar(submitInfoButton, getString(R.string.no_internet_label), this);
+      }
     } else {
-      gender = 1;
+      AppUtil.showSnackbar(submitInfoButton, getString(R.string.field_require_label), this);
     }
-    updateUser(firstName, lastName, gender);
   }
 
   private void updateUser(final String firstName, final String lastName, final int gender) {
+    //TODO add loading if need.
     final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.updateUser(info.getUuid(), firstName, lastName, gender);
@@ -316,14 +325,14 @@ public class LauncherActivity extends BaseActivity implements
 
   private void retrieveData(View view) {
     if (NetworkUtils.isConnected()) {
-      retrieveUserData();
+      retrieveSkillsData();
     } else {
       hiddenLoadingLayout();
-      AppUtil.showSnackbar(view, this);
+      AppUtil.showSnackbar(view, "", this);
     }
   }
 
-  private void retrieveUserData() {
+  private void retrieveSkillsData() {
     loadingLayout();
     final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
@@ -359,11 +368,14 @@ public class LauncherActivity extends BaseActivity implements
           List<UserSkill> userSkills = response.body();
           storeUserSkill(userSkills);
           startMainActivity();
+        } else {
+          hiddenLoadingLayout();
         }
       }
 
       @Override
       public void onFailure(@NonNull Call<List<UserSkill>> call, @NonNull Throwable t) {
+        hiddenLoadingLayout();
         t.printStackTrace();
       }
     });

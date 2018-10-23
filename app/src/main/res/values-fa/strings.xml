@@ -40,4 +40,5 @@
     <string name="ok_label">باشه</string>
     <string name="error_get_data_label">خطا در حین دریافت اطلاعات</string>
     <string name="retry_label">تلاش مجدد</string>
+    <string name="field_require_label">لطفا تمامی اطلاعات را وارد نمایید</string>
 </resources>

@@ -41,4 +41,5 @@
     <string name="ok_label">OK</string>
     <string name="error_get_data_label">Error during get data from server</string>
     <string name="retry_label">Retry</string>
+    <string name="field_require_label">Please fill all fields</string>
 </resources>

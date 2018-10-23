@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/male_label"
                 android:textColor="?attr/colorSecondary"
-                app:buttonTint="?attr/colorSecondary" />
+                app:buttonTint="@color/colorAccent" />
 
             <androidx.appcompat.widget.AppCompatRadioButton
                 android:id="@+id/radioFemale"
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/female_label"
                 android:textColor="?attr/colorSecondary"
-                app:buttonTint="?attr/colorSecondary" />
+                app:buttonTint="@color/colorAccent" />
 
         </RadioGroup>
 

@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/google_login_button"
@@ -150,7 +150,7 @@
                     android:checked="true"
                     android:text="@string/male_label"
                     android:textColor="?attr/colorSecondary"
-                    app:buttonTint="?attr/colorSecondary" />
+                    app:buttonTint="@color/colorAccent" />
 
                 <androidx.appcompat.widget.AppCompatRadioButton
                     android:id="@+id/radioFemale"
@@ -158,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/female_label"
                     android:textColor="?attr/colorSecondary"
-                    app:buttonTint="?attr/colorSecondary" />
+                    app:buttonTint="@color/colorAccent" />
 
             </RadioGroup>
 
@@ -183,7 +183,7 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/spacing_large"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <com.github.ybq.android.spinkit.SpinKitView
                 android:id="@+id/loading_view"
