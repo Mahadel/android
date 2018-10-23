@@ -193,4 +193,18 @@ public class AppUtil {
         })
         .show();
   }
+
+  public static Dialog getDialogLoading(Context context) {
+    Dialog dialog = new Dialog(context);
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    dialog.setContentView(R.layout.dialog_full_screen_loading);
+    dialog.setCancelable(false);
+    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+    lp.copyFrom(dialog.getWindow().getAttributes());
+    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+    lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+    dialog.getWindow().setAttributes(lp);
+    return dialog;
+  }
 }

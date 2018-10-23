@@ -1,5 +1,6 @@
 package com.github.bkhezry.learn2learn.ui.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,6 @@ import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.github.bkhezry.learn2learn.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
-import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -77,12 +77,8 @@ public class LauncherActivity extends BaseActivity implements
   AppCompatImageView englishImageView;
   @BindView(R.id.submit_info_button)
   MaterialButton submitInfoButton;
-  @BindView(R.id.loading_view)
-  SpinKitView loadingView;
   @BindView(R.id.get_data_layout)
   LinearLayout getDataLayout;
-  @BindView(R.id.loading_login_view)
-  SpinKitView loadingLoginView;
   @BindView(R.id.google_login_button)
   MaterialButton googleLoginButton;
   @BindView(R.id.error_get_data_layout)
@@ -94,6 +90,7 @@ public class LauncherActivity extends BaseActivity implements
   private Box<Category> categoryBox;
   private Box<SkillsItem> skillsItemBox;
   private Box<UserSkill> userSkillBox;
+  private Dialog loadingDialog;
 
 
   @Override
@@ -109,6 +106,7 @@ public class LauncherActivity extends BaseActivity implements
     categoryBox = boxStore.boxFor(Category.class);
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
     userSkillBox = boxStore.boxFor(UserSkill.class);
+    loadingDialog = AppUtil.getDialogLoading(this);
     if (prefser.contains(Constant.TOKEN)) {
       AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
       if (info.getFillInfo()) {
@@ -172,13 +170,13 @@ public class LauncherActivity extends BaseActivity implements
   }
 
   private void storeUser(final GoogleSignInAccount acct) {
-    showLoading();
+    loadingDialog.show();
     APIService apiService = RetrofitUtil.getRetrofit("").create(APIService.class);
     Call<AuthenticationInfo> call = apiService.storeUser(acct.getIdToken());
     call.enqueue(new Callback<AuthenticationInfo>() {
       @Override
       public void onResponse(@NonNull Call<AuthenticationInfo> call, @NonNull Response<AuthenticationInfo> response) {
-        hideLoading();
+        loadingDialog.dismiss();
         if (response.isSuccessful()) {
           AuthenticationInfo info = response.body();
           if (info != null) {
@@ -196,20 +194,10 @@ public class LauncherActivity extends BaseActivity implements
 
       @Override
       public void onFailure(@NonNull Call<AuthenticationInfo> call, @NonNull Throwable t) {
-        hideLoading();
+        loadingDialog.dismiss();
         t.printStackTrace();
       }
     });
-  }
-
-  private void hideLoading() {
-    googleLoginButton.setVisibility(View.VISIBLE);
-    loadingLoginView.setVisibility(View.GONE);
-  }
-
-  private void showLoading() {
-    googleLoginButton.setVisibility(View.GONE);
-    loadingLoginView.setVisibility(View.VISIBLE);
   }
 
   private void showGetAccountInfoLayout(String email) {
@@ -319,6 +307,7 @@ public class LauncherActivity extends BaseActivity implements
   }
 
   private void startMainActivity() {
+    loadingDialog.dismiss();
     startActivity(new Intent(LauncherActivity.this, MainActivity.class));
     finish();
   }
@@ -387,15 +376,15 @@ public class LauncherActivity extends BaseActivity implements
   }
 
   private void loadingLayout() {
+    loadingDialog.show();
     loginLayout.setVisibility(View.GONE);
     personalLayout.setVisibility(View.GONE);
     getDataLayout.setVisibility(View.VISIBLE);
-    loadingView.setVisibility(View.VISIBLE);
     errorGetDataLayout.setVisibility(View.GONE);
   }
 
   private void hiddenLoadingLayout() {
-    loadingView.setVisibility(View.GONE);
+    loadingDialog.dismiss();
     errorGetDataLayout.setVisibility(View.VISIBLE);
   }
 
