@@ -197,9 +197,11 @@ public class AppUtil {
   public static Dialog getDialogLoading(Context context) {
     Dialog dialog = new Dialog(context);
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+    dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        WindowManager.LayoutParams.FLAG_FULLSCREEN);
     dialog.setContentView(R.layout.dialog_full_screen_loading);
     dialog.setCancelable(false);
-    dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
     WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
     lp.copyFrom(dialog.getWindow().getAttributes());
     lp.width = WindowManager.LayoutParams.MATCH_PARENT;

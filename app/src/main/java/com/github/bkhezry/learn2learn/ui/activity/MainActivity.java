@@ -1,6 +1,5 @@
 package com.github.bkhezry.learn2learn.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -280,13 +279,6 @@ public class MainActivity extends BaseActivity {
   private void showProfileFragment() {
     FragmentManager fragmentManager = getSupportFragmentManager();
     ProfileFragment profileFragment = new ProfileFragment();
-    profileFragment.setOnCallbackResult(new ProfileFragment.ProfileCallbackResult() {
-      @Override
-      public void logout() {
-        startActivity(new Intent(MainActivity.this, LauncherActivity.class));
-        finish();
-      }
-    });
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
     transaction.add(android.R.id.content, profileFragment).addToBackStack(null).commit();

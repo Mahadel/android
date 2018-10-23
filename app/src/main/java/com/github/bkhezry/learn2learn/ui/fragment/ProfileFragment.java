@@ -2,6 +2,7 @@ package com.github.bkhezry.learn2learn.ui.fragment;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.UserInfo;
 import com.github.bkhezry.learn2learn.service.APIService;
+import com.github.bkhezry.learn2learn.ui.activity.LauncherActivity;
+import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.bkhezry.learn2learn.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
@@ -49,16 +52,15 @@ public class ProfileFragment extends DialogFragment implements
   AppCompatTextView nameTextView;
   @BindView(R.id.profile_pic)
   CircularImageView profilePic;
-  private ProfileCallbackResult callbackResult;
+
   private Activity activity;
   private Prefser prefser;
   private GoogleApiClient mGoogleApiClient;
   private UserInfo userInfo;
+  private Dialog loadingDialog;
 
 
-  public void setOnCallbackResult(ProfileCallbackResult callbackResult) {
-    this.callbackResult = callbackResult;
-  }
+
 
 
   @Override
@@ -67,6 +69,7 @@ public class ProfileFragment extends DialogFragment implements
     ButterKnife.bind(this, rootView);
     activity = getActivity();
     prefser = new Prefser(activity);
+    loadingDialog = AppUtil.getDialogLoading(activity);
     setUpGoogleSignIn();
     AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     emailTextView.setText(info.getEmail());
@@ -77,12 +80,14 @@ public class ProfileFragment extends DialogFragment implements
   }
 
   private void requestProfileInfo() {
+    loadingDialog.show();
     AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<UserInfo> call = apiService.getUserInfo(info.getUuid());
     call.enqueue(new Callback<UserInfo>() {
       @Override
       public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
+        loadingDialog.dismiss();
         if (response.isSuccessful()) {
           userInfo = response.body();
           if (userInfo != null) {
@@ -93,8 +98,8 @@ public class ProfileFragment extends DialogFragment implements
 
       @Override
       public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
+        loadingDialog.dismiss();
         t.printStackTrace();
-
       }
     });
   }
@@ -155,15 +160,15 @@ public class ProfileFragment extends DialogFragment implements
   }
 
   private void revokeAccess() {
+    loadingDialog.show();
     Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
         new ResultCallback<Status>() {
           @Override
           public void onResult(@NonNull Status status) {
+            loadingDialog.dismiss();
             prefser.remove(Constant.TOKEN);
-            if (callbackResult != null) {
-              callbackResult.logout();
-              close();
-            }
+            startActivity(new Intent(activity, LauncherActivity.class));
+            activity.finish();
           }
         });
   }
@@ -184,9 +189,6 @@ public class ProfileFragment extends DialogFragment implements
 
   }
 
-  public interface ProfileCallbackResult {
-    void logout();
-  }
 
   @Override
   public void onPause() {

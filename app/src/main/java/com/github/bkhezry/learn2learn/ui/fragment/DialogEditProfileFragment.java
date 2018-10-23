@@ -10,11 +10,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RadioGroup;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.ResponseMessage;
 import com.github.bkhezry.learn2learn.model.UserInfo;
 import com.github.bkhezry.learn2learn.service.APIService;
+import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.bkhezry.learn2learn.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
@@ -51,6 +53,7 @@ public class DialogEditProfileFragment extends DialogFragment {
   private Prefser prefser;
   private UserInfo userInfo;
   private CallbackListener listener;
+  private Dialog loadingDialog;
 
   void setOnCallbackResult(CallbackListener listener) {
     this.listener = listener;
@@ -62,6 +65,7 @@ public class DialogEditProfileFragment extends DialogFragment {
     ButterKnife.bind(this, rootView);
     activity = getActivity();
     prefser = new Prefser(activity);
+    loadingDialog = AppUtil.getDialogLoading(activity);
     firstNameEditText.setText(userInfo.getFirstName());
     lastNameEditText.setText(userInfo.getLastName());
     if (userInfo.getGender() == 1) {
@@ -92,25 +96,35 @@ public class DialogEditProfileFragment extends DialogFragment {
   }
 
   @OnClick(R.id.submit_info_button)
-  void editProfileInfo() {
+  void editProfileInfo(View view) {
     int gender;
     String firstName = firstNameEditText.getText().toString();
     String lastName = lastNameEditText.getText().toString();
-    if (radioGender.getCheckedRadioButtonId() == R.id.radioFemale) {
-      gender = 2;
+    if (!firstName.equals("") && !lastName.equals("")) {
+      if (radioGender.getCheckedRadioButtonId() == R.id.radioFemale) {
+        gender = 2;
+      } else {
+        gender = 1;
+      }
+      if (NetworkUtils.isConnected()) {
+        updateUser(firstName, lastName, gender);
+      } else {
+        AppUtil.showSnackbar(view, getString(R.string.no_internet_label), activity);
+      }
     } else {
-      gender = 1;
+      AppUtil.showSnackbar(view, getString(R.string.field_require_label), activity);
     }
-    updateUser(firstName, lastName, gender);
   }
 
   private void updateUser(final String firstName, final String lastName, final int gender) {
+    loadingDialog.show();
     AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.updateUser(info.getUuid(), firstName, lastName, gender);
     call.enqueue(new Callback<ResponseMessage>() {
       @Override
       public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
+        loadingDialog.dismiss();
         if (response.isSuccessful()) {
           userInfo.setFirstName(firstName);
           userInfo.setGender(gender);
@@ -124,13 +138,14 @@ public class DialogEditProfileFragment extends DialogFragment {
 
       @Override
       public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
+        loadingDialog.dismiss();
         t.printStackTrace();
       }
     });
 
   }
 
-  void close() {
+  private void close() {
     dismiss();
     if (getFragmentManager() != null) {
       getFragmentManager().popBackStackImmediate();

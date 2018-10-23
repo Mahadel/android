@@ -6,22 +6,14 @@
     android:clickable="true"
     android:focusable="true">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        style="@style/SpinKitView.Large.CubeGrid"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerInParent="true"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <com.github.ybq.android.spinkit.SpinKitView
-            android:id="@+id/loading_login_view"
-            style="@style/SpinKitView.Large.CubeGrid"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/spacing_large"
-            android:visibility="gone"
-            app:SpinKit_Color="?attr/colorSecondary" />
-    </LinearLayout>
-
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/spacing_large"
+        android:visibility="visible"
+        app:SpinKit_Color="@color/grey_10" />
 </RelativeLayout>

@@ -37,16 +37,6 @@
                 app:iconSize="@dimen/spacing_xlarge"
                 app:iconTint="@color/grey_10" />
 
-            <com.github.ybq.android.spinkit.SpinKitView
-                android:id="@+id/loading_login_view"
-                style="@style/SpinKitView.Large.CubeGrid"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/spacing_large"
-                android:visibility="gone"
-                app:SpinKit_Color="?attr/colorSecondary" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -184,14 +174,6 @@
             android:layout_margin="@dimen/spacing_large"
             android:orientation="vertical"
             android:visibility="gone">
-
-            <com.github.ybq.android.spinkit.SpinKitView
-                android:id="@+id/loading_view"
-                style="@style/SpinKitView.Large.CubeGrid"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                app:SpinKit_Color="?attr/colorSecondary" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/error_get_data_layout"
