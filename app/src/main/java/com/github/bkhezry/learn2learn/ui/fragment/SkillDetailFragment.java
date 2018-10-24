@@ -1,11 +1,13 @@
 package com.github.bkhezry.learn2learn.ui.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.listener.SkillDetailCallbackResult;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
@@ -47,6 +49,7 @@ public class SkillDetailFragment extends Fragment {
   private UserSkill userSkill;
   private Prefser prefser;
   private Box<SkillsItem> skillsItemBox;
+  private Dialog loadingDialog;
 
 
   public void setOnCallbackResult(SkillDetailCallbackResult callbackResult) {
@@ -71,6 +74,7 @@ public class SkillDetailFragment extends Fragment {
     View rootView = inflater.inflate(R.layout.fragment_skill_detail, container, false);
     ButterKnife.bind(this, rootView);
     activity = getActivity();
+    loadingDialog = AppUtil.getDialogLoading(activity);
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
     prefser = new Prefser(activity);
@@ -93,7 +97,16 @@ public class SkillDetailFragment extends Fragment {
   }
 
   @OnClick(R.id.submit_btn)
-  void submit() {
+  void submit(View view) {
+    if (NetworkUtils.isConnected()) {
+      editUserSkill();
+    } else {
+      AppUtil.showSnackbar(view, getString(R.string.no_internet_label), activity);
+    }
+  }
+
+  private void editUserSkill() {
+    loadingDialog.show();
     String description = skillDescriptionEditText.getText().toString();
     AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
@@ -101,6 +114,7 @@ public class SkillDetailFragment extends Fragment {
     call.enqueue(new Callback<UserSkill>() {
       @Override
       public void onResponse(@NonNull Call<UserSkill> call, @NonNull Response<UserSkill> response) {
+        loadingDialog.dismiss();
         if (response.isSuccessful()) {
           UserSkill userSkill = response.body();
           handleUserSkill(userSkill);
@@ -109,6 +123,7 @@ public class SkillDetailFragment extends Fragment {
 
       @Override
       public void onFailure(@NonNull Call<UserSkill> call, @NonNull Throwable t) {
+        loadingDialog.dismiss();
         t.printStackTrace();
       }
     });
@@ -122,28 +137,34 @@ public class SkillDetailFragment extends Fragment {
   }
 
   @OnClick(R.id.remove_btn)
-  void removeSkill() {
-    AppUtil.showConfirmDialog(getString(R.string.confirm_remove_skill_label), activity, new AppUtil.ConfirmDialogClickListener() {
-      @Override
-      public void ok() {
-        removeSkillServer();
-      }
+  void removeSkill(View view) {
+    if (NetworkUtils.isConnected()) {
+      AppUtil.showConfirmDialog(getString(R.string.confirm_remove_skill_label), activity, new AppUtil.ConfirmDialogClickListener() {
+        @Override
+        public void ok() {
+          removeSkillServer();
+        }
 
-      @Override
-      public void cancel() {
+        @Override
+        public void cancel() {
 
-      }
-    });
+        }
+      });
+    } else {
+      AppUtil.showSnackbar(view, getString(R.string.no_internet_label), activity);
+    }
 
   }
 
   private void removeSkillServer() {
+    loadingDialog.show();
     AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.deleteUserSkill(info.getUuid(), userSkill.getUuid());
     call.enqueue(new Callback<ResponseMessage>() {
       @Override
       public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
+        loadingDialog.dismiss();
         if (response.isSuccessful()) {
           if (callbackResult != null) {
             callbackResult.remove(userSkill, skillType);
@@ -155,6 +176,7 @@ public class SkillDetailFragment extends Fragment {
 
       @Override
       public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
+        loadingDialog.dismiss();
         t.printStackTrace();
       }
     });
