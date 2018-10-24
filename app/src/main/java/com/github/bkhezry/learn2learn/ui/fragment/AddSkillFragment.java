@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.listener.CallbackResult;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
@@ -73,7 +74,15 @@ public class AddSkillFragment extends Fragment {
   }
 
   @OnClick(R.id.submit_btn)
-  void submit() {
+  void submit(View view) {
+    if (NetworkUtils.isConnected()) {
+      submitUserSkill();
+    } else {
+      AppUtil.showSnackbar(view, getString(R.string.no_internet_label), activity);
+    }
+  }
+
+  private void submitUserSkill() {
     String description = skillDescriptionEditText.getText().toString();
     int skillTypeInt;
     if (skillType == AppUtil.SkillType.WANT_TEACH) {

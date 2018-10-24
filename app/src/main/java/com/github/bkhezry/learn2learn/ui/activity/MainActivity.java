@@ -277,6 +277,7 @@ public class MainActivity extends BaseActivity {
   }
 
   private void showProfileFragment() {
+    //TODO create function for showing fragments in AppUtil.
     FragmentManager fragmentManager = getSupportFragmentManager();
     ProfileFragment profileFragment = new ProfileFragment();
     FragmentTransaction transaction = fragmentManager.beginTransaction();

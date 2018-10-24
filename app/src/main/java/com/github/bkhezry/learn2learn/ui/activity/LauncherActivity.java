@@ -85,6 +85,8 @@ public class LauncherActivity extends BaseActivity implements
   MaterialCardView errorGetDataLayout;
   @BindView(R.id.retry_button)
   MaterialButton retryButton;
+  @BindView(R.id.root_card_view)
+  MaterialCardView rootCardView;
   private GoogleApiClient mGoogleApiClient;
   private Prefser prefser;
   private Box<Category> categoryBox;
@@ -110,7 +112,7 @@ public class LauncherActivity extends BaseActivity implements
     if (prefser.contains(Constant.TOKEN)) {
       AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
       if (info.getFillInfo()) {
-        retrieveData(retryButton);
+        retrieveData(rootCardView);
       } else {
         showGetAccountInfoLayout(info.getEmail());
       }
@@ -147,7 +149,7 @@ public class LauncherActivity extends BaseActivity implements
       Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
       startActivityForResult(signInIntent, RC_SIGN_IN);
     } else {
-      AppUtil.showSnackbar(view, "", this);
+      AppUtil.showSnackbar(view, getString(R.string.no_internet_label), this);
     }
   }
 
@@ -185,7 +187,7 @@ public class LauncherActivity extends BaseActivity implements
             if (!info.getFillInfo()) {
               showGetAccountInfoLayout(acct.getEmail());
             } else {
-              retrieveData(retryButton);
+              retrieveData(rootCardView);
             }
           }
         }
@@ -263,7 +265,7 @@ public class LauncherActivity extends BaseActivity implements
         if (response.isSuccessful()) {
           info.setFillInfo(true);
           prefser.put(Constant.TOKEN, info);
-          retrieveData(retryButton);
+          retrieveData(rootCardView);
         }
       }
 
@@ -317,7 +319,7 @@ public class LauncherActivity extends BaseActivity implements
       retrieveSkillsData();
     } else {
       hiddenLoadingLayout();
-      AppUtil.showSnackbar(view, "", this);
+      AppUtil.showSnackbar(view, getString(R.string.no_internet_label), this);
     }
   }
 
@@ -385,6 +387,9 @@ public class LauncherActivity extends BaseActivity implements
 
   private void hiddenLoadingLayout() {
     loadingDialog.dismiss();
+    loginLayout.setVisibility(View.GONE);
+    personalLayout.setVisibility(View.GONE);
+    getDataLayout.setVisibility(View.VISIBLE);
     errorGetDataLayout.setVisibility(View.VISIBLE);
   }
 
@@ -402,8 +407,8 @@ public class LauncherActivity extends BaseActivity implements
   }
 
   @OnClick(R.id.retry_button)
-  public void retry(View view) {
-    retrieveData(view);
+  public void retry() {
+    retrieveData(rootCardView);
   }
 }
 

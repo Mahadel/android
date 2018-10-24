@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
+import android.os.Handler;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
@@ -180,18 +181,24 @@ public class AppUtil {
   }
 
   public static void showSnackbar(View view, String message, Context context) {
-    SnackbarUtils.with(view)
-        .setBottomMargin(20)
-        .setMessage(message)
-        .setMessageColor(context.getResources().getColor(R.color.white))
-        .setBgColor(context.getResources().getColor(R.color.colorAccent))
-        .setDuration(SnackbarUtils.LENGTH_LONG)
-        .setAction(context.getString(R.string.ok_label), Color.YELLOW, new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-          }
-        })
-        .show();
+    final Handler handler = new Handler();
+    handler.postDelayed(new Runnable() {
+      @Override
+      public void run() {
+        SnackbarUtils.with(view)
+            .setBottomMargin(20)
+            .setMessage(message)
+            .setMessageColor(context.getResources().getColor(R.color.white))
+            .setBgColor(context.getResources().getColor(R.color.colorAccent))
+            .setDuration(SnackbarUtils.LENGTH_LONG)
+            .setAction(context.getString(R.string.ok_label), Color.YELLOW, new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+              }
+            })
+            .show();
+      }
+    }, 100);
   }
 
   public static Dialog getDialogLoading(Context context) {
