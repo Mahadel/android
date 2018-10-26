@@ -16,6 +16,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.DialogFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class AboutFragment extends DialogFragment {
@@ -56,6 +57,7 @@ public class AboutFragment extends DialogFragment {
     return dialog;
   }
 
+  @OnClick(R.id.close_image_view)
   void close() {
     dismiss();
     if (getFragmentManager() != null) {

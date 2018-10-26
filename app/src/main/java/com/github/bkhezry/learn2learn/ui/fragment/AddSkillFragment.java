@@ -90,23 +90,27 @@ public class AddSkillFragment extends Fragment {
     } else {
       skillTypeInt = 2;
     }
-    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
-    APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
-    Call<UserSkill> call = apiService.addUserSkill(info.getUuid(), skillsItem.getUuid(), description, skillTypeInt);
-    call.enqueue(new Callback<UserSkill>() {
-      @Override
-      public void onResponse(@NonNull Call<UserSkill> call, @NonNull Response<UserSkill> response) {
-        if (response.isSuccessful()) {
-          UserSkill userSkill = response.body();
-          handleUserSkill(userSkill);
+    if (skillsItem != null) {
+      AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+      APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+      Call<UserSkill> call = apiService.addUserSkill(info.getUuid(), skillsItem.getUuid(), description, skillTypeInt);
+      call.enqueue(new Callback<UserSkill>() {
+        @Override
+        public void onResponse(@NonNull Call<UserSkill> call, @NonNull Response<UserSkill> response) {
+          if (response.isSuccessful()) {
+            UserSkill userSkill = response.body();
+            handleUserSkill(userSkill);
+          }
         }
-      }
 
-      @Override
-      public void onFailure(@NonNull Call<UserSkill> call, @NonNull Throwable t) {
-        t.printStackTrace();
-      }
-    });
+        @Override
+        public void onFailure(@NonNull Call<UserSkill> call, @NonNull Throwable t) {
+          t.printStackTrace();
+        }
+      });
+    } else {
+      AppUtil.showSnackbar(selectSkillButton, getString(R.string.select_skill_message_label), activity);
+    }
   }
 
   private void handleUserSkill(UserSkill userSkill) {
