@@ -36,8 +36,6 @@ import com.ramotion.cardslider.CardSnapHelper;
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -277,28 +275,15 @@ public class MainActivity extends BaseActivity {
   }
 
   private void showProfileFragment() {
-    //TODO create function for showing fragments in AppUtil.
-    FragmentManager fragmentManager = getSupportFragmentManager();
-    ProfileFragment profileFragment = new ProfileFragment();
-    FragmentTransaction transaction = fragmentManager.beginTransaction();
-    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-    transaction.add(android.R.id.content, profileFragment).addToBackStack(null).commit();
+    AppUtil.showFragment(new ProfileFragment(), getSupportFragmentManager());
   }
 
   private void showSettingsFragment() {
-    FragmentManager fragmentManager = getSupportFragmentManager();
-    SettingsFragment profileFragment = new SettingsFragment();
-    FragmentTransaction transaction = fragmentManager.beginTransaction();
-    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-    transaction.add(android.R.id.content, profileFragment).addToBackStack(null).commit();
+    AppUtil.showFragment(new SettingsFragment(), getSupportFragmentManager());
   }
 
   private void showAboutFragment() {
-    FragmentManager fragmentManager = getSupportFragmentManager();
-    AboutFragment profileFragment = new AboutFragment();
-    FragmentTransaction transaction = fragmentManager.beginTransaction();
-    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-    transaction.add(android.R.id.content, profileFragment).addToBackStack(null).commit();
+    AppUtil.showFragment(new AboutFragment(), getSupportFragmentManager());
   }
 
   private void handleUserSkill(UserSkill userSkill) {

@@ -216,4 +216,10 @@ public class AppUtil {
     dialog.getWindow().setAttributes(lp);
     return dialog;
   }
+
+  public static void showFragment(Fragment fragment, FragmentManager fragmentManager) {
+    FragmentTransaction transaction = fragmentManager.beginTransaction();
+    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+    transaction.add(android.R.id.content, fragment).addToBackStack(null).commit();
+  }
 }
