@@ -1,5 +1,6 @@
 package com.github.bkhezry.learn2learn.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -8,7 +9,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.listener.CallbackResult;
@@ -319,7 +319,7 @@ public class MainActivity extends BaseActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem menuItem) {
-    Toast.makeText(this, menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+    startActivity(new Intent(this, SearchActivity.class));
     return true;
   }
 
