@@ -3,6 +3,7 @@ package com.github.bkhezry.learn2learn.service;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.ResponseMessage;
+import com.github.bkhezry.learn2learn.model.SearchResult;
 import com.github.bkhezry.learn2learn.model.UserInfo;
 import com.github.bkhezry.learn2learn.model.UserSkill;
 
@@ -58,4 +59,7 @@ public interface APIService {
 
   @GET("user/{uuid}/info")
   Call<UserInfo> getUserInfo(@Path("uuid") String uuid);
+
+  @GET("search/{uuid}")
+  Call<List<SearchResult>> search(@Path("uuid") String uuid);
 }
