@@ -43,4 +43,5 @@
     <string name="retry_label">Retry</string>
     <string name="field_require_label">Please fill all fields</string>
     <string name="select_skill_message_label">Please select a skill</string>
+    <string name="more_info_label">More info</string>
 </resources>

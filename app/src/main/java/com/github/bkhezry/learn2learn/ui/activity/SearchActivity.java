@@ -1,7 +1,10 @@
 package com.github.bkhezry.learn2learn.ui.activity;
 
 import android.app.Dialog;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -11,22 +14,38 @@ import com.github.bkhezry.learn2learn.model.SearchResult;
 import com.github.bkhezry.learn2learn.service.APIService;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
+import com.github.bkhezry.learn2learn.util.GridSpacingItemDecoration;
 import com.github.bkhezry.learn2learn.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.mikepenz.fastadapter.FastAdapter;
+import com.mikepenz.fastadapter.IAdapter;
+import com.mikepenz.fastadapter.adapters.ItemAdapter;
+import com.mikepenz.fastadapter.listeners.OnClickListener;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SearchActivity extends BaseActivity {
+  @BindView(R.id.recycler_view)
+  RecyclerView recyclerView;
   private Prefser prefser;
   private Dialog loadingDialog;
-  private FastAdapter<SearchResult> fastAdapter;
+  private FastAdapter<SearchResult> mFastAdapter;
+  private ItemAdapter<SearchResult> mItemAdapter;
+
+  public static int dpToPx(int dp, Resources r) {
+    return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+  }
+
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +57,20 @@ public class SearchActivity extends BaseActivity {
     ButterKnife.bind(this);
     prefser = new Prefser(this);
     loadingDialog = AppUtil.getDialogLoading(this);
+    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
+    recyclerView.setLayoutManager(mLayoutManager);
+    recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(6, getResources()), true));
+    mItemAdapter = new ItemAdapter<>();
+    mFastAdapter = FastAdapter.with(mItemAdapter);
+    recyclerView.setAdapter(mFastAdapter);
+    mFastAdapter.withOnPreClickListener(new OnClickListener<SearchResult>() {
+      @Override
+      public boolean onClick(@Nullable View v, @NonNull IAdapter<SearchResult> adapter, @NonNull SearchResult item, int position) {
+        return true;
+      }
+    });
+
+
     doSearch();
   }
 
@@ -52,6 +85,8 @@ public class SearchActivity extends BaseActivity {
         loadingDialog.dismiss();
         if (response.isSuccessful()) {
           List<SearchResult> searchResults = response.body();
+          mItemAdapter.clear();
+          mItemAdapter.add(searchResults);
         }
       }
 

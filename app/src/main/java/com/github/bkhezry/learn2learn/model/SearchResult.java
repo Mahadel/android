@@ -1,9 +1,11 @@
 package com.github.bkhezry.learn2learn.model;
 
 import android.view.View;
-import android.widget.TextView;
 
 import com.github.bkhezry.learn2learn.R;
+import com.github.bkhezry.learn2learn.util.AppUtil;
+import com.github.bkhezry.learn2learn.util.DatabaseUtil;
+import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.google.gson.annotations.SerializedName;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
@@ -11,8 +13,11 @@ import com.mikepenz.fastadapter.items.AbstractItem;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.objectbox.Box;
+import io.objectbox.BoxStore;
 
 public class SearchResult extends AbstractItem<SearchResult, SearchResult.ViewHolder> {
 
@@ -73,8 +78,8 @@ public class SearchResult extends AbstractItem<SearchResult, SearchResult.ViewHo
 
   @NonNull
   @Override
-  public SearchResult.ViewHolder getViewHolder(@NonNull View view) {
-    return new SearchResult.ViewHolder(view);
+  public ViewHolder getViewHolder(@NonNull View view) {
+    return new ViewHolder(view);
   }
 
   @Override
@@ -84,28 +89,55 @@ public class SearchResult extends AbstractItem<SearchResult, SearchResult.ViewHo
 
   @Override
   public int getLayoutRes() {
-    return R.layout.item_skill;
+    return R.layout.item_search;
   }
 
   protected static class ViewHolder extends FastAdapter.ViewHolder<SearchResult> {
     protected View view;
-    @BindView(R.id.skill)
-    TextView skill;
+    @BindView(R.id.name_text_view)
+    AppCompatTextView nameTextView;
+    @BindView(R.id.gender_text_view)
+    AppCompatTextView genderTextView;
+    @BindView(R.id.teach_skill_name)
+    AppCompatTextView teachSkillName;
+    @BindView(R.id.learn_skill_name)
+    AppCompatTextView learnSkillName;
+    @BindView(R.id.teach_description_text_view)
+    AppCompatTextView teachDescriptionTextView;
+    @BindView(R.id.learn_description_text_view)
+    AppCompatTextView learnDescriptionTextView;
+    Box<SkillsItem> skillsItemBox;
 
     ViewHolder(View view) {
       super(view);
       ButterKnife.bind(this, view);
       this.view = view;
+      BoxStore boxStore = MyApplication.getBoxStore();
+      skillsItemBox = boxStore.boxFor(SkillsItem.class);
     }
 
     @Override
     public void bindView(@NonNull SearchResult item, @NonNull List<Object> payloads) {
-
+      nameTextView.setText(String.format("%s %s", item.getUser().getFirstName(), item.getUser().getLastName()));
+      genderTextView.setText(item.getUser().getGender() == 1 ? R.string.male_label : R.string.female_label);
+      teachDescriptionTextView.setText(item.getTeachDescription());
+      learnDescriptionTextView.setText(item.getLearnDescription());
+      if (AppUtil.isRTL(view.getContext())) {
+        teachSkillName.setText(getSkill(item.getTeachSkillUuid()).getFaName());
+        learnSkillName.setText(getSkill(item.getLearnSkillUuid()).getFaName());
+      } else {
+        teachSkillName.setText(getSkill(item.getTeachSkillUuid()).getEnName());
+        learnSkillName.setText(getSkill(item.getLearnSkillUuid()).getEnName());
+      }
     }
 
     @Override
     public void unbindView(@NonNull SearchResult item) {
+      nameTextView.setText(null);
+    }
 
+    private SkillsItem getSkill(String skillUuid) {
+      return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
     }
   }
 }
