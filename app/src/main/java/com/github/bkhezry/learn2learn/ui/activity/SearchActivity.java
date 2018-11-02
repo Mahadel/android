@@ -62,6 +62,7 @@ public class SearchActivity extends BaseActivity {
   private ItemAdapter<SearchResult> mItemAdapter;
   private BottomSheetBehavior bottomSheetBehavior;
   private Box<SkillsItem> skillsItemBox;
+  private SearchResult selectedResult;
 
 
   @Override
@@ -92,6 +93,7 @@ public class SearchActivity extends BaseActivity {
     mFastAdapter.withEventHook(new SearchResult.RequestButtonClickEvent(new SearchResult.DoClickListener() {
       @Override
       public void requestEmail(SearchResult item) {
+        selectedResult = item;
         nameTextView.setText(String.format("%s %s", item.getUser().getFirstName(), item.getUser().getLastName()));
         if (AppUtil.isRTL(SearchActivity.this)) {
           teachSkillNameTextView.setText(getSkill(item.getTeachSkillUuid()).getFaName());
@@ -139,6 +141,15 @@ public class SearchActivity extends BaseActivity {
 
   private SkillsItem getSkill(String skillUuid) {
     return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
+  }
+
+  @Override
+  public void onBackPressed() {
+    if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_HIDDEN) {
+      bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    } else {
+      super.onBackPressed();
+    }
   }
 }
 
