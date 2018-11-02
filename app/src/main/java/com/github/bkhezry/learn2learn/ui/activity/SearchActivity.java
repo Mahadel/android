@@ -6,15 +6,17 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.SearchResult;
+import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.bkhezry.learn2learn.service.APIService;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
+import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.GridSpacingItemDecoration;
+import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.github.bkhezry.learn2learn.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -27,10 +29,14 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.objectbox.Box;
+import io.objectbox.BoxStore;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,11 +48,20 @@ public class SearchActivity extends BaseActivity {
   RecyclerView recyclerView;
   @BindView(R.id.requestLayout)
   FrameLayout requestLayout;
+  @BindView(R.id.name_text_view)
+  AppCompatTextView nameTextView;
+  @BindView(R.id.teach_skill_name_text_view)
+  AppCompatTextView teachSkillNameTextView;
+  @BindView(R.id.learn_skill_name_text_view)
+  AppCompatTextView learnSkillNameTextView;
+  @BindView(R.id.request_description_edit_text)
+  AppCompatEditText requestDescriptionEditText;
   private Prefser prefser;
   private Dialog loadingDialog;
   private FastAdapter<SearchResult> mFastAdapter;
   private ItemAdapter<SearchResult> mItemAdapter;
   private BottomSheetBehavior bottomSheetBehavior;
+  private Box<SkillsItem> skillsItemBox;
 
 
   @Override
@@ -57,6 +72,8 @@ public class SearchActivity extends BaseActivity {
         WindowManager.LayoutParams.FLAG_FULLSCREEN);
     setContentView(R.layout.activity_search);
     ButterKnife.bind(this);
+    BoxStore boxStore = MyApplication.getBoxStore();
+    skillsItemBox = boxStore.boxFor(SkillsItem.class);
     setUpBottomSheet();
     prefser = new Prefser(this);
     loadingDialog = AppUtil.getDialogLoading(this);
@@ -75,7 +92,15 @@ public class SearchActivity extends BaseActivity {
     mFastAdapter.withEventHook(new SearchResult.RequestButtonClickEvent(new SearchResult.DoClickListener() {
       @Override
       public void requestEmail(SearchResult item) {
-        Toast.makeText(SearchActivity.this, item.getUser().getFirstName(), Toast.LENGTH_SHORT).show();
+        nameTextView.setText(String.format("%s %s", item.getUser().getFirstName(), item.getUser().getLastName()));
+        if (AppUtil.isRTL(SearchActivity.this)) {
+          teachSkillNameTextView.setText(getSkill(item.getTeachSkillUuid()).getFaName());
+          learnSkillNameTextView.setText(getSkill(item.getLearnSkillUuid()).getFaName());
+        } else {
+          teachSkillNameTextView.setText(getSkill(item.getTeachSkillUuid()).getEnName());
+          learnSkillNameTextView.setText(getSkill(item.getLearnSkillUuid()).getEnName());
+        }
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
       }
     }));
     doSearch();
@@ -83,7 +108,7 @@ public class SearchActivity extends BaseActivity {
 
   private void setUpBottomSheet() {
     bottomSheetBehavior = BottomSheetBehavior.from(requestLayout);
-    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
   }
 
   private void doSearch() {
@@ -110,6 +135,10 @@ public class SearchActivity extends BaseActivity {
         t.printStackTrace();
       }
     });
+  }
+
+  private SkillsItem getSkill(String skillUuid) {
+    return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
   }
 }
 

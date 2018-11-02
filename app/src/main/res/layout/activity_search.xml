@@ -58,7 +58,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="250dp"
             android:layoutDirection="locale"
             app:cardBackgroundColor="?attr/colorPrimary"
             app:cardCornerRadius="5dp"
@@ -92,7 +92,7 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/skill_type_text_view"
+                            android:id="@+id/name_text_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
@@ -129,6 +129,7 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/teach_skill_name_text_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
@@ -148,6 +149,7 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/learn_skill_name_text_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
@@ -176,7 +178,7 @@
                     android:textColorHint="?attr/colorSecondary">
 
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/skill_description_edit_text"
+                        android:id="@+id/request_description_edit_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"
