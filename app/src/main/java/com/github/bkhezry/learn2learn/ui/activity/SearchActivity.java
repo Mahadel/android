@@ -7,6 +7,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
@@ -69,6 +70,12 @@ public class SearchActivity extends BaseActivity {
         return true;
       }
     });
+    mFastAdapter.withEventHook(new SearchResult.RequestButtonClickEvent(new SearchResult.DoClickListener() {
+      @Override
+      public void requestEmail(SearchResult item) {
+        Toast.makeText(SearchActivity.this, item.getUser().getFirstName(), Toast.LENGTH_SHORT).show();
+      }
+    }));
 
 
     doSearch();
@@ -85,8 +92,10 @@ public class SearchActivity extends BaseActivity {
         loadingDialog.dismiss();
         if (response.isSuccessful()) {
           List<SearchResult> searchResults = response.body();
-          mItemAdapter.clear();
-          mItemAdapter.add(searchResults);
+          if (searchResults != null) {
+            mItemAdapter.clear();
+            mItemAdapter.add(searchResults);
+          }
         }
       }
 

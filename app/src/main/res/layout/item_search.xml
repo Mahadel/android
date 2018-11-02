@@ -23,9 +23,6 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <View
-                android:layout_width="@dimen/spacing_large"
-                android:layout_height="0dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/name_text_view"
@@ -46,6 +43,20 @@
                 android:layout_weight="1"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="?attr/colorSecondary" />
+
+            <View
+                android:layout_width="@dimen/spacing_large"
+                android:layout_height="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/request_email_btn"
+                style="@style/StyleMaterialButtonLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/request_label"
+                android:textColor="@color/grey_10" />
+
         </LinearLayout>
 
         <View

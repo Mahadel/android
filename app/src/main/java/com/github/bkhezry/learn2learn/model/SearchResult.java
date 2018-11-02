@@ -6,14 +6,18 @@ import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.MyApplication;
+import com.google.android.material.button.MaterialButton;
 import com.google.gson.annotations.SerializedName;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
+import com.mikepenz.fastadapter.listeners.ClickEventHook;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.objectbox.Box;
@@ -92,6 +96,10 @@ public class SearchResult extends AbstractItem<SearchResult, SearchResult.ViewHo
     return R.layout.item_search;
   }
 
+  public interface DoClickListener {
+    void requestEmail(SearchResult item);
+  }
+
   protected static class ViewHolder extends FastAdapter.ViewHolder<SearchResult> {
     protected View view;
     @BindView(R.id.name_text_view)
@@ -106,6 +114,8 @@ public class SearchResult extends AbstractItem<SearchResult, SearchResult.ViewHo
     AppCompatTextView teachDescriptionTextView;
     @BindView(R.id.learn_description_text_view)
     AppCompatTextView learnDescriptionTextView;
+    @BindView(R.id.request_email_btn)
+    MaterialButton requestEmailBtn;
     Box<SkillsItem> skillsItemBox;
 
     ViewHolder(View view) {
@@ -140,4 +150,29 @@ public class SearchResult extends AbstractItem<SearchResult, SearchResult.ViewHo
       return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
     }
   }
+
+  public static class RequestButtonClickEvent extends ClickEventHook<SearchResult> {
+    private DoClickListener listener;
+
+    public RequestButtonClickEvent(DoClickListener doClickListener) {
+      this.listener = doClickListener;
+    }
+
+    @Override
+    public void onClick(@NonNull View view, int position, @NonNull FastAdapter<SearchResult> fastAdapter, @NonNull SearchResult item) {
+      if (listener != null) {
+        listener.requestEmail(item);
+      }
+    }
+
+    @Nullable
+    @Override
+    public View onBind(RecyclerView.ViewHolder viewHolder) {
+      if (viewHolder instanceof SearchResult.ViewHolder) {
+        return ((ViewHolder) viewHolder).requestEmailBtn;
+      }
+      return null;
+    }
+  }
+
 }
