@@ -7,8 +7,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.blankj.utilcode.util.SnackbarUtils;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
+import com.github.bkhezry.learn2learn.model.ResponseMessage;
 import com.github.bkhezry.learn2learn.model.SearchResult;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.bkhezry.learn2learn.service.APIService;
@@ -35,6 +37,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 import retrofit2.Call;
@@ -150,6 +153,37 @@ public class SearchActivity extends BaseActivity {
     } else {
       super.onBackPressed();
     }
+  }
+
+  @OnClick(R.id.submit_btn)
+  public void submitRequestConnection(final View view) {
+    loadingDialog.show();
+    AppUtil.hideSoftInput(SearchActivity.this);
+    String description = requestDescriptionEditText.getText().toString();
+    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+    APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+    Call<ResponseMessage> call = apiService.requestConnection(
+        info.getUuid(),
+        selectedResult.getUser().getUuid(),
+        selectedResult.getLearnSkillUuid(),
+        selectedResult.getTeachSkillUuid(),
+        description);
+    call.enqueue(new Callback<ResponseMessage>() {
+      @Override
+      public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
+        loadingDialog.dismiss();
+        if (response.isSuccessful()) {
+          bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+          AppUtil.showSnackbar(view, "درخواست با موفقیت ارسال شد.", SearchActivity.this, SnackbarUtils.LENGTH_INDEFINITE);
+        }
+      }
+
+      @Override
+      public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
+        t.printStackTrace();
+        loadingDialog.dismiss();
+      }
+    });
   }
 }
 

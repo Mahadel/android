@@ -62,4 +62,12 @@ public interface APIService {
 
   @GET("search/{uuid}")
   Call<List<SearchResult>> search(@Path("uuid") String uuid);
+
+  @POST("connection")
+  @FormUrlEncoded
+  Call<ResponseMessage> requestConnection(@Field("user_uuid_from") String userUUIDFrom,
+                                          @Field("user_uuid_to") String userUUIDTo,
+                                          @Field("learn_skill_uuid_from") String learnSkillUUIDFrom,
+                                          @Field("teach_skill_uuid_from") String teachSkillUUIDFrom,
+                                          @Field("description") String description);
 }

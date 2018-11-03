@@ -180,7 +180,7 @@ public class AppUtil {
     ft.commit();
   }
 
-  public static void showSnackbar(View view, String message, Context context) {
+  public static void showSnackbar(View view, String message, Context context, int duration) {
     final Handler handler = new Handler();
     handler.postDelayed(new Runnable() {
       @Override
@@ -190,7 +190,7 @@ public class AppUtil {
             .setMessage(message)
             .setMessageColor(context.getResources().getColor(R.color.white))
             .setBgColor(context.getResources().getColor(R.color.colorAccent))
-            .setDuration(SnackbarUtils.LENGTH_LONG)
+            .setDuration(duration)
             .setAction(context.getString(R.string.ok_label), Color.YELLOW, new View.OnClickListener() {
               @Override
               public void onClick(View v) {

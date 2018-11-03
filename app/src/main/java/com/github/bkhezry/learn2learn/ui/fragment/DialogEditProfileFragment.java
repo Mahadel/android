@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.RadioGroup;
 
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.SnackbarUtils;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.ResponseMessage;
@@ -109,10 +110,10 @@ public class DialogEditProfileFragment extends DialogFragment {
       if (NetworkUtils.isConnected()) {
         updateUser(firstName, lastName, gender);
       } else {
-        AppUtil.showSnackbar(view, getString(R.string.no_internet_label), activity);
+        AppUtil.showSnackbar(view, getString(R.string.no_internet_label), activity, SnackbarUtils.LENGTH_LONG);
       }
     } else {
-      AppUtil.showSnackbar(view, getString(R.string.field_require_label), activity);
+      AppUtil.showSnackbar(view, getString(R.string.field_require_label), activity, SnackbarUtils.LENGTH_LONG);
     }
   }
 

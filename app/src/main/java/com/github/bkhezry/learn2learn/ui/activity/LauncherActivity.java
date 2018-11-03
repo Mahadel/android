@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.SnackbarUtils;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.Category;
@@ -149,7 +150,7 @@ public class LauncherActivity extends BaseActivity implements
       Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
       startActivityForResult(signInIntent, RC_SIGN_IN);
     } else {
-      AppUtil.showSnackbar(view, getString(R.string.no_internet_label), this);
+      AppUtil.showSnackbar(view, getString(R.string.no_internet_label), this, SnackbarUtils.LENGTH_LONG);
     }
   }
 
@@ -247,10 +248,10 @@ public class LauncherActivity extends BaseActivity implements
       if (NetworkUtils.isConnected()) {
         updateUser(firstName, lastName, gender);
       } else {
-        AppUtil.showSnackbar(submitInfoButton, getString(R.string.no_internet_label), this);
+        AppUtil.showSnackbar(submitInfoButton, getString(R.string.no_internet_label), this, SnackbarUtils.LENGTH_LONG);
       }
     } else {
-      AppUtil.showSnackbar(submitInfoButton, getString(R.string.field_require_label), this);
+      AppUtil.showSnackbar(submitInfoButton, getString(R.string.field_require_label), this, SnackbarUtils.LENGTH_LONG);
     }
   }
 
@@ -319,7 +320,7 @@ public class LauncherActivity extends BaseActivity implements
       retrieveSkillsData();
     } else {
       hiddenLoadingLayout();
-      AppUtil.showSnackbar(view, getString(R.string.no_internet_label), this);
+      AppUtil.showSnackbar(view, getString(R.string.no_internet_label), this, SnackbarUtils.LENGTH_LONG);
     }
   }
 

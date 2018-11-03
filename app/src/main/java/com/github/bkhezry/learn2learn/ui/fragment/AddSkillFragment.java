@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.SnackbarUtils;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.listener.CallbackResult;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
@@ -78,7 +79,7 @@ public class AddSkillFragment extends Fragment {
     if (NetworkUtils.isConnected()) {
       submitUserSkill();
     } else {
-      AppUtil.showSnackbar(view, getString(R.string.no_internet_label), activity);
+      AppUtil.showSnackbar(view, getString(R.string.no_internet_label), activity, SnackbarUtils.LENGTH_LONG);
     }
   }
 
@@ -109,7 +110,7 @@ public class AddSkillFragment extends Fragment {
         }
       });
     } else {
-      AppUtil.showSnackbar(selectSkillButton, getString(R.string.select_skill_message_label), activity);
+      AppUtil.showSnackbar(selectSkillButton, getString(R.string.select_skill_message_label), activity, SnackbarUtils.LENGTH_LONG);
     }
   }
 
