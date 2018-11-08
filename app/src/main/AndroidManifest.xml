@@ -23,6 +23,7 @@
         <activity android:name=".ui.activity.BaseActivity" />
         <activity android:name=".ui.activity.SelectSkillActivity" />
         <activity android:name=".ui.activity.SearchActivity" />
+        <activity android:name=".ui.activity.ConnectionRequestActivity" />
     </application>
 
 </manifest>

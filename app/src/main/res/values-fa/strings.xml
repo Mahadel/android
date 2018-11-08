@@ -44,4 +44,6 @@
     <string name="select_skill_message_label">لطفا مهارت مورد نظر را انتخاب کنید</string>
     <string name="more_info_label">جزئیات بیشتر</string>
     <string name="request_label">درخواست</string>
+    <string name="connections_label">درخواست‌ها</string>
+    <string name="search_label">جستجو</string>
 </resources>

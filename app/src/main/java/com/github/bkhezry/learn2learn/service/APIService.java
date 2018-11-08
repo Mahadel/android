@@ -2,6 +2,7 @@ package com.github.bkhezry.learn2learn.service;
 
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.Category;
+import com.github.bkhezry.learn2learn.model.ConnectionRequest;
 import com.github.bkhezry.learn2learn.model.ResponseMessage;
 import com.github.bkhezry.learn2learn.model.SearchResult;
 import com.github.bkhezry.learn2learn.model.UserInfo;
@@ -70,4 +71,9 @@ public interface APIService {
                                           @Field("learn_skill_uuid_from") String learnSkillUUIDFrom,
                                           @Field("teach_skill_uuid_from") String teachSkillUUIDFrom,
                                           @Field("description") String description);
+
+  @GET("user/{uuid}/connection")
+  Call<List<ConnectionRequest>> getUserConnectionRequst(@Path("uuid") String uuid);
 }
+
+

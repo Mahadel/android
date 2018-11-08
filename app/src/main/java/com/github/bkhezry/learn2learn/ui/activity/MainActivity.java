@@ -319,7 +319,11 @@ public class MainActivity extends BaseActivity {
 
   @Override
   public boolean onOptionsItemSelected(MenuItem menuItem) {
-    startActivity(new Intent(this, SearchActivity.class));
+    if (menuItem.getItemId() == R.id.search_item) {
+      startActivity(new Intent(this, SearchActivity.class));
+    } else {
+      startActivity(new Intent(this, ConnectionRequestActivity.class));
+    }
     return true;
   }
 

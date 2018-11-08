@@ -3,7 +3,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:icon="@drawable/ic_swap_vert_black_24dp"
+        android:title="@string/connections_label"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/search_item"
         android:icon="@drawable/ic_search_24px"
-        android:title="Search"
+        android:title="@string/search_label"
         app:showAsAction="ifRoom" />
 </menu>
