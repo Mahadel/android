@@ -36,7 +36,6 @@ import com.ramotion.cardslider.CardSnapHelper;
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -130,14 +129,9 @@ public class MainActivity extends BaseActivity {
   }
 
   private void initRecyclerViews() {
-    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView_1.getContext(),
-        DividerItemDecoration.HORIZONTAL);
-    dividerItemDecoration.setDrawable(AppUtil.getInsetDrawable(this));
-
     mItemAdapter_1 = new ItemAdapter<>();
     mFastAdapter_1 = FastAdapter.with(mItemAdapter_1);
     recyclerView_1.setAdapter(mFastAdapter_1);
-    recyclerView_1.addItemDecoration(dividerItemDecoration);
     new CardSnapHelper().attachToRecyclerView(recyclerView_1);
     mFastAdapter_1.withOnClickListener(new OnClickListener<UserSkill>() {
       @Override
@@ -150,7 +144,6 @@ public class MainActivity extends BaseActivity {
     mItemAdapter_2 = new ItemAdapter<>();
     mFastAdapter_2 = FastAdapter.with(mItemAdapter_2);
     recyclerView_2.setAdapter(mFastAdapter_2);
-    recyclerView_2.addItemDecoration(dividerItemDecoration);
     new CardSnapHelper().attachToRecyclerView(recyclerView_2);
     mFastAdapter_2.withOnClickListener(new OnClickListener<UserSkill>() {
       @Override

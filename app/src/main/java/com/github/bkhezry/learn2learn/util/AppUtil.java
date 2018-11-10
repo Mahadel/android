@@ -5,10 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.InsetDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.util.TypedValue;
@@ -36,16 +33,6 @@ public class AppUtil {
    */
   public static int dpToPx(int dp, Resources r) {
     return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
-  }
-
-  public static InsetDrawable getInsetDrawable(Context context) {
-    int[] ATTRS = new int[]{android.R.attr.listDivider};
-    TypedArray a = context.obtainStyledAttributes(ATTRS);
-    Drawable divider = a.getDrawable(0);
-    int inset = context.getResources().getDimensionPixelSize(R.dimen.item_space);
-    InsetDrawable insetDivider = new InsetDrawable(divider, inset, 0, inset, 0);
-    a.recycle();
-    return insetDivider;
   }
 
   public static void showSkillTypeDialog(Context context, final DialogClickListener listener) {
