@@ -47,4 +47,6 @@
     <string name="request_label">Request</string>
     <string name="connections_label">Connections</string>
     <string name="search_label">Search</string>
+    <string name="send_email_label">Send Email</string>
+    <string name="delete_label">Delete</string>
 </resources>

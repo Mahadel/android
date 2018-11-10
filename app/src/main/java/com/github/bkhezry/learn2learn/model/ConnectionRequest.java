@@ -3,6 +3,7 @@ package com.github.bkhezry.learn2learn.model;
 import android.view.View;
 
 import com.github.bkhezry.learn2learn.R;
+import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.google.gson.annotations.SerializedName;
@@ -12,6 +13,8 @@ import com.mikepenz.fastadapter.items.AbstractItem;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
@@ -147,6 +150,16 @@ public class ConnectionRequest extends AbstractItem<ConnectionRequest, Connectio
 
   protected static class ViewHolder extends FastAdapter.ViewHolder<ConnectionRequest> {
     protected View view;
+    @BindView(R.id.name_text_view)
+    AppCompatTextView nameTextView;
+    @BindView(R.id.email_text_view)
+    AppCompatTextView emailTextView;
+    @BindView(R.id.learn_skill_name_text_view)
+    AppCompatTextView learnSkillNameTextView;
+    @BindView(R.id.teach_skill_name_text_view)
+    AppCompatTextView teachSkillNameTextView;
+    @BindView(R.id.description_text_view)
+    AppCompatTextView descriptionTextView;
     Box<SkillsItem> skillsItemBox;
 
     ViewHolder(View view) {
@@ -159,7 +172,16 @@ public class ConnectionRequest extends AbstractItem<ConnectionRequest, Connectio
 
     @Override
     public void bindView(@NonNull ConnectionRequest item, @NonNull List<Object> payloads) {
-
+      nameTextView.setText(item.getUserUuidTo());
+      emailTextView.setText(item.getEmailTo());
+      if (AppUtil.isRTL(view.getContext())) {
+        learnSkillNameTextView.setText(getSkill(item.getLearnSkillUuidFrom()).getFaName());
+        teachSkillNameTextView.setText(getSkill(item.getTeachSkillUuidFrom()).getFaName());
+      } else {
+        learnSkillNameTextView.setText(getSkill(item.getLearnSkillUuidFrom()).getEnName());
+        teachSkillNameTextView.setText(getSkill(item.getTeachSkillUuidFrom()).getEnName());
+      }
+      descriptionTextView.setText(item.getDescription());
     }
 
     @Override

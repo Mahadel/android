@@ -20,32 +20,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_large"
-            android:text="Behrouz Khezry"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/email_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="\u0040bkhezry"
             android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_large"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large">
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/learn_skill_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
 
-            <View
-                android:layout_width="@dimen/spacing_xlarge"
-                android:layout_height="0dp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/teach_skill_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
 
-
-            <View
-                android:layout_width="@dimen/spacing_xlarge"
-                android:layout_height="0dp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/description_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
 
         </LinearLayout>
@@ -66,7 +73,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Delete"
+                android:text="@string/delete_label"
                 app:icon="@drawable/ic_delete_black_24dp" />
 
 
@@ -75,7 +82,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Send Email"
+                android:text="@string/send_email_label"
                 app:icon="@drawable/ic_mail_black_24dp" />
         </LinearLayout>
 

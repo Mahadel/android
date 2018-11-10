@@ -46,4 +46,6 @@
     <string name="request_label">درخواست</string>
     <string name="connections_label">درخواست‌ها</string>
     <string name="search_label">جستجو</string>
+    <string name="send_email_label">ارسال ایمیل</string>
+    <string name="delete_label">حذف</string>
 </resources>
