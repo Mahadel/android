@@ -1,9 +1,23 @@
 package com.github.bkhezry.learn2learn.model;
 
+import android.view.View;
+
+import com.github.bkhezry.learn2learn.R;
+import com.github.bkhezry.learn2learn.util.DatabaseUtil;
+import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.google.gson.annotations.SerializedName;
+import com.mikepenz.fastadapter.FastAdapter;
+import com.mikepenz.fastadapter.items.AbstractItem;
+
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import butterknife.ButterKnife;
+import io.objectbox.Box;
+import io.objectbox.BoxStore;
 
 
-public class ConnectionRequest {
+public class ConnectionRequest extends AbstractItem<ConnectionRequest, ConnectionRequest.ViewHolder> {
 
   @SerializedName("email_to")
   private String emailTo;
@@ -115,4 +129,47 @@ public class ConnectionRequest {
     this.userUuidFrom = userUuidFrom;
   }
 
+  @NonNull
+  @Override
+  public ViewHolder getViewHolder(@NonNull View view) {
+    return new ViewHolder(view);
+  }
+
+  @Override
+  public int getType() {
+    return R.id.fastadapter_sample_item_id;
+  }
+
+  @Override
+  public int getLayoutRes() {
+    return R.layout.item_connection_request;
+  }
+
+  protected static class ViewHolder extends FastAdapter.ViewHolder<ConnectionRequest> {
+    protected View view;
+    Box<SkillsItem> skillsItemBox;
+
+    ViewHolder(View view) {
+      super(view);
+      ButterKnife.bind(this, view);
+      this.view = view;
+      BoxStore boxStore = MyApplication.getBoxStore();
+      skillsItemBox = boxStore.boxFor(SkillsItem.class);
+    }
+
+    @Override
+    public void bindView(@NonNull ConnectionRequest item, @NonNull List<Object> payloads) {
+
+    }
+
+    @Override
+    public void unbindView(@NonNull ConnectionRequest item) {
+
+    }
+
+    //TODO move to AppUtil class.
+    private SkillsItem getSkill(String skillUuid) {
+      return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
+    }
+  }
 }

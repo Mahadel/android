@@ -45,8 +45,8 @@ public class ConnectionRequestActivity extends BaseActivity {
   RecyclerView recyclerView;
   private Prefser prefser;
   private Dialog loadingDialog;
-  private FastAdapter<SearchResult> mFastAdapter;
-  private ItemAdapter<SearchResult> mItemAdapter;
+  private FastAdapter<ConnectionRequest> mFastAdapter;
+  private ItemAdapter<ConnectionRequest> mItemAdapter;
   private Box<SkillsItem> skillsItemBox;
 
 
@@ -68,9 +68,9 @@ public class ConnectionRequestActivity extends BaseActivity {
     mItemAdapter = new ItemAdapter<>();
     mFastAdapter = FastAdapter.with(mItemAdapter);
     recyclerView.setAdapter(mFastAdapter);
-    mFastAdapter.withOnPreClickListener(new OnClickListener<SearchResult>() {
+    mFastAdapter.withOnPreClickListener(new OnClickListener<ConnectionRequest>() {
       @Override
-      public boolean onClick(@Nullable View v, @NonNull IAdapter<SearchResult> adapter, @NonNull SearchResult item, int position) {
+      public boolean onClick(@Nullable View v, @NonNull IAdapter<ConnectionRequest> adapter, @NonNull ConnectionRequest item, int position) {
         return true;
       }
     });
@@ -88,6 +88,10 @@ public class ConnectionRequestActivity extends BaseActivity {
         loadingDialog.dismiss();
         if (response.isSuccessful()) {
           List<ConnectionRequest> connectionRequests = response.body();
+          if (connectionRequests != null) {
+            mItemAdapter.clear();
+            mItemAdapter.add(connectionRequests);
+          }
         }
       }
 
