@@ -11,13 +11,10 @@ import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.ConnectionReceiveItem;
 import com.github.bkhezry.learn2learn.model.ConnectionRequest;
 import com.github.bkhezry.learn2learn.model.ConnectionSendItem;
-import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.bkhezry.learn2learn.service.APIService;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
-import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.GridSpacingItemDecoration;
-import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.github.bkhezry.learn2learn.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.mikepenz.fastadapter.FastAdapter;
@@ -33,8 +30,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.objectbox.Box;
-import io.objectbox.BoxStore;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,7 +45,6 @@ public class ConnectionRequestActivity extends BaseActivity {
   private ItemAdapter<ConnectionSendItem> mItemAdapterConnectionSend;
   private FastAdapter<ConnectionReceiveItem> mFastAdapterConnectionReceive;
   private ItemAdapter<ConnectionReceiveItem> mItemAdapterConnectionReceive;
-  private Box<SkillsItem> skillsItemBox;
   private ConnectionRequest connectionRequest;
 
 
@@ -62,8 +56,6 @@ public class ConnectionRequestActivity extends BaseActivity {
         WindowManager.LayoutParams.FLAG_FULLSCREEN);
     setContentView(R.layout.activity_connection_request);
     ButterKnife.bind(this);
-    BoxStore boxStore = MyApplication.getBoxStore();
-    skillsItemBox = boxStore.boxFor(SkillsItem.class);
     prefser = new Prefser(this);
     loadingDialog = AppUtil.getDialogLoading(this);
     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
