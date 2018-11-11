@@ -1,7 +1,9 @@
 package com.github.bkhezry.learn2learn.ui.activity;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -26,6 +28,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -42,6 +46,14 @@ public class ConnectionRequestActivity extends BaseActivity {
   private static final int RECEIVED_CONNECTION = 2;
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
+  @BindView(R.id.sent_image_button)
+  AppCompatImageButton sentImageButton;
+  @BindView(R.id.sent_text_view)
+  AppCompatTextView sentTextView;
+  @BindView(R.id.received_image_button)
+  AppCompatImageButton receivedImageButton;
+  @BindView(R.id.received_text_view)
+  AppCompatTextView receivedTextView;
   private Prefser prefser;
   private Dialog loadingDialog;
   private FastAdapter<ConnectionSendItem> mFastAdapterConnectionSend;
@@ -51,6 +63,12 @@ public class ConnectionRequestActivity extends BaseActivity {
   private ConnectionRequest connectionRequest;
   private int currentConnectionType = SENT_CONNECTION;
 
+  private static int getThemeColorSecondary(Context context) {
+    int colorAttr = context.getResources().getIdentifier("colorSecondary", "attr", context.getPackageName());
+    TypedValue outValue = new TypedValue();
+    context.getTheme().resolveAttribute(colorAttr, outValue, true);
+    return outValue.data;
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -62,25 +80,8 @@ public class ConnectionRequestActivity extends BaseActivity {
     ButterKnife.bind(this);
     prefser = new Prefser(this);
     loadingDialog = AppUtil.getDialogLoading(this);
-    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
-    recyclerView.setLayoutManager(mLayoutManager);
-    recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(6, getResources()), true));
-    mItemAdapterConnectionSend = new ItemAdapter<>();
-    mFastAdapterConnectionSend = FastAdapter.with(mItemAdapterConnectionSend);
-    mFastAdapterConnectionSend.withOnPreClickListener(new OnClickListener<ConnectionSendItem>() {
-      @Override
-      public boolean onClick(@Nullable View v, @NonNull IAdapter<ConnectionSendItem> adapter, @NonNull ConnectionSendItem item, int position) {
-        return true;
-      }
-    });
-    mItemAdapterConnectionReceive = new ItemAdapter<>();
-    mFastAdapterConnectionReceive = FastAdapter.with(mItemAdapterConnectionReceive);
-    mFastAdapterConnectionReceive.withOnPreClickListener(new OnClickListener<ConnectionReceiveItem>() {
-      @Override
-      public boolean onClick(@Nullable View v, @NonNull IAdapter<ConnectionReceiveItem> adapter, @NonNull ConnectionReceiveItem item, int position) {
-        return true;
-      }
-    });
+    setSentSelect();
+    initRecyclerView();
     getConnectionRequests();
   }
 
@@ -122,22 +123,88 @@ public class ConnectionRequestActivity extends BaseActivity {
     mItemAdapterConnectionReceive.add(connectionReceiveItems);
   }
 
-  @OnClick({R.id.sent_layout, R.id.received_layout})
+  private void initRecyclerView() {
+    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
+    recyclerView.setLayoutManager(mLayoutManager);
+    recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(6, getResources()), true));
+    mItemAdapterConnectionSend = new ItemAdapter<>();
+    mFastAdapterConnectionSend = FastAdapter.with(mItemAdapterConnectionSend);
+    mFastAdapterConnectionSend.withOnPreClickListener(new OnClickListener<ConnectionSendItem>() {
+      @Override
+      public boolean onClick(@Nullable View v, @NonNull IAdapter<ConnectionSendItem> adapter, @NonNull ConnectionSendItem item, int position) {
+        return true;
+      }
+    });
+    mItemAdapterConnectionReceive = new ItemAdapter<>();
+    mFastAdapterConnectionReceive = FastAdapter.with(mItemAdapterConnectionReceive);
+    mFastAdapterConnectionReceive.withOnPreClickListener(new OnClickListener<ConnectionReceiveItem>() {
+      @Override
+      public boolean onClick(@Nullable View v, @NonNull IAdapter<ConnectionReceiveItem> adapter, @NonNull ConnectionReceiveItem item, int position) {
+        return true;
+      }
+    });
+  }
+
+  @OnClick({R.id.sent_layout, R.id.received_layout, R.id.sent_image_button, R.id.received_image_button})
   public void handleBottomNavigationClick(View view) {
     switch (view.getId()) {
       case R.id.sent_layout:
-        if (currentConnectionType != SENT_CONNECTION) {
-          displayConnectionSend(connectionRequest.getConnectionSend());
-          currentConnectionType = SENT_CONNECTION;
-        }
+        selectSentConnection();
         break;
       case R.id.received_layout:
-        if (currentConnectionType != RECEIVED_CONNECTION) {
-          displayConnectionReceive(connectionRequest.getConnectionReceive());
-          currentConnectionType = RECEIVED_CONNECTION;
-        }
+        selectReceivedConnection();
+        break;
+      case R.id.sent_image_button:
+        selectSentConnection();
+        break;
+      case R.id.received_image_button:
+        selectReceivedConnection();
         break;
     }
   }
+
+  private void selectReceivedConnection() {
+    if (currentConnectionType != RECEIVED_CONNECTION) {
+      displayConnectionReceive(connectionRequest.getConnectionReceive());
+      currentConnectionType = RECEIVED_CONNECTION;
+      setReceivedSelect();
+      setSentDeselect();
+    }
+  }
+
+  private void selectSentConnection() {
+    if (currentConnectionType != SENT_CONNECTION) {
+      displayConnectionSend(connectionRequest.getConnectionSend());
+      currentConnectionType = SENT_CONNECTION;
+      setSentSelect();
+      setReceivedDeselect();
+    }
+  }
+
+  private void setSentSelect() {
+    sentTextView.setTextColor(getResources().getColor(R.color.colorAccent));
+    sentImageButton.setColorFilter(getResources().getColor(R.color.colorAccent));
+  }
+
+  private void setReceivedSelect() {
+    receivedTextView.setTextColor(getResources().getColor(R.color.colorAccent));
+    receivedImageButton.setColorFilter(getResources().getColor(R.color.colorAccent));
+  }
+
+  private void setSentDeselect() {
+    sentTextView.setTextColor(getThemeColorSecondary(this));
+    sentImageButton.setColorFilter(getThemeColorSecondary(this));
+  }
+
+  private void setReceivedDeselect() {
+    receivedTextView.setTextColor(getThemeColorSecondary(this));
+    receivedImageButton.setColorFilter(getThemeColorSecondary(this));
+  }
+
+  @OnClick(R.id.close_image_view)
+  public void close() {
+    finish();
+  }
+
 }
 

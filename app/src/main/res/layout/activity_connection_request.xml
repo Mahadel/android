@@ -45,6 +45,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:cardBackgroundColor="?attr/colorPrimary"
                     app:cardCornerRadius="5dp">
 
                     <LinearLayout
@@ -62,14 +63,16 @@
                             android:focusable="true"
                             android:orientation="horizontal">
 
-                            <ImageButton
+                            <androidx.appcompat.widget.AppCompatImageButton
+                                android:id="@+id/sent_image_button"
                                 android:layout_width="?attr/actionBarSize"
                                 android:layout_height="?attr/actionBarSize"
                                 android:background="?attr/selectableItemBackgroundBorderless"
                                 android:tint="?attr/colorSecondary"
                                 app:srcCompat="@drawable/ic_arrow_upward_black_24dp" />
 
-                            <TextView
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/sent_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -90,14 +93,16 @@
                             android:clickable="true"
                             android:focusable="true">
 
-                            <ImageButton
+                            <androidx.appcompat.widget.AppCompatImageButton
+                                android:id="@+id/received_image_button"
                                 android:layout_width="?attr/actionBarSize"
                                 android:layout_height="?attr/actionBarSize"
                                 android:background="?attr/selectableItemBackgroundBorderless"
                                 android:tint="?attr/colorSecondary"
                                 app:srcCompat="@drawable/ic_arrow_downward_black_24dp" />
 
-                            <TextView
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/received_text_view"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
