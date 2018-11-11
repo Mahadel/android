@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,6 +38,8 @@ import retrofit2.Response;
 import static com.github.bkhezry.learn2learn.util.AppUtil.dpToPx;
 
 public class ConnectionRequestActivity extends BaseActivity {
+  private static final int SENT_CONNECTION = 1;
+  private static final int RECEIVED_CONNECTION = 2;
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
   private Prefser prefser;
@@ -46,6 +49,7 @@ public class ConnectionRequestActivity extends BaseActivity {
   private FastAdapter<ConnectionReceiveItem> mFastAdapterConnectionReceive;
   private ItemAdapter<ConnectionReceiveItem> mItemAdapterConnectionReceive;
   private ConnectionRequest connectionRequest;
+  private int currentConnectionType = SENT_CONNECTION;
 
 
   @Override
@@ -110,6 +114,30 @@ public class ConnectionRequestActivity extends BaseActivity {
     recyclerView.setAdapter(mFastAdapterConnectionSend);
     mItemAdapterConnectionSend.clear();
     mItemAdapterConnectionSend.add(connectionSend);
+  }
+
+  private void displayConnectionReceive(List<ConnectionReceiveItem> connectionReceiveItems) {
+    recyclerView.setAdapter(mFastAdapterConnectionReceive);
+    mItemAdapterConnectionReceive.clear();
+    mItemAdapterConnectionReceive.add(connectionReceiveItems);
+  }
+
+  @OnClick({R.id.sent_layout, R.id.received_layout})
+  public void handleButtomNavigationClick(View view) {
+    switch (view.getId()) {
+      case R.id.sent_layout:
+        if (currentConnectionType != SENT_CONNECTION) {
+          displayConnectionSend(connectionRequest.getConnectionSend());
+          currentConnectionType = SENT_CONNECTION;
+        }
+        break;
+      case R.id.received_layout:
+        if (currentConnectionType != RECEIVED_CONNECTION) {
+          displayConnectionReceive(connectionRequest.getConnectionReceive());
+          currentConnectionType = RECEIVED_CONNECTION;
+        }
+        break;
+    }
   }
 }
 

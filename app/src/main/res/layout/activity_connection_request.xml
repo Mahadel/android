@@ -54,15 +54,15 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/sent_layout"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:padding="@dimen/spacing_medium">
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:orientation="horizontal">
 
                             <ImageButton
-                                android:id="@+id/map_button"
                                 android:layout_width="?attr/actionBarSize"
                                 android:layout_height="?attr/actionBarSize"
                                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -72,9 +72,9 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:text="@string/sent_label"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                                android:textStyle="bold" />
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
 
                         </LinearLayout>
 
@@ -83,14 +83,14 @@
                             android:layout_height="0dp" />
 
                         <LinearLayout
+                            android:id="@+id/received_layout"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center"
-                            android:padding="@dimen/spacing_medium">
+                            android:clickable="true"
+                            android:focusable="true">
 
                             <ImageButton
-                                android:id="@+id/list_button"
                                 android:layout_width="?attr/actionBarSize"
                                 android:layout_height="?attr/actionBarSize"
                                 android:background="?attr/selectableItemBackgroundBorderless"
@@ -100,9 +100,9 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center"
                                 android:text="@string/received_label"
-                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-                                android:textStyle="bold" />
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
 
                         </LinearLayout>
 
