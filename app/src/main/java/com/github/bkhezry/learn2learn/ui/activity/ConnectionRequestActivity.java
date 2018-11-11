@@ -9,7 +9,7 @@ import android.view.WindowManager;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.ConnectionRequest;
-import com.github.bkhezry.learn2learn.model.SearchResult;
+import com.github.bkhezry.learn2learn.model.ConnectionSendItem;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.bkhezry.learn2learn.service.APIService;
 import com.github.bkhezry.learn2learn.util.AppUtil;
@@ -23,8 +23,6 @@ import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
-
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,8 +43,8 @@ public class ConnectionRequestActivity extends BaseActivity {
   RecyclerView recyclerView;
   private Prefser prefser;
   private Dialog loadingDialog;
-  private FastAdapter<ConnectionRequest> mFastAdapter;
-  private ItemAdapter<ConnectionRequest> mItemAdapter;
+  private FastAdapter<ConnectionSendItem> mFastAdapter;
+  private ItemAdapter<ConnectionSendItem> mItemAdapter;
   private Box<SkillsItem> skillsItemBox;
 
 
@@ -68,9 +66,9 @@ public class ConnectionRequestActivity extends BaseActivity {
     mItemAdapter = new ItemAdapter<>();
     mFastAdapter = FastAdapter.with(mItemAdapter);
     recyclerView.setAdapter(mFastAdapter);
-    mFastAdapter.withOnPreClickListener(new OnClickListener<ConnectionRequest>() {
+    mFastAdapter.withOnPreClickListener(new OnClickListener<ConnectionSendItem>() {
       @Override
-      public boolean onClick(@Nullable View v, @NonNull IAdapter<ConnectionRequest> adapter, @NonNull ConnectionRequest item, int position) {
+      public boolean onClick(@Nullable View v, @NonNull IAdapter<ConnectionSendItem> adapter, @NonNull ConnectionSendItem item, int position) {
         return true;
       }
     });
@@ -81,22 +79,22 @@ public class ConnectionRequestActivity extends BaseActivity {
     loadingDialog.show();
     final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
-    Call<List<ConnectionRequest>> call = apiService.getUserConnectionRequst(info.getUuid());
-    call.enqueue(new Callback<List<ConnectionRequest>>() {
+    Call<ConnectionRequest> call = apiService.getUserConnectionRequst(info.getUuid());
+    call.enqueue(new Callback<ConnectionRequest>() {
       @Override
-      public void onResponse(@NonNull Call<List<ConnectionRequest>> call, @NonNull Response<List<ConnectionRequest>> response) {
+      public void onResponse(@NonNull Call<ConnectionRequest> call, @NonNull Response<ConnectionRequest> response) {
         loadingDialog.dismiss();
         if (response.isSuccessful()) {
-          List<ConnectionRequest> connectionRequests = response.body();
+          ConnectionRequest connectionRequests = response.body();
           if (connectionRequests != null) {
             mItemAdapter.clear();
-            mItemAdapter.add(connectionRequests);
+            mItemAdapter.add(connectionRequests.getConnectionSend());
           }
         }
       }
 
       @Override
-      public void onFailure(@NonNull Call<List<ConnectionRequest>> call, @NonNull Throwable t) {
+      public void onFailure(@NonNull Call<ConnectionRequest> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
 

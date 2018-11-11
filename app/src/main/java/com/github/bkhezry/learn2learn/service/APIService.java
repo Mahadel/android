@@ -73,7 +73,7 @@ public interface APIService {
                                           @Field("description") String description);
 
   @GET("user/{uuid}/connection")
-  Call<List<ConnectionRequest>> getUserConnectionRequst(@Path("uuid") String uuid);
+  Call<ConnectionRequest> getUserConnectionRequst(@Path("uuid") String uuid);
 }
 
 
