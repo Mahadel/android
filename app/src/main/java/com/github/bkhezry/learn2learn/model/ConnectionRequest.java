@@ -6,34 +6,26 @@ import com.google.gson.annotations.SerializedName;
 
 public class ConnectionRequest {
 
-	@SerializedName("connection_receive")
-	private List<ConnectionReceiveItem> connectionReceive;
+  @SerializedName("connection_receive")
+  private List<ConnectionReceiveItem> connectionReceive;
 
-	@SerializedName("connection_send")
-	private List<ConnectionSendItem> connectionSend;
+  @SerializedName("connection_send")
+  private List<ConnectionSendItem> connectionSend;
 
-	public void setConnectionReceive(List<ConnectionReceiveItem> connectionReceive){
-		this.connectionReceive = connectionReceive;
-	}
+  public void setConnectionReceive(List<ConnectionReceiveItem> connectionReceive) {
+    this.connectionReceive = connectionReceive;
+  }
 
-	public List<ConnectionReceiveItem> getConnectionReceive(){
-		return connectionReceive;
-	}
+  public List<ConnectionReceiveItem> getConnectionReceive() {
+    return connectionReceive;
+  }
 
-	public void setConnectionSend(List<ConnectionSendItem> connectionSend){
-		this.connectionSend = connectionSend;
-	}
+  public void setConnectionSend(List<ConnectionSendItem> connectionSend) {
+    this.connectionSend = connectionSend;
+  }
 
-	public List<ConnectionSendItem> getConnectionSend(){
-		return connectionSend;
-	}
+  public List<ConnectionSendItem> getConnectionSend() {
+    return connectionSend;
+  }
 
-	@Override
- 	public String toString(){
-		return 
-			"ConnectionRequest{" +
-			"connection_receive = '" + connectionReceive + '\'' + 
-			",connection_send = '" + connectionSend + '\'' + 
-			"}";
-		}
 }

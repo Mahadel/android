@@ -8,6 +8,7 @@ import android.view.WindowManager;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
+import com.github.bkhezry.learn2learn.model.ConnectionReceiveItem;
 import com.github.bkhezry.learn2learn.model.ConnectionRequest;
 import com.github.bkhezry.learn2learn.model.ConnectionSendItem;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
@@ -23,6 +24,8 @@ import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,9 +46,12 @@ public class ConnectionRequestActivity extends BaseActivity {
   RecyclerView recyclerView;
   private Prefser prefser;
   private Dialog loadingDialog;
-  private FastAdapter<ConnectionSendItem> mFastAdapter;
-  private ItemAdapter<ConnectionSendItem> mItemAdapter;
+  private FastAdapter<ConnectionSendItem> mFastAdapterConnectionSend;
+  private ItemAdapter<ConnectionSendItem> mItemAdapterConnectionSend;
+  private FastAdapter<ConnectionReceiveItem> mFastAdapterConnectionReceive;
+  private ItemAdapter<ConnectionReceiveItem> mItemAdapterConnectionReceive;
   private Box<SkillsItem> skillsItemBox;
+  private ConnectionRequest connectionRequest;
 
 
   @Override
@@ -63,12 +69,19 @@ public class ConnectionRequestActivity extends BaseActivity {
     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
     recyclerView.setLayoutManager(mLayoutManager);
     recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(6, getResources()), true));
-    mItemAdapter = new ItemAdapter<>();
-    mFastAdapter = FastAdapter.with(mItemAdapter);
-    recyclerView.setAdapter(mFastAdapter);
-    mFastAdapter.withOnPreClickListener(new OnClickListener<ConnectionSendItem>() {
+    mItemAdapterConnectionSend = new ItemAdapter<>();
+    mFastAdapterConnectionSend = FastAdapter.with(mItemAdapterConnectionSend);
+    mFastAdapterConnectionSend.withOnPreClickListener(new OnClickListener<ConnectionSendItem>() {
       @Override
       public boolean onClick(@Nullable View v, @NonNull IAdapter<ConnectionSendItem> adapter, @NonNull ConnectionSendItem item, int position) {
+        return true;
+      }
+    });
+    mItemAdapterConnectionReceive = new ItemAdapter<>();
+    mFastAdapterConnectionReceive = FastAdapter.with(mItemAdapterConnectionReceive);
+    mFastAdapterConnectionReceive.withOnPreClickListener(new OnClickListener<ConnectionReceiveItem>() {
+      @Override
+      public boolean onClick(@javax.annotation.Nullable View v, IAdapter<ConnectionReceiveItem> adapter, ConnectionReceiveItem item, int position) {
         return true;
       }
     });
@@ -85,10 +98,9 @@ public class ConnectionRequestActivity extends BaseActivity {
       public void onResponse(@NonNull Call<ConnectionRequest> call, @NonNull Response<ConnectionRequest> response) {
         loadingDialog.dismiss();
         if (response.isSuccessful()) {
-          ConnectionRequest connectionRequests = response.body();
-          if (connectionRequests != null) {
-            mItemAdapter.clear();
-            mItemAdapter.add(connectionRequests.getConnectionSend());
+          connectionRequest = response.body();
+          if (connectionRequest != null) {
+            displayConnectionSend(connectionRequest.getConnectionSend());
           }
         }
       }
@@ -102,8 +114,10 @@ public class ConnectionRequestActivity extends BaseActivity {
     });
   }
 
-  private SkillsItem getSkill(String skillUuid) {
-    return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
+  private void displayConnectionSend(List<ConnectionSendItem> connectionSend) {
+    recyclerView.setAdapter(mFastAdapterConnectionSend);
+    mItemAdapterConnectionSend.clear();
+    mItemAdapterConnectionSend.add(connectionSend);
   }
 }
 
