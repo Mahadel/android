@@ -123,7 +123,7 @@ public class ConnectionRequestActivity extends BaseActivity {
   }
 
   @OnClick({R.id.sent_layout, R.id.received_layout})
-  public void handleButtomNavigationClick(View view) {
+  public void handleBottomNavigationClick(View view) {
     switch (view.getId()) {
       case R.id.sent_layout:
         if (currentConnectionType != SENT_CONNECTION) {
