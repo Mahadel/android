@@ -73,7 +73,7 @@ public class ConnectionRequestActivity extends BaseActivity {
     mFastAdapterConnectionReceive = FastAdapter.with(mItemAdapterConnectionReceive);
     mFastAdapterConnectionReceive.withOnPreClickListener(new OnClickListener<ConnectionReceiveItem>() {
       @Override
-      public boolean onClick(@javax.annotation.Nullable View v, IAdapter<ConnectionReceiveItem> adapter, ConnectionReceiveItem item, int position) {
+      public boolean onClick(@Nullable View v, @NonNull IAdapter<ConnectionReceiveItem> adapter, @NonNull ConnectionReceiveItem item, int position) {
         return true;
       }
     });

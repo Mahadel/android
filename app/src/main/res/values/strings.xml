@@ -49,4 +49,6 @@
     <string name="search_label">Search</string>
     <string name="send_email_label">Send Email</string>
     <string name="delete_label">Delete</string>
+    <string name="received_label">Received</string>
+    <string name="sent_label">Sent</string>
 </resources>
