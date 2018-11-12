@@ -96,7 +96,7 @@ public class SearchResult extends AbstractItem<SearchResult, SearchResult.ViewHo
     return R.layout.item_search;
   }
 
-  public interface DoClickListener {
+  public interface RequestClickListener {
     void requestEmail(SearchResult item);
   }
 
@@ -152,10 +152,10 @@ public class SearchResult extends AbstractItem<SearchResult, SearchResult.ViewHo
   }
 
   public static class RequestButtonClickEvent extends ClickEventHook<SearchResult> {
-    private DoClickListener listener;
+    private RequestClickListener listener;
 
-    public RequestButtonClickEvent(DoClickListener doClickListener) {
-      this.listener = doClickListener;
+    public RequestButtonClickEvent(RequestClickListener doRequestClickListener) {
+      this.listener = doRequestClickListener;
     }
 
     @Override
