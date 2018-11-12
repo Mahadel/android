@@ -157,7 +157,7 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
 
   @Override
   public int getLayoutRes() {
-    return R.layout.item_connection_request;
+    return R.layout.item_connection_sent;
   }
 
   protected static class ViewHolder extends FastAdapter.ViewHolder<ConnectionSendItem> {
@@ -184,7 +184,7 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
 
     @Override
     public void bindView(@NonNull ConnectionSendItem item, @NonNull List<Object> payloads) {
-      nameTextView.setText(item.getUserUuidTo());
+      nameTextView.setText(String.format("%s %s", item.getUserInfo().getFirstName(), item.getUserInfo().getLastName()));
       emailTextView.setText(item.getEmailTo());
       if (AppUtil.isRTL(view.getContext())) {
         learnSkillNameTextView.setText(getSkill(item.getLearnSkillUuidFrom()).getFaName());
