@@ -53,6 +53,9 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
   @SerializedName("user_uuid_from")
   private String userUuidFrom;
 
+  @SerializedName("user_to")
+  private UserInfo userInfo;
+
   public void setEmailTo(String emailTo) {
     this.emailTo = emailTo;
   }
@@ -131,6 +134,14 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
 
   public String getUserUuidFrom() {
     return userUuidFrom;
+  }
+
+  public UserInfo getUserInfo() {
+    return userInfo;
+  }
+
+  public void setUserInfo(UserInfo userInfo) {
+    this.userInfo = userInfo;
   }
 
   @NonNull
