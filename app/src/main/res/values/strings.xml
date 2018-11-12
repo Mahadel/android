@@ -53,4 +53,5 @@
     <string name="sent_label">Sent</string>
     <string name="reject_label">Reject</string>
     <string name="accept">Accept</string>
+    <string name="request_sent_success">request sent successfully.</string>
 </resources>

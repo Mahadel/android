@@ -220,4 +220,3 @@ public class ConnectionRequestActivity extends BaseActivity {
   }
 
 }
-

@@ -174,7 +174,7 @@ public class SearchActivity extends BaseActivity {
         loadingDialog.dismiss();
         if (response.isSuccessful()) {
           bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-          AppUtil.showSnackbar(view, "درخواست با موفقیت ارسال شد.", SearchActivity.this, SnackbarUtils.LENGTH_INDEFINITE);
+          AppUtil.showSnackbar(view, getString(R.string.request_sent_success), SearchActivity.this, SnackbarUtils.LENGTH_INDEFINITE);
         }
       }
 

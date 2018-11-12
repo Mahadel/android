@@ -52,4 +52,5 @@
     <string name="sent_label">ارسال شده</string>
     <string name="reject_label">رد درخواست</string>
     <string name="accept">قبول درخواست</string>
+    <string name="request_sent_success">درخواست با موفقیت ارسال شد.</string>
 </resources>
