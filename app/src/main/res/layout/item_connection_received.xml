@@ -69,6 +69,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/reject_button"
                 style="@style/StyleMaterialButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -79,6 +80,7 @@
 
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/accept_button"
                 style="@style/StyleMaterialButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
