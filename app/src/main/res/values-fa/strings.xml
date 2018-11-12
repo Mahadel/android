@@ -47,7 +47,9 @@
     <string name="connections_label">درخواست‌ها</string>
     <string name="search_label">جستجو</string>
     <string name="send_email_label">ارسال ایمیل</string>
-    <string name="delete_label">حذف</string>
+    <string name="delete_label">حذف درخواست</string>
     <string name="received_label">دریافت شده</string>
     <string name="sent_label">ارسال شده</string>
+    <string name="reject_label">رد درخواست</string>
+    <string name="accept">قبول درخواست</string>
 </resources>

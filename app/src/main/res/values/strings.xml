@@ -51,4 +51,6 @@
     <string name="delete_label">Delete</string>
     <string name="received_label">Received</string>
     <string name="sent_label">Sent</string>
+    <string name="reject_label">Reject</string>
+    <string name="accept">Accept</string>
 </resources>
