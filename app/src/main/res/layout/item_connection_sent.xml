@@ -74,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/delete_label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 app:icon="@drawable/ic_delete_black_24dp" />
 
 
@@ -83,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/send_email_label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 app:icon="@drawable/ic_mail_black_24dp" />
         </LinearLayout>
 
