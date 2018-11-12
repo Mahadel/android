@@ -93,7 +93,7 @@ public class SearchActivity extends BaseActivity {
         return true;
       }
     });
-    mFastAdapter.withEventHook(new SearchResult.RequestButtonClickEvent(new SearchResult.DoClickListener() {
+    mFastAdapter.withEventHook(new SearchResult.RequestButtonClickEvent(new SearchResult.RequestClickListener() {
       @Override
       public void requestEmail(SearchResult item) {
         selectedResult = item;
