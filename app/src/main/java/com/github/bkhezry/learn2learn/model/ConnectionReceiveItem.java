@@ -7,14 +7,18 @@ import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.MyApplication;
+import com.google.android.material.button.MaterialButton;
 import com.google.gson.annotations.SerializedName;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
+import com.mikepenz.fastadapter.listeners.ClickEventHook;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.objectbox.Box;
@@ -146,8 +150,16 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
 
   @NonNull
   @Override
-  public ConnectionReceiveItem.ViewHolder getViewHolder(@NonNull View view) {
+  public ViewHolder getViewHolder(@NonNull View view) {
     return new ViewHolder(view);
+  }
+
+  public interface HandleAcceptClickListener {
+    void accept(ConnectionReceiveItem item);
+  }
+
+  public interface HandleRejectClickListener {
+    void reject(ConnectionReceiveItem item);
   }
 
   @Override
@@ -172,6 +184,10 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
     AppCompatTextView teachSkillNameTextView;
     @BindView(R.id.description_text_view)
     AppCompatTextView descriptionTextView;
+    @BindView(R.id.reject_request_button)
+    MaterialButton rejectRequestButton;
+    @BindView(R.id.accept_request_button)
+    MaterialButton acceptRequestButton;
     Box<SkillsItem> skillsItemBox;
 
     ViewHolder(View view) {
@@ -204,6 +220,54 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
     //TODO move to AppUtil class.
     private SkillsItem getSkill(String skillUuid) {
       return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
+    }
+  }
+
+  public static class AcceptButtonClickEvent extends ClickEventHook<ConnectionReceiveItem> {
+    private HandleAcceptClickListener listener;
+
+    public AcceptButtonClickEvent(HandleAcceptClickListener handleAcceptClickListener) {
+      this.listener = handleAcceptClickListener;
+    }
+
+    @Override
+    public void onClick(@NonNull View view, int position, @NonNull FastAdapter<ConnectionReceiveItem> fastAdapter, @NonNull ConnectionReceiveItem item) {
+      if (listener != null) {
+        listener.accept(item);
+      }
+    }
+
+    @Nullable
+    @Override
+    public View onBind(RecyclerView.ViewHolder viewHolder) {
+      if (viewHolder instanceof ViewHolder) {
+        return ((ViewHolder) viewHolder).acceptRequestButton;
+      }
+      return null;
+    }
+  }
+
+  public static class RejectButtonClickEvent extends ClickEventHook<ConnectionReceiveItem> {
+    private HandleRejectClickListener listener;
+
+    public RejectButtonClickEvent(HandleRejectClickListener handleRejectButtonClickEvent) {
+      this.listener = handleRejectButtonClickEvent;
+    }
+
+    @Override
+    public void onClick(@NonNull View view, int position, @NonNull FastAdapter<ConnectionReceiveItem> fastAdapter, @NonNull ConnectionReceiveItem item) {
+      if (listener != null) {
+        listener.reject(item);
+      }
+    }
+
+    @Nullable
+    @Override
+    public View onBind(RecyclerView.ViewHolder viewHolder) {
+      if (viewHolder instanceof ViewHolder) {
+        return ((ViewHolder) viewHolder).rejectRequestButton;
+      }
+      return null;
     }
   }
 }

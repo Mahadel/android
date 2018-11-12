@@ -7,6 +7,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
@@ -143,6 +144,18 @@ public class ConnectionRequestActivity extends BaseActivity {
         return true;
       }
     });
+    mFastAdapterConnectionReceive.withEventHook(new ConnectionReceiveItem.AcceptButtonClickEvent(new ConnectionReceiveItem.HandleAcceptClickListener() {
+      @Override
+      public void accept(ConnectionReceiveItem item) {
+        Toast.makeText(ConnectionRequestActivity.this, item.getUserInfo().getFirstName(), Toast.LENGTH_SHORT).show();
+      }
+    }));
+    mFastAdapterConnectionReceive.withEventHook(new ConnectionReceiveItem.RejectButtonClickEvent(new ConnectionReceiveItem.HandleRejectClickListener() {
+      @Override
+      public void reject(ConnectionReceiveItem item) {
+        Toast.makeText(ConnectionRequestActivity.this, item.getUserInfo().getFirstName(), Toast.LENGTH_SHORT).show();
+      }
+    }));
   }
 
   @OnClick({R.id.sent_layout, R.id.received_layout, R.id.sent_image_button, R.id.received_image_button})
