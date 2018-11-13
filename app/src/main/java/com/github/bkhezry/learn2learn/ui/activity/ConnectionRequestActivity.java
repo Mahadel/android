@@ -14,6 +14,7 @@ import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.ConnectionReceiveItem;
 import com.github.bkhezry.learn2learn.model.ConnectionRequest;
 import com.github.bkhezry.learn2learn.model.ConnectionSendItem;
+import com.github.bkhezry.learn2learn.model.ResponseMessage;
 import com.github.bkhezry.learn2learn.service.APIService;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
@@ -139,7 +140,7 @@ public class ConnectionRequestActivity extends BaseActivity {
     mFastAdapterConnectionSend.withEventHook(new ConnectionSendItem.DeleteButtonClickEvent(new ConnectionSendItem.HandleDeleteClickListener() {
       @Override
       public void delete(ConnectionSendItem item) {
-        Toast.makeText(ConnectionRequestActivity.this, item.getUserInfo().getFirstName(), Toast.LENGTH_SHORT).show();
+        deleteConnection(item);
       }
     }));
     mFastAdapterConnectionSend.withEventHook(new ConnectionSendItem.EmailButtonClickEvent(new ConnectionSendItem.HandleEmailClickListener() {
@@ -159,15 +160,62 @@ public class ConnectionRequestActivity extends BaseActivity {
     mFastAdapterConnectionReceive.withEventHook(new ConnectionReceiveItem.AcceptButtonClickEvent(new ConnectionReceiveItem.HandleAcceptClickListener() {
       @Override
       public void accept(ConnectionReceiveItem item) {
-        Toast.makeText(ConnectionRequestActivity.this, item.getUserInfo().getFirstName(), Toast.LENGTH_SHORT).show();
+        editConnectionRequest(item, 1);
       }
     }));
     mFastAdapterConnectionReceive.withEventHook(new ConnectionReceiveItem.RejectButtonClickEvent(new ConnectionReceiveItem.HandleRejectClickListener() {
       @Override
       public void reject(ConnectionReceiveItem item) {
-        Toast.makeText(ConnectionRequestActivity.this, item.getUserInfo().getFirstName(), Toast.LENGTH_SHORT).show();
+        editConnectionRequest(item, 0);
       }
     }));
+  }
+
+  private void editConnectionRequest(ConnectionReceiveItem item, int isAccept) {
+    loadingDialog.show();
+    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+    APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+    Call<ConnectionReceiveItem> call = apiService.editConnection(info.getUuid(), item.getUuid(), isAccept);
+    call.enqueue(new Callback<ConnectionReceiveItem>() {
+      @Override
+      public void onResponse(@NonNull Call<ConnectionReceiveItem> call, @NonNull Response<ConnectionReceiveItem> response) {
+        loadingDialog.dismiss();
+        if (response.isSuccessful()) {
+          ConnectionReceiveItem connectionReceiveItem = response.body();
+        }
+      }
+
+      @Override
+      public void onFailure(@NonNull Call<ConnectionReceiveItem> call, @NonNull Throwable t) {
+        t.printStackTrace();
+        loadingDialog.dismiss();
+      }
+    });
+  }
+
+  private void deleteConnection(ConnectionSendItem item) {
+    loadingDialog.show();
+    //TODO get authentication info only one time.
+    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+    APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+    Call<ResponseMessage> call = apiService.deleteConnectionRequest(info.getUuid(), item.getUuid());
+    call.enqueue(new Callback<ResponseMessage>() {
+      @Override
+      public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
+        loadingDialog.dismiss();
+        if (response.isSuccessful()) {
+
+        }
+      }
+
+      @Override
+      public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
+        loadingDialog.dismiss();
+        t.printStackTrace();
+
+      }
+    });
+
   }
 
   @OnClick({R.id.sent_layout, R.id.received_layout, R.id.sent_image_button, R.id.received_image_button})

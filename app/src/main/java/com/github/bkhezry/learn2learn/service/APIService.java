@@ -2,6 +2,7 @@ package com.github.bkhezry.learn2learn.service;
 
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.Category;
+import com.github.bkhezry.learn2learn.model.ConnectionReceiveItem;
 import com.github.bkhezry.learn2learn.model.ConnectionRequest;
 import com.github.bkhezry.learn2learn.model.ResponseMessage;
 import com.github.bkhezry.learn2learn.model.SearchResult;
@@ -74,6 +75,16 @@ public interface APIService {
 
   @GET("user/{uuid}/connection")
   Call<ConnectionRequest> getUserConnectionRequest(@Path("uuid") String uuid);
+
+  @DELETE("user/{uuid}/connection/{connection_uuid}")
+  Call<ResponseMessage> deleteConnectionRequest(@Path("uuid") String uuid,
+                                                @Path("connection_uuid") String connectionUUID);
+
+  @PUT("user/{uuid}/connection/{connection_uuid}")
+  @FormUrlEncoded
+  Call<ConnectionReceiveItem> editConnection(@Path("uuid") String uuid,
+                                             @Path("connection_uuid") String connectionUUID,
+                                             @Field("is_active") int isActive);
 }
 
 
