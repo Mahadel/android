@@ -90,7 +90,7 @@ public class ConnectionRequestActivity extends BaseActivity {
     loadingDialog.show();
     final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
-    Call<ConnectionRequest> call = apiService.getUserConnectionRequst(info.getUuid());
+    Call<ConnectionRequest> call = apiService.getUserConnectionRequest(info.getUuid());
     call.enqueue(new Callback<ConnectionRequest>() {
       @Override
       public void onResponse(@NonNull Call<ConnectionRequest> call, @NonNull Response<ConnectionRequest> response) {
