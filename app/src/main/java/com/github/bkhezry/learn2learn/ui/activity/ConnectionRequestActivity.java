@@ -136,6 +136,18 @@ public class ConnectionRequestActivity extends BaseActivity {
         return true;
       }
     });
+    mFastAdapterConnectionSend.withEventHook(new ConnectionSendItem.DeleteButtonClickEvent(new ConnectionSendItem.HandleDeleteClickListener() {
+      @Override
+      public void delete(ConnectionSendItem item) {
+        Toast.makeText(ConnectionRequestActivity.this, item.getUserInfo().getFirstName(), Toast.LENGTH_SHORT).show();
+      }
+    }));
+    mFastAdapterConnectionSend.withEventHook(new ConnectionSendItem.EmailButtonClickEvent(new ConnectionSendItem.HandleEmailClickListener() {
+      @Override
+      public void sendEmail(ConnectionSendItem item) {
+        Toast.makeText(ConnectionRequestActivity.this, item.getUserInfo().getFirstName(), Toast.LENGTH_SHORT).show();
+      }
+    }));
     mItemAdapterConnectionReceive = new ItemAdapter<>();
     mFastAdapterConnectionReceive = FastAdapter.with(mItemAdapterConnectionReceive);
     mFastAdapterConnectionReceive.withOnPreClickListener(new OnClickListener<ConnectionReceiveItem>() {

@@ -21,7 +21,7 @@ public class RetrofitUtil {
   }
 
   private static OkHttpClient getHeader(final String authorizationValue) {
-    //remove this interceptor in released app
+    //delete this interceptor in released app
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
     interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
     //end interceptor

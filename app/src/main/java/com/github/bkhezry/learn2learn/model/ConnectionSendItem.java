@@ -7,14 +7,18 @@ import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.MyApplication;
+import com.google.android.material.button.MaterialButton;
 import com.google.gson.annotations.SerializedName;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.items.AbstractItem;
+import com.mikepenz.fastadapter.listeners.ClickEventHook;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.objectbox.Box;
@@ -144,6 +148,14 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
     this.userInfo = userInfo;
   }
 
+  public interface HandleDeleteClickListener {
+    void delete(ConnectionSendItem item);
+  }
+
+  public interface HandleEmailClickListener {
+    void sendEmail(ConnectionSendItem item);
+  }
+
   @NonNull
   @Override
   public ViewHolder getViewHolder(@NonNull View view) {
@@ -172,6 +184,10 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
     AppCompatTextView teachSkillNameTextView;
     @BindView(R.id.description_text_view)
     AppCompatTextView descriptionTextView;
+    @BindView(R.id.delete_request_button)
+    MaterialButton deleteRequestButton;
+    @BindView(R.id.send_email_button)
+    MaterialButton sendEmailButton;
     Box<SkillsItem> skillsItemBox;
 
     ViewHolder(View view) {
@@ -206,4 +222,53 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
       return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
     }
   }
+
+  public static class DeleteButtonClickEvent extends ClickEventHook<ConnectionSendItem> {
+    private HandleDeleteClickListener listener;
+
+    public DeleteButtonClickEvent(HandleDeleteClickListener handleDeleteClickListener) {
+      this.listener = handleDeleteClickListener;
+    }
+
+    @Override
+    public void onClick(@NonNull View view, int position, @NonNull FastAdapter<ConnectionSendItem> fastAdapter, @NonNull ConnectionSendItem item) {
+      if (listener != null) {
+        listener.delete(item);
+      }
+    }
+
+    @Nullable
+    @Override
+    public View onBind(RecyclerView.ViewHolder viewHolder) {
+      if (viewHolder instanceof ViewHolder) {
+        return ((ViewHolder) viewHolder).deleteRequestButton;
+      }
+      return null;
+    }
+  }
+
+  public static class EmailButtonClickEvent extends ClickEventHook<ConnectionSendItem> {
+    private HandleEmailClickListener listener;
+
+    public EmailButtonClickEvent(HandleEmailClickListener handleEmailClickListener) {
+      this.listener = handleEmailClickListener;
+    }
+
+    @Override
+    public void onClick(@NonNull View view, int position, @NonNull FastAdapter<ConnectionSendItem> fastAdapter, @NonNull ConnectionSendItem item) {
+      if (listener != null) {
+        listener.sendEmail(item);
+      }
+    }
+
+    @Nullable
+    @Override
+    public View onBind(RecyclerView.ViewHolder viewHolder) {
+      if (viewHolder instanceof ViewHolder) {
+        return ((ViewHolder) viewHolder).sendEmailButton;
+      }
+      return null;
+    }
+  }
+
 }
