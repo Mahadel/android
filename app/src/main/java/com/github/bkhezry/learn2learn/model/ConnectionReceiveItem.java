@@ -60,6 +60,9 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
   @SerializedName("user_from")
   private UserInfo userInfo;
 
+  @SerializedName("is_accept")
+  private int isAccept;
+
   public void setEmailTo(String emailTo) {
     this.emailTo = emailTo;
   }
@@ -146,6 +149,14 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
 
   public void setUserInfo(UserInfo userInfo) {
     this.userInfo = userInfo;
+  }
+
+  public int getIsAccept() {
+    return isAccept;
+  }
+
+  public void setIsAccept(int isAccept) {
+    this.isAccept = isAccept;
   }
 
   @NonNull

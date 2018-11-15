@@ -60,6 +60,9 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
   @SerializedName("user_to")
   private UserInfo userInfo;
 
+  @SerializedName("is_accept")
+  private int isAccept;
+
   public void setEmailTo(String emailTo) {
     this.emailTo = emailTo;
   }
@@ -146,6 +149,14 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
 
   public void setUserInfo(UserInfo userInfo) {
     this.userInfo = userInfo;
+  }
+
+  public int getIsAccept() {
+    return isAccept;
+  }
+
+  public void setIsAccept(int isAccept) {
+    this.isAccept = isAccept;
   }
 
   public interface HandleDeleteClickListener {
