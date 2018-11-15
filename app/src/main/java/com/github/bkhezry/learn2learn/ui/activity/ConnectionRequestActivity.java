@@ -7,7 +7,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
@@ -139,14 +138,13 @@ public class ConnectionRequestActivity extends BaseActivity {
     });
     mFastAdapterConnectionSend.withEventHook(new ConnectionSendItem.DeleteButtonClickEvent(new ConnectionSendItem.HandleDeleteClickListener() {
       @Override
-      public void delete(ConnectionSendItem item) {
+      public void delete(ConnectionSendItem item, int position) {
         deleteConnection(item);
       }
     }));
     mFastAdapterConnectionSend.withEventHook(new ConnectionSendItem.EmailButtonClickEvent(new ConnectionSendItem.HandleEmailClickListener() {
       @Override
-      public void sendEmail(ConnectionSendItem item) {
-        Toast.makeText(ConnectionRequestActivity.this, item.getUserInfo().getFirstName(), Toast.LENGTH_SHORT).show();
+      public void sendEmail(ConnectionSendItem item, int position) {
       }
     }));
     mItemAdapterConnectionReceive = new ItemAdapter<>();
@@ -159,13 +157,13 @@ public class ConnectionRequestActivity extends BaseActivity {
     });
     mFastAdapterConnectionReceive.withEventHook(new ConnectionReceiveItem.AcceptButtonClickEvent(new ConnectionReceiveItem.HandleAcceptClickListener() {
       @Override
-      public void accept(ConnectionReceiveItem item) {
+      public void accept(ConnectionReceiveItem item, int position) {
         editConnectionRequest(item, 1);
       }
     }));
     mFastAdapterConnectionReceive.withEventHook(new ConnectionReceiveItem.RejectButtonClickEvent(new ConnectionReceiveItem.HandleRejectClickListener() {
       @Override
-      public void reject(ConnectionReceiveItem item) {
+      public void reject(ConnectionReceiveItem item, int position) {
         editConnectionRequest(item, 0);
       }
     }));

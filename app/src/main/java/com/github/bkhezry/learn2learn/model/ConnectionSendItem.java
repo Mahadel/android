@@ -149,11 +149,11 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
   }
 
   public interface HandleDeleteClickListener {
-    void delete(ConnectionSendItem item);
+    void delete(ConnectionSendItem item, int position);
   }
 
   public interface HandleEmailClickListener {
-    void sendEmail(ConnectionSendItem item);
+    void sendEmail(ConnectionSendItem item, int position);
   }
 
   @NonNull
@@ -233,7 +233,7 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
     @Override
     public void onClick(@NonNull View view, int position, @NonNull FastAdapter<ConnectionSendItem> fastAdapter, @NonNull ConnectionSendItem item) {
       if (listener != null) {
-        listener.delete(item);
+        listener.delete(item, position);
       }
     }
 
@@ -257,7 +257,7 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
     @Override
     public void onClick(@NonNull View view, int position, @NonNull FastAdapter<ConnectionSendItem> fastAdapter, @NonNull ConnectionSendItem item) {
       if (listener != null) {
-        listener.sendEmail(item);
+        listener.sendEmail(item, position);
       }
     }
 

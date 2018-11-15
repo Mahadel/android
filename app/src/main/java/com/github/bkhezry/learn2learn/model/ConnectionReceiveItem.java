@@ -155,11 +155,11 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
   }
 
   public interface HandleAcceptClickListener {
-    void accept(ConnectionReceiveItem item);
+    void accept(ConnectionReceiveItem item, int position);
   }
 
   public interface HandleRejectClickListener {
-    void reject(ConnectionReceiveItem item);
+    void reject(ConnectionReceiveItem item, int position);
   }
 
   @Override
@@ -233,7 +233,7 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
     @Override
     public void onClick(@NonNull View view, int position, @NonNull FastAdapter<ConnectionReceiveItem> fastAdapter, @NonNull ConnectionReceiveItem item) {
       if (listener != null) {
-        listener.accept(item);
+        listener.accept(item, position);
       }
     }
 
@@ -257,7 +257,7 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
     @Override
     public void onClick(@NonNull View view, int position, @NonNull FastAdapter<ConnectionReceiveItem> fastAdapter, @NonNull ConnectionReceiveItem item) {
       if (listener != null) {
-        listener.reject(item);
+        listener.reject(item, position);
       }
     }
 

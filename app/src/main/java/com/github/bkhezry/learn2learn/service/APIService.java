@@ -84,7 +84,7 @@ public interface APIService {
   @FormUrlEncoded
   Call<ConnectionReceiveItem> editConnection(@Path("uuid") String uuid,
                                              @Path("connection_uuid") String connectionUUID,
-                                             @Field("is_active") int isActive);
+                                             @Field("is_accept") int isActive);
 }
 
 
