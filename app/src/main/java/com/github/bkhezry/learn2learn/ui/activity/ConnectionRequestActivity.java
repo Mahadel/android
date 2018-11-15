@@ -139,7 +139,7 @@ public class ConnectionRequestActivity extends BaseActivity {
     mFastAdapterConnectionSend.withEventHook(new ConnectionSendItem.DeleteButtonClickEvent(new ConnectionSendItem.HandleDeleteClickListener() {
       @Override
       public void delete(ConnectionSendItem item, int position) {
-        deleteConnection(item);
+        deleteConnection(item, position);
       }
     }));
     mFastAdapterConnectionSend.withEventHook(new ConnectionSendItem.EmailButtonClickEvent(new ConnectionSendItem.HandleEmailClickListener() {
@@ -191,7 +191,7 @@ public class ConnectionRequestActivity extends BaseActivity {
     });
   }
 
-  private void deleteConnection(ConnectionSendItem item) {
+  private void deleteConnection(ConnectionSendItem item, int position) {
     loadingDialog.show();
     //TODO get authentication info only one time.
     AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
@@ -202,7 +202,7 @@ public class ConnectionRequestActivity extends BaseActivity {
       public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
         loadingDialog.dismiss();
         if (response.isSuccessful()) {
-
+          mItemAdapterConnectionSend.remove(position);
         }
       }
 
