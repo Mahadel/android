@@ -7,7 +7,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0-alpha03'
+        classpath 'com.android.tools.build:gradle:3.4.0-alpha04'
         classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.8.3'
         classpath "io.objectbox:objectbox-gradle-plugin:2.1.0"
         classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-rc1'
