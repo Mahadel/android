@@ -158,18 +158,18 @@ public class ConnectionRequestActivity extends BaseActivity {
     mFastAdapterConnectionReceive.withEventHook(new ConnectionReceiveItem.AcceptButtonClickEvent(new ConnectionReceiveItem.HandleAcceptClickListener() {
       @Override
       public void accept(ConnectionReceiveItem item, int position) {
-        editConnectionRequest(item, 1);
+        editConnectionRequest(item, 1, position);
       }
     }));
     mFastAdapterConnectionReceive.withEventHook(new ConnectionReceiveItem.RejectButtonClickEvent(new ConnectionReceiveItem.HandleRejectClickListener() {
       @Override
       public void reject(ConnectionReceiveItem item, int position) {
-        editConnectionRequest(item, 0);
+        editConnectionRequest(item, 0, position);
       }
     }));
   }
 
-  private void editConnectionRequest(ConnectionReceiveItem item, int isAccept) {
+  private void editConnectionRequest(ConnectionReceiveItem item, int isAccept, int position) {
     loadingDialog.show();
     AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
@@ -180,6 +180,8 @@ public class ConnectionRequestActivity extends BaseActivity {
         loadingDialog.dismiss();
         if (response.isSuccessful()) {
           ConnectionReceiveItem connectionReceiveItem = response.body();
+          mItemAdapterConnectionReceive.remove(position);
+          mItemAdapterConnectionReceive.add(position, connectionReceiveItem);
         }
       }
 

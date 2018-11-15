@@ -211,6 +211,16 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
 
     @Override
     public void bindView(@NonNull ConnectionReceiveItem item, @NonNull List<Object> payloads) {
+      if (item.getIsAccept() == -1) {
+        acceptRequestButton.setVisibility(View.VISIBLE);
+        rejectRequestButton.setVisibility(View.VISIBLE);
+      } else if (item.getIsAccept() == 0) {
+        acceptRequestButton.setVisibility(View.VISIBLE);
+        rejectRequestButton.setVisibility(View.GONE);
+      } else if (item.getIsAccept() == 1) {
+        acceptRequestButton.setVisibility(View.GONE);
+        rejectRequestButton.setVisibility(View.VISIBLE);
+      }
       nameTextView.setText(String.format("%s %s", item.getUserInfo().getFirstName(), item.getUserInfo().getLastName()));
       emailTextView.setText(item.getEmailTo());
       if (AppUtil.isRTL(view.getContext())) {
