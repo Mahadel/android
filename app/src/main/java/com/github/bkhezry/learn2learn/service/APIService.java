@@ -65,9 +65,9 @@ public interface APIService {
   @GET("search/{uuid}")
   Call<List<SearchResult>> search(@Path("uuid") String uuid);
 
-  @POST("connection")
+  @POST("user/{uuid}/connection")
   @FormUrlEncoded
-  Call<ResponseMessage> requestConnection(@Field("user_uuid_from") String userUUIDFrom,
+  Call<ResponseMessage> requestConnection(@Path("uuid") String userUUIDFrom,
                                           @Field("user_uuid_to") String userUUIDTo,
                                           @Field("learn_skill_uuid_from") String learnSkillUUIDFrom,
                                           @Field("teach_skill_uuid_from") String teachSkillUUIDFrom,
