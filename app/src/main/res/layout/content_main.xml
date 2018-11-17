@@ -83,13 +83,13 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No item"
+                        android:text="@string/no_skill_label"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="For add skill press + button "
+                        android:text="@string/for_add_skill_press_button_label"
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
                 </LinearLayout>
             </LinearLayout>
@@ -132,13 +132,13 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No item"
+                        android:text="@string/no_skill_label"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="For add skill press + button "
+                        android:text="@string/for_add_skill_press_button_label"
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
                 </LinearLayout>
             </LinearLayout>

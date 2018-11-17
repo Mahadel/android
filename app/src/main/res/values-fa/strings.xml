@@ -53,4 +53,6 @@
     <string name="reject_label">رد درخواست</string>
     <string name="accept">قبول درخواست</string>
     <string name="request_sent_success">درخواست با موفقیت ارسال شد.</string>
+    <string name="no_skill_label">مهارتی وجود ندارد</string>
+    <string name="for_add_skill_press_button_label">برای اضافه کردن مهارت دکمه + را فشار دهید</string>
 </resources>

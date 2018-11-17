@@ -54,4 +54,6 @@
     <string name="reject_label">Reject</string>
     <string name="accept">Accept</string>
     <string name="request_sent_success">request sent successfully.</string>
+    <string name="no_skill_label">No skill</string>
+    <string name="for_add_skill_press_button_label">For add skill press + button</string>
 </resources>
