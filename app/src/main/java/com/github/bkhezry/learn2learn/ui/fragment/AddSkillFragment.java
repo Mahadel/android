@@ -1,6 +1,7 @@
 package com.github.bkhezry.learn2learn.ui.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -49,6 +50,7 @@ public class AddSkillFragment extends Fragment {
   private Activity activity;
   private SkillsItem skillsItem;
   private Prefser prefser;
+  private Dialog loadingDialog;
 
 
   public void setOnCallbackResult(final CallbackResult callbackResult) {
@@ -67,6 +69,7 @@ public class AddSkillFragment extends Fragment {
     activity = getActivity();
     if (activity != null) {
       prefser = new Prefser(activity);
+      loadingDialog = AppUtil.getDialogLoading(activity);
     }
     if (skillType == AppUtil.SkillType.WANT_LEARN) {
       skillTypeTextView.setText(R.string.add_skill_learn_label);
@@ -94,12 +97,14 @@ public class AddSkillFragment extends Fragment {
       skillTypeInt = 2;
     }
     if (skillsItem != null) {
+      loadingDialog.show();
       AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
       APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
       Call<UserSkill> call = apiService.addUserSkill(info.getUuid(), skillsItem.getUuid(), description, skillTypeInt);
       call.enqueue(new Callback<UserSkill>() {
         @Override
         public void onResponse(@NonNull Call<UserSkill> call, @NonNull Response<UserSkill> response) {
+          loadingDialog.dismiss();
           if (response.isSuccessful()) {
             UserSkill userSkill = response.body();
             handleUserSkill(userSkill);
@@ -108,6 +113,7 @@ public class AddSkillFragment extends Fragment {
 
         @Override
         public void onFailure(@NonNull Call<UserSkill> call, @NonNull Throwable t) {
+          loadingDialog.dismiss();
           t.printStackTrace();
         }
       });
