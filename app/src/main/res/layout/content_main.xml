@@ -98,9 +98,29 @@
                     android:layout_marginEnd="-40dp"
                     android:clipChildren="false"
                     android:overScrollMode="never"
+                    android:visibility="gone"
                     app:activeCardLeftOffset="50dp"
                     app:cardWidth="@dimen/card_size"
                     app:layoutManager="com.ramotion.cardslider.CardSliderLayoutManager" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No item"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="For add skill press + button "
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
