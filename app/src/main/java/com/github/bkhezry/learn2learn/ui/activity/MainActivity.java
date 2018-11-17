@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.listener.CallbackResult;
@@ -32,6 +33,8 @@ import com.mikepenz.fastadapter.adapters.ItemAdapter;
 import com.mikepenz.fastadapter.listeners.OnClickListener;
 import com.ramotion.cardslider.CardSliderLayoutManager;
 import com.ramotion.cardslider.CardSnapHelper;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -61,6 +64,10 @@ public class MainActivity extends BaseActivity {
   CoordinatorLayout coordinatorLayout;
   @BindView(R.id.contentFrameLayout)
   View contentFrameLayout;
+  @BindView(R.id.layout_empty_1)
+  LinearLayout layoutEmpty1;
+  @BindView(R.id.layout_empty_2)
+  LinearLayout layoutEmpty2;
   private BottomSheetBehavior<View> bottomDrawerBehavior;
   private FastAdapter<UserSkill> mFastAdapter_1;
   private ItemAdapter<UserSkill> mItemAdapter_1;
@@ -291,10 +298,26 @@ public class MainActivity extends BaseActivity {
 
   private void requestSkills() {
     mItemAdapter_1.clear();
-    mItemAdapter_1.add(DatabaseUtil.getUserSkillWithType(userSkillBox, 1).find());
-
+    List<UserSkill> userSkills1 = DatabaseUtil.getUserSkillWithType(userSkillBox, 1).find();
+    mItemAdapter_1.add(userSkills1);
+    if (userSkills1.size() == 0) {
+      recyclerView_1.setVisibility(View.GONE);
+      layoutEmpty1.setVisibility(View.VISIBLE);
+    } else {
+      recyclerView_1.setVisibility(View.VISIBLE);
+      layoutEmpty1.setVisibility(View.GONE);
+    }
     mItemAdapter_2.clear();
-    mItemAdapter_2.add(DatabaseUtil.getUserSkillWithType(userSkillBox, 2).find());
+    List<UserSkill> userSkills2 = DatabaseUtil.getUserSkillWithType(userSkillBox, 2).find();
+    mItemAdapter_2.add(userSkills2);
+    if (userSkills2.size() == 0) {
+      recyclerView_2.setVisibility(View.GONE);
+      layoutEmpty2.setVisibility(View.VISIBLE);
+    } else {
+      recyclerView_2.setVisibility(View.VISIBLE);
+      layoutEmpty2.setVisibility(View.GONE);
+
+    }
   }
 
   @OnClick(R.id.main_layout)
