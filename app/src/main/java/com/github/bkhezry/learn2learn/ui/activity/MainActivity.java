@@ -297,6 +297,7 @@ public class MainActivity extends BaseActivity {
 
 
   private void requestSkills() {
+    //TODO add listener to DB for handle empty of list when add first item or remove last item.
     mItemAdapter_1.clear();
     List<UserSkill> userSkills1 = DatabaseUtil.getUserSkillWithType(userSkillBox, 1).find();
     mItemAdapter_1.add(userSkills1);
