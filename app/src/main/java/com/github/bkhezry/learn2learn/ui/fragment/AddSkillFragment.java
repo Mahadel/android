@@ -65,7 +65,9 @@ public class AddSkillFragment extends Fragment {
     View rootView = inflater.inflate(R.layout.fragment_add_skill, container, false);
     ButterKnife.bind(this, rootView);
     activity = getActivity();
-    prefser = new Prefser(activity);
+    if (activity != null) {
+      prefser = new Prefser(activity);
+    }
     if (skillType == AppUtil.SkillType.WANT_LEARN) {
       skillTypeTextView.setText(R.string.add_skill_learn_label);
     } else {
