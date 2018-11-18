@@ -60,9 +60,6 @@ public class ProfileFragment extends DialogFragment implements
   private Dialog loadingDialog;
 
 
-
-
-
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
@@ -160,17 +157,27 @@ public class ProfileFragment extends DialogFragment implements
   }
 
   private void revokeAccess() {
-    loadingDialog.show();
-    Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
-        new ResultCallback<Status>() {
-          @Override
-          public void onResult(@NonNull Status status) {
-            loadingDialog.dismiss();
-            prefser.remove(Constant.TOKEN);
-            startActivity(new Intent(activity, LauncherActivity.class));
-            activity.finish();
-          }
-        });
+    AppUtil.showConfirmDialog(activity.getString(R.string.logout_message_label), activity, new AppUtil.ConfirmDialogClickListener() {
+      @Override
+      public void ok() {
+        loadingDialog.show();
+        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
+            new ResultCallback<Status>() {
+              @Override
+              public void onResult(@NonNull Status status) {
+                loadingDialog.dismiss();
+                prefser.remove(Constant.TOKEN);
+                startActivity(new Intent(activity, LauncherActivity.class));
+                activity.finish();
+              }
+            });
+      }
+
+      @Override
+      public void cancel() {
+
+      }
+    });
   }
 
   private void setUpGoogleSignIn() {
