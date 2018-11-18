@@ -42,9 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/select_skill_label"
-            android:textColor="@color/grey_10"
-            app:icon="@drawable/ic_list_black_24dp"
-            app:iconTint="@color/grey_10" />
+            app:icon="@drawable/ic_list_black_24dp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/til_skill_description"
