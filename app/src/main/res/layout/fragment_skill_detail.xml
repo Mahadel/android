@@ -96,7 +96,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/remove_btn"
-                style="@style/StyleMaterialButtonLarge"
+                style="@style/StyleMaterialButtonBorder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
