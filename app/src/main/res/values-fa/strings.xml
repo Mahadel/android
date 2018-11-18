@@ -9,8 +9,8 @@
     <string name="last_name_label">نام‌خانوادگی</string>
     <string name="male_label">مرد</string>
     <string name="female_label">زن</string>
-    <string name="skill_name_label">نام مهارت</string>
-    <string name="description_label">توضیحات</string>
+    <string name="skill_name_label">نام مهارت:</string>
+    <string name="description_label">توضیحات:</string>
     <string name="add_skill_learn_label">قصد یادگیری دارم</string>
     <string name="add_skill_teach_label">قصد یاددادن دارم</string>
     <string name="want_learn_label">می‌خوام یاد بگیرم</string>

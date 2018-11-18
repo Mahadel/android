@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="350dp"
     android:layoutDirection="locale"
@@ -15,36 +16,74 @@
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="center_vertical"
         android:layoutDirection="locale"
         android:orientation="vertical"
         android:padding="@dimen/spacing_large">
 
-        <LinearLayout
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/skill_type_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            tools:text="Want to Learn" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/skill_name_label"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:textStyle="bold" />
+
             <View
-                android:layout_width="@dimen/spacing_large"
+                android:layout_width="@dimen/spacing_small"
                 android:layout_height="0dp" />
 
-            <LinearLayout
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/skill_name_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:gravity="center_vertical"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                android:textStyle="bold" />
+        </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/skill_type_text_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textStyle="bold" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:layout_marginBottom="@dimen/spacing_medium"
+            android:background="@color/colorAccent" />
 
-            </LinearLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/til_skill_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/description_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/skill_description_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:lines="4"
+            android:maxLines="4"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/submit_btn"
@@ -55,51 +94,15 @@
                 android:text="@string/edit_label"
                 android:textColor="@color/grey_10" />
 
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/spacing_medium"
-            android:layout_marginBottom="@dimen/spacing_medium"
-            android:background="@color/grey_40" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/skill_name_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-            android:textStyle="bold" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_skill_description"
-            style="@style/StyleMaterialTextInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/description_label"
-            android:textColorHint="?attr/colorSecondary">
-
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/skill_description_edit_text"
-                android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/remove_btn"
+                style="@style/StyleMaterialButtonLarge"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="top"
-                android:lines="4"
-                android:maxLines="4"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/remove_btn"
-            style="@style/StyleMaterialButtonLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/remove_label"
-            android:textColor="@color/grey_10" />
+                android:gravity="center"
+                android:text="@string/remove_label"
+                android:textColor="@color/grey_10" />
+        </LinearLayout>
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
