@@ -56,4 +56,6 @@
     <string name="request_sent_success">request sent successfully.</string>
     <string name="no_skill_label">No skill</string>
     <string name="for_add_skill_press_button_label">For add skill press + button</string>
+    <string name="delete_account_label">Delete</string>
+    <string name="logout_label">Logout</string>
 </resources>
