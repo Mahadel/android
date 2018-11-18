@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="350dp"
     android:layoutDirection="locale"
@@ -15,47 +16,17 @@
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
-        android:gravity="center_vertical"
         android:layoutDirection="locale"
         android:orientation="vertical"
         android:padding="@dimen/spacing_large">
 
-        <LinearLayout
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/skill_type_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="@dimen/spacing_large"
-                android:layout_height="0dp" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/skill_type_text_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/submit_btn"
-                style="@style/StyleMaterialButtonLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/submit_label"
-                android:textColor="@color/grey_10" />
-
-        </LinearLayout>
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            tools:text="Add Skill" />
 
         <View
             android:layout_width="match_parent"
@@ -75,25 +46,33 @@
             app:icon="@drawable/ic_list_black_24dp"
             app:iconTint="@color/grey_10" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/til_skill_description"
-            style="@style/StyleMaterialTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/description_label"
-            android:textColorHint="?attr/colorSecondary">
+            android:text="@string/description_label"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textStyle="bold" />
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/skill_description_edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:lines="4"
-                android:maxLines="4"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/skill_description_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:lines="4"
+            android:maxLines="4"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/submit_btn"
+            style="@style/StyleMaterialButtonLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/submit_label"
+            android:textColor="@color/grey_10" />
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
