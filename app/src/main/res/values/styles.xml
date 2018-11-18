@@ -5,16 +5,26 @@
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:layout_marginBottom">10dp</item>
-        <item name="cornerRadius">40dp</item>
+        <item name="cornerRadius">20dp</item>
         <item name="android:layout_marginStart">10dp</item>
         <item name="android:layout_marginEnd">10dp</item>
     </style>
 
     <style name="StyleMaterialButtonLarge" parent="Widget.MaterialComponents.Button">
         <item name="android:gravity">center</item>
-        <item name="cornerRadius">40dp</item>
+        <item name="cornerRadius">20dp</item>
         <item name="android:layout_marginStart">20dp</item>
         <item name="android:layout_marginEnd">20dp</item>
+    </style>
+
+    <style name="StyleMaterialButtonBorder" parent="Widget.MaterialComponents.Button">
+        <item name="android:gravity">center</item>
+        <item name="cornerRadius">20dp</item>
+        <item name="android:layout_marginStart">20dp</item>
+        <item name="android:layout_marginEnd">20dp</item>
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="strokeColor">?attr/colorSecondary</item>
+        <item name="strokeWidth">1dp</item>
     </style>
 
     <style name="StyleMaterialTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
