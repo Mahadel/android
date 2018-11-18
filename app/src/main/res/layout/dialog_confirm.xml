@@ -44,9 +44,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/cancel_label"
                 android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                app:icon="@drawable/ic_close_black_24dp"
-                app:iconSize="18dp" />
+                app:icon="@drawable/ic_close_black_24dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/ok_button"
@@ -55,10 +53,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/yes_label"
                 android:textAllCaps="false"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
                 android:textColor="@color/grey_10"
                 app:icon="@drawable/ic_done_black_24dp"
-                app:iconSize="18dp"
                 app:iconTint="@color/grey_10" />
         </LinearLayout>
     </LinearLayout>
