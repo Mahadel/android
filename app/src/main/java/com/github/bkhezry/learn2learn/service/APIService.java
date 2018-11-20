@@ -85,6 +85,7 @@ public interface APIService {
   Call<ConnectionReceiveItem> editConnection(@Path("uuid") String uuid,
                                              @Path("connection_uuid") String connectionUUID,
                                              @Field("is_accept") int isActive);
+
+  @DELETE("user/{uuid}")
+  Call<ResponseMessage> deleteUserAccount(@Path("uuid") String uuid);
 }
-
-

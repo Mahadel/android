@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import com.bumptech.glide.Glide;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
+import com.github.bkhezry.learn2learn.model.ResponseMessage;
 import com.github.bkhezry.learn2learn.model.UserInfo;
 import com.github.bkhezry.learn2learn.service.APIService;
 import com.github.bkhezry.learn2learn.ui.activity.LauncherActivity;
@@ -143,6 +144,24 @@ public class ProfileFragment extends DialogFragment implements
       @Override
       public void ok() {
         loadingDialog.show();
+        AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+        APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+        Call<ResponseMessage> call = apiService.deleteUserAccount(info.getUuid());
+        call.enqueue(new Callback<ResponseMessage>() {
+          @Override
+          public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
+            loadingDialog.dismiss();
+            if (response.isSuccessful()) {
+              revoke();
+            }
+          }
+
+          @Override
+          public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
+            loadingDialog.dismiss();
+            t.printStackTrace();
+          }
+        });
       }
 
       @Override
