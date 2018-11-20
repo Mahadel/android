@@ -139,7 +139,7 @@ public class ProfileFragment extends DialogFragment implements
   }
 
   private void deleteAccount() {
-    AppUtil.showConfirmDialog("از حذف کامل حساب‌کاربری خود مطمئن هستید؟", activity, new AppUtil.ConfirmDialogClickListener() {
+    AppUtil.showConfirmDialog(activity.getString(R.string.delete_account_message), activity, new AppUtil.ConfirmDialogClickListener() {
       @Override
       public void ok() {
         loadingDialog.show();

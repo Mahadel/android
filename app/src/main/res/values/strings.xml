@@ -59,4 +59,5 @@
     <string name="delete_account_label">Delete</string>
     <string name="logout_label">Logout</string>
     <string name="logout_message_label">Are you sure want logout from app?</string>
+    <string name="delete_account_message">Are you sure want delete your account permanently?</string>
 </resources>

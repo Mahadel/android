@@ -58,4 +58,5 @@
     <string name="delete_account_label">حذف</string>
     <string name="logout_label">خروج</string>
     <string name="logout_message_label">برای خروج از برنامه مطمئن هستید؟</string>
+    <string name="delete_account_message">از حذف کامل حساب‌کاربری خود مطمئن هستید؟</string>
 </resources>
