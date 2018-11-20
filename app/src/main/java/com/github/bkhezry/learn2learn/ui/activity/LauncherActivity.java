@@ -20,6 +20,7 @@ import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.service.APIService;
 import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
+import com.github.bkhezry.learn2learn.util.LocaleManager;
 import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.github.bkhezry.learn2learn.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
@@ -135,12 +136,10 @@ public class LauncherActivity extends BaseActivity implements
   }
 
   private void setUpLocale() {
-    if (prefser.contains(Constant.LANGUAGE)) {
-      if (prefser.get(Constant.LANGUAGE, String.class, null).equals("fa")) {
-        changeLanguagePersian();
-      } else {
-        changeLanguageEnglish();
-      }
+    if (MyApplication.localeManager.getLanguage().equals(LocaleManager.LANGUAGE_PERSIAN)) {
+      changeLanguagePersian();
+    } else {
+      changeLanguageEnglish();
     }
   }
 
@@ -283,31 +282,33 @@ public class LauncherActivity extends BaseActivity implements
     switch (view.getId()) {
       case R.id.persian_image_view:
         changeLanguagePersian();
+        setNewLocale(LocaleManager.LANGUAGE_PERSIAN);
         break;
       case R.id.english_image_view:
         changeLanguageEnglish();
+        setNewLocale(LocaleManager.LANGUAGE_ENGLISH);
         break;
     }
-    restartApp();
   }
 
   private void changeLanguagePersian() {
     persianImageView.setBackgroundResource(R.drawable.image_border);
     englishImageView.setBackgroundResource(android.R.color.transparent);
-    prefser.put(Constant.LANGUAGE, "fa");
   }
 
   private void changeLanguageEnglish() {
     englishImageView.setBackgroundResource(R.drawable.image_border);
     persianImageView.setBackgroundResource(android.R.color.transparent);
-    prefser.put(Constant.LANGUAGE, "en");
   }
 
-  private void restartApp() {
+
+  private void setNewLocale(String language) {
+    MyApplication.localeManager.setNewLocale(this, language);
     Intent i = new Intent(this, LauncherActivity.class);
     startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
     System.exit(0);
   }
+
 
   private void startMainActivity() {
     loadingDialog.dismiss();

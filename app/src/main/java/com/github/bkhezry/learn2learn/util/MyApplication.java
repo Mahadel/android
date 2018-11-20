@@ -1,13 +1,13 @@
 package com.github.bkhezry.learn2learn.util;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.util.Log;
 
 import com.github.bkhezry.learn2learn.BuildConfig;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.MyObjectBox;
-import com.github.pwittchen.prefser.library.rx2.Prefser;
 
 import io.github.inflationx.calligraphy3.CalligraphyConfig;
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
@@ -16,8 +16,8 @@ import io.objectbox.BoxStore;
 import io.objectbox.android.AndroidObjectBrowser;
 
 public class MyApplication extends Application {
-  private Prefser prefser;
   private static BoxStore boxStore;
+  public static LocaleManager localeManager;
 
   @Override
   public void onCreate() {
@@ -47,20 +47,17 @@ public class MyApplication extends Application {
     return boxStore;
   }
 
-
-  private void changeLanguage() {
-    prefser = new Prefser(this);
-    if (prefser.contains(Constant.LANGUAGE)) {
-      AppUtil.updateResources(this);
-    } else {
-      prefser.put(Constant.LANGUAGE, "fa");
-      AppUtil.updateResources(this);
-    }
+  @Override
+  protected void attachBaseContext(Context base) {
+    localeManager = new LocaleManager(base);
+    super.attachBaseContext(localeManager.setLocale(base));
+    Log.d("MyApplication", "attachBaseContext");
   }
 
   @Override
   public void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
-    changeLanguage();
+    localeManager.setLocale(this);
+    Log.d("MyApplication", "onConfigurationChanged: " + newConfig.locale.getLanguage());
   }
 }

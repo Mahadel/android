@@ -13,6 +13,8 @@ import android.view.WindowManager;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.ui.activity.MainActivity;
 import com.github.bkhezry.learn2learn.util.Constant;
+import com.github.bkhezry.learn2learn.util.LocaleManager;
+import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 
 import androidx.annotation.NonNull;
@@ -69,26 +71,24 @@ public class SettingsFragment extends DialogFragment {
   void handleLanguage(View view) {
     switch (view.getId()) {
       case R.id.persian_image_view:
-        prefser.put(Constant.LANGUAGE, "fa");
+        restartApp(LocaleManager.LANGUAGE_PERSIAN);
         break;
       case R.id.english_image_view:
-        prefser.put(Constant.LANGUAGE, "en");
+        restartApp(LocaleManager.LANGUAGE_ENGLISH);
         break;
     }
-    restartApp();
   }
 
   private void setUpLocale() {
-    if (prefser.contains(Constant.LANGUAGE)) {
-      if (prefser.get(Constant.LANGUAGE, String.class, null).equals("fa")) {
-        changeLanguagePersian();
-      } else {
-        changeLanguageEnglish();
-      }
+    if (MyApplication.localeManager.getLanguage().equals(LocaleManager.LANGUAGE_PERSIAN)) {
+      changeLanguagePersian();
+    } else {
+      changeLanguageEnglish();
     }
   }
 
-  private void restartApp() {
+  private void restartApp(String language) {
+    MyApplication.localeManager.setNewLocale(activity, language);
     Intent i = new Intent(activity, MainActivity.class);
     startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK));
     System.exit(0);

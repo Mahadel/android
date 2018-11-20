@@ -4,8 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.github.bkhezry.learn2learn.R;
-import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
+import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +25,7 @@ public class BaseActivity extends AppCompatActivity {
 
   @Override
   protected void attachBaseContext(Context base) {
-    Context newContext = AppUtil.updateResources(base);
+    Context newContext = MyApplication.localeManager.setLocale(base);
     super.attachBaseContext(ViewPumpContextWrapper.wrap(newContext));
   }
 }

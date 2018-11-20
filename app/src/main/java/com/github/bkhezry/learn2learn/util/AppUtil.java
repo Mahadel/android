@@ -209,4 +209,8 @@ public class AppUtil {
     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
     transaction.add(android.R.id.content, fragment).addToBackStack(null).commit();
   }
+
+  public static boolean isAtLeastVersion(int version) {
+    return Build.VERSION.SDK_INT >= version;
+  }
 }
