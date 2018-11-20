@@ -339,6 +339,8 @@ public class LauncherActivity extends BaseActivity implements
             storeCategoriesDB(categories);
           }
           retrieveUserSkillsData();
+        } else if (response.code() == 403) {
+          //TODO remove authentication info and start activity again.
         }
       }
 
@@ -361,8 +363,8 @@ public class LauncherActivity extends BaseActivity implements
           List<UserSkill> userSkills = response.body();
           storeUserSkill(userSkills);
           startMainActivity();
-        } else {
-          hiddenLoadingLayout();
+        } else if (response.code() == 403) {
+          //TODO remove authentication info and start activity again.
         }
       }
 
