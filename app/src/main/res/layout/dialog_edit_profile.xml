@@ -92,9 +92,10 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/submit_info_button"
-            style="@style/StyleMaterialButton"
-            android:layout_width="match_parent"
+            style="@style/StyleMaterialButtonLarge"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="@dimen/spacing_medium"
             android:text="@string/edit_label"
             android:textAllCaps="false"
