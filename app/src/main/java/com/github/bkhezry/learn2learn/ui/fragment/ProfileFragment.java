@@ -133,8 +133,23 @@ public class ProfileFragment extends DialogFragment implements
         revokeAccess();
         break;
       case R.id.delete_profile_button:
+        deleteAccount();
         break;
     }
+  }
+
+  private void deleteAccount() {
+    AppUtil.showConfirmDialog("از حذف کامل حساب‌کاربری خود مطمئن هستید؟", activity, new AppUtil.ConfirmDialogClickListener() {
+      @Override
+      public void ok() {
+        loadingDialog.show();
+      }
+
+      @Override
+      public void cancel() {
+
+      }
+    });
   }
 
   private void editProfileInfo() {
@@ -160,17 +175,7 @@ public class ProfileFragment extends DialogFragment implements
     AppUtil.showConfirmDialog(activity.getString(R.string.logout_message_label), activity, new AppUtil.ConfirmDialogClickListener() {
       @Override
       public void ok() {
-        loadingDialog.show();
-        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
-            new ResultCallback<Status>() {
-              @Override
-              public void onResult(@NonNull Status status) {
-                loadingDialog.dismiss();
-                prefser.remove(Constant.TOKEN);
-                startActivity(new Intent(activity, LauncherActivity.class));
-                activity.finish();
-              }
-            });
+        revoke();
       }
 
       @Override
@@ -178,6 +183,20 @@ public class ProfileFragment extends DialogFragment implements
 
       }
     });
+  }
+
+  private void revoke() {
+    loadingDialog.show();
+    Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
+        new ResultCallback<Status>() {
+          @Override
+          public void onResult(@NonNull Status status) {
+            loadingDialog.dismiss();
+            prefser.remove(Constant.TOKEN);
+            startActivity(new Intent(activity, LauncherActivity.class));
+            activity.finish();
+          }
+        });
   }
 
   private void setUpGoogleSignIn() {
