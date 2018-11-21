@@ -267,7 +267,7 @@ public class MainActivity extends BaseActivity {
       public void sendResult(Object obj, AppUtil.SkillType skillType) {
         //TODO check return object from fragment and isAdd to DB or get it.
         UserSkill userSkill = (UserSkill) obj;
-        handleUserSkill(userSkill);
+        handleUserSkill(userSkill, skillType);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
       }
     });
@@ -286,9 +286,9 @@ public class MainActivity extends BaseActivity {
     AppUtil.showFragment(new AboutFragment(), getSupportFragmentManager());
   }
 
-  private void handleUserSkill(UserSkill userSkill) {
+  private void handleUserSkill(UserSkill userSkill, AppUtil.SkillType skillType) {
     userSkillBox.put(userSkill);
-    if (userSkill.getSkillType() == 1) {
+    if (skillType == AppUtil.SkillType.WANT_TEACH) {
       mItemAdapter_1.add(0, userSkill);
     } else {
       mItemAdapter_2.add(0, userSkill);
