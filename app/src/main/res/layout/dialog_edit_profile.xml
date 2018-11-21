@@ -10,6 +10,15 @@
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp">
 
+    <ImageView
+        android:id="@+id/close_image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_large"
+        android:tint="@color/grey_60"
+        app:srcCompat="@drawable/ic_close_black_24dp" />
+
+
     <LinearLayout
         android:id="@+id/personal_layout"
         android:layout_width="match_parent"

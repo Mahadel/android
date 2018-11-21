@@ -146,7 +146,8 @@ public class DialogEditProfileFragment extends DialogFragment {
 
   }
 
-  private void close() {
+  @OnClick(R.id.close_image_view)
+  void close() {
     dismiss();
     if (getFragmentManager() != null) {
       getFragmentManager().popBackStackImmediate();
