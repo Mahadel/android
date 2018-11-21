@@ -16,6 +16,7 @@ import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.GridSpacingItemDecoration;
 import com.github.bkhezry.learn2learn.util.MyApplication;
+import com.google.android.material.button.MaterialButton;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
@@ -39,6 +40,8 @@ import static com.github.bkhezry.learn2learn.util.AppUtil.dpToPx;
 public class SelectSkillActivity extends BaseActivity {
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
+  @BindView(R.id.category_button)
+  MaterialButton categoryButton;
   private Box<SkillsItem> skillsItemBox;
   private Box<Category> categoryBox;
   private Box<UserSkill> userSkillBox;
@@ -59,13 +62,11 @@ public class SelectSkillActivity extends BaseActivity {
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
     categoryBox = boxStore.boxFor(Category.class);
     userSkillBox = boxStore.boxFor(UserSkill.class);
-    initRecyclerViews();
+    initRecyclerView();
+    initAdapters();
   }
 
-  private void initRecyclerViews() {
-    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
-    recyclerView.setLayoutManager(mLayoutManager);
-    recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(6, getResources()), true));
+  private void initAdapters() {
     mItemAdapterCategory = new ItemAdapter<>();
     mFastAdapterCategory = FastAdapter.with(mItemAdapterCategory);
     recyclerView.setAdapter(mFastAdapterCategory);
@@ -88,11 +89,19 @@ public class SelectSkillActivity extends BaseActivity {
     getCategory();
   }
 
+  private void initRecyclerView() {
+    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+    recyclerView.setLayoutManager(mLayoutManager);
+    recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(6, getResources()), true));
+  }
+
   private void getSkills(Category item) {
     List<SkillsItem> skillsItems = DatabaseUtil.getSkillItemOfCategory(skillsItemBox, item.getUuid());
     recyclerView.setAdapter(mFastAdapterSkill);
     mItemAdapterSkill.clear();
     mItemAdapterSkill.add(skillsItems);
+    categoryButton.setVisibility(View.VISIBLE);
+
   }
 
   private void getCategory() {
@@ -121,5 +130,11 @@ public class SelectSkillActivity extends BaseActivity {
   @OnClick(R.id.close_image_view)
   void closeDialog() {
     finish();
+  }
+
+  @OnClick(R.id.category_button)
+  public void handleCategoryButton(View view) {
+    view.setVisibility(View.GONE);
+    initAdapters();
   }
 }
