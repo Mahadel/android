@@ -3,6 +3,7 @@ package com.github.bkhezry.learn2learn.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -11,15 +12,18 @@ import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.bkhezry.learn2learn.model.UserSkill;
-import com.github.bkhezry.learn2learn.util.AppUtil;
 import com.github.bkhezry.learn2learn.util.Constant;
 import com.github.bkhezry.learn2learn.util.DatabaseUtil;
 import com.github.bkhezry.learn2learn.util.GridSpacingItemDecoration;
 import com.github.bkhezry.learn2learn.util.MyApplication;
 import com.mikepenz.fastadapter.FastAdapter;
+import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
+import com.mikepenz.fastadapter.listeners.OnClickListener;
 
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -39,6 +43,7 @@ public class SelectSkillActivity extends BaseActivity {
   private Box<Category> categoryBox;
   private Box<UserSkill> userSkillBox;
   private FastAdapter<SkillsItem> mFastAdapterSkill;
+  private ItemAdapter<SkillsItem> mItemAdapterSkill;
   private FastAdapter<Category> mFastAdapterCategory;
   private ItemAdapter<Category> mItemAdapterCategory;
 
@@ -64,29 +69,36 @@ public class SelectSkillActivity extends BaseActivity {
     mItemAdapterCategory = new ItemAdapter<>();
     mFastAdapterCategory = FastAdapter.with(mItemAdapterCategory);
     recyclerView.setAdapter(mFastAdapterCategory);
+    mItemAdapterSkill = new ItemAdapter<>();
+    mFastAdapterSkill = FastAdapter.with(mItemAdapterSkill);
+    mFastAdapterCategory.withOnClickListener(new OnClickListener<Category>() {
+      @Override
+      public boolean onClick(@Nullable View v, @NonNull IAdapter<Category> adapter, @NonNull Category item, int position) {
+        getSkills(item);
+        return true;
+      }
+    });
+    mFastAdapterSkill.withOnClickListener(new OnClickListener<SkillsItem>() {
+      @Override
+      public boolean onClick(@Nullable View v, @NonNull IAdapter<SkillsItem> adapter, @NonNull SkillsItem item, int position) {
+        returnResult(item);
+        return true;
+      }
+    });
     getCategory();
+  }
+
+  private void getSkills(Category item) {
+    List<SkillsItem> skillsItems = DatabaseUtil.getSkillItemOfCategory(skillsItemBox, item.getUuid());
+    recyclerView.setAdapter(mFastAdapterSkill);
+    mItemAdapterSkill.clear();
+    mItemAdapterSkill.add(skillsItems);
   }
 
   private void getCategory() {
     List<Category> categories = categoryBox.getAll();
     mItemAdapterCategory.clear();
     mItemAdapterCategory.add(categories);
-  }
-
-  private void separateLists(List<SkillsItem> skillsItems) {
-    if (AppUtil.isRTL(this)) {
-      for (SkillsItem skillsItem : skillsItems) {
-        Category category = DatabaseUtil.getCategoryWithUUID(categoryBox, skillsItem.getCategoryUuid());
-        skillsItem.setCategoryName(category.getFaName());
-        skillsItem.withIdentifier(category.getId());
-      }
-    } else {
-      for (SkillsItem skillsItem : skillsItems) {
-        Category category = DatabaseUtil.getCategoryWithUUID(categoryBox, skillsItem.getCategoryUuid());
-        skillsItem.setCategoryName(category.getEnName());
-        skillsItem.withIdentifier(category.getId());
-      }
-    }
   }
 
   private void returnResult(@NonNull SkillsItem item) {

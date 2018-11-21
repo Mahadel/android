@@ -7,6 +7,8 @@ import com.github.bkhezry.learn2learn.model.SkillsItem_;
 import com.github.bkhezry.learn2learn.model.UserSkill;
 import com.github.bkhezry.learn2learn.model.UserSkill_;
 
+import java.util.List;
+
 import io.objectbox.Box;
 import io.objectbox.query.Query;
 
@@ -24,6 +26,7 @@ public class DatabaseUtil {
         .equal(UserSkill_.skillUuid, uuid)
         .build().findFirst();
   }
+
   public static UserSkill getUserSkillWithUUID(Box<UserSkill> userSkillBox, String uuid) {
     return userSkillBox.query()
         .equal(UserSkill_.uuid, uuid)
@@ -43,4 +46,9 @@ public class DatabaseUtil {
         .build();
   }
 
+  public static List<SkillsItem> getSkillItemOfCategory(Box<SkillsItem> skillsItemBox, String categoryUUID) {
+    return skillsItemBox.query()
+        .equal(SkillsItem_.categoryUuid, categoryUUID)
+        .build().find();
+  }
 }
