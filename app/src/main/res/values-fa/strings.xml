@@ -60,4 +60,5 @@
     <string name="logout_message_label">برای خروج از برنامه مطمئن هستید؟</string>
     <string name="delete_account_message">از حذف کامل حساب‌کاربری خود مطمئن هستید؟</string>
     <string name="update_label">به‌روزرسانی</string>
+    <string name="category_label">دسته‌بندی</string>
 </resources>
