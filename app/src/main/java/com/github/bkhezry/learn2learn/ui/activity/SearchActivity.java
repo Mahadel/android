@@ -198,5 +198,10 @@ public class SearchActivity extends BaseActivity {
       }
     });
   }
+
+  @OnClick(R.id.close_image_view)
+  public void close() {
+    finish();
+  }
 }
 
