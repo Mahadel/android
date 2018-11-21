@@ -61,4 +61,6 @@
     <string name="delete_account_message">از حذف کامل حساب‌کاربری خود مطمئن هستید؟</string>
     <string name="update_label">به‌روزرسانی</string>
     <string name="category_label">دسته‌بندی</string>
+    <string name="no_search_label">جستجو نتیجه‌ای نداشت</string>
+    <string name="search_later_label">لطفا بعدا جستجو نمایید</string>
 </resources>

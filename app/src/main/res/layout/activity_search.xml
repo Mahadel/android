@@ -41,6 +41,26 @@
                     android:clipChildren="false"
                     android:overScrollMode="never" />
 
+                <LinearLayout
+                    android:id="@+id/layout_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_search_label"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/search_later_label"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+                </LinearLayout>
+
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

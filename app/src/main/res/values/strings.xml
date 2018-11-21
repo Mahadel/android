@@ -62,4 +62,6 @@
     <string name="delete_account_message">Are you sure want delete your account permanently?</string>
     <string name="update_label">Update</string>
     <string name="category_label">Category</string>
+    <string name="no_search_label">No search result</string>
+    <string name="search_later_label">Please search later</string>
 </resources>

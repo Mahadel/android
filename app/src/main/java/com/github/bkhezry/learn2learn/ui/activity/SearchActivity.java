@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.github.bkhezry.learn2learn.R;
@@ -59,6 +60,8 @@ public class SearchActivity extends BaseActivity {
   AppCompatTextView learnSkillNameTextView;
   @BindView(R.id.request_description_edit_text)
   AppCompatEditText requestDescriptionEditText;
+  @BindView(R.id.layout_empty)
+  LinearLayout layoutEmpty;
   private Prefser prefser;
   private Dialog loadingDialog;
   private FastAdapter<SearchResult> mFastAdapter;
@@ -128,8 +131,7 @@ public class SearchActivity extends BaseActivity {
         if (response.isSuccessful()) {
           List<SearchResult> searchResults = response.body();
           if (searchResults != null) {
-            mItemAdapter.clear();
-            mItemAdapter.add(searchResults);
+            handleSearchResults(searchResults);
           }
         }
       }
@@ -141,6 +143,17 @@ public class SearchActivity extends BaseActivity {
       }
     });
   }
+
+  private void handleSearchResults(List<SearchResult> searchResults) {
+    if (searchResults.size() != 0) {
+      mItemAdapter.clear();
+      mItemAdapter.add(searchResults);
+    } else {
+      layoutEmpty.setVisibility(View.VISIBLE);
+      recyclerView.setVisibility(View.GONE);
+    }
+  }
+
 
   private SkillsItem getSkill(String skillUuid) {
     return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
