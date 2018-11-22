@@ -23,46 +23,71 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/name_text_view"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="?attr/colorSecondary" />
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="کاربر یافت‌شده:"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textColor="?attr/colorSecondary" />
+
+                <View
+                    android:layout_width="@dimen/spacing_small"
+                    android:layout_height="0dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/name_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="?attr/colorSecondary" />
+            </LinearLayout>
 
             <View
                 android:layout_width="@dimen/spacing_middle"
                 android:layout_height="0dp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/gender_text_view"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textColor="?attr/colorSecondary" />
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="جنسیت:"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textColor="?attr/colorSecondary" />
+
+                <View
+                    android:layout_width="@dimen/spacing_small"
+                    android:layout_height="0dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/gender_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="?attr/colorSecondary" />
+            </LinearLayout>
 
             <View
                 android:layout_width="@dimen/spacing_large"
                 android:layout_height="0dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/request_email_btn"
-                style="@style/StyleMaterialButtonLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/request_label"
-                android:textColor="@color/grey_10" />
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/grey_10" />
+            android:background="@color/colorAccent" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -97,6 +122,15 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
         </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/request_email_btn"
+            style="@style/StyleMaterialButtonLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/request_label"
+            android:textColor="@color/grey_10" />
 
     </LinearLayout>
 
