@@ -70,4 +70,5 @@
     <string name="teach_search_label">Teaches:</string>
     <string name="request_sent_to_label">Request sent to:</string>
     <string name="email_label">Email:</string>
+    <string name="send_request_to_label">Send request to:</string>
 </resources>

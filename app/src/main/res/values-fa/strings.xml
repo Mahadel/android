@@ -69,4 +69,5 @@
     <string name="teach_search_label">یاد می‌دهد:</string>
     <string name="request_sent_to_label">درخواست ارسال شده به:</string>
     <string name="email_label">ایمیل:</string>
+    <string name="send_request_to_label">ارسال درخواست به:</string>
 </resources>
