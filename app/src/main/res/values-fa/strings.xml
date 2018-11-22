@@ -67,4 +67,6 @@
     <string name="search_item_found_label">کاربر یافت‌شده:</string>
     <string name="learn_search_label">یاد می‌گیرد:</string>
     <string name="teach_search_label">یاد می‌دهد:</string>
+    <string name="request_sent_to_label">درخواست ارسال شده به:</string>
+    <string name="email_label">ایمیل:</string>
 </resources>
