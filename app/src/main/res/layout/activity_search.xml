@@ -98,17 +98,27 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <View
                         android:layout_width="@dimen/spacing_large"
                         android:layout_height="0dp" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="ارسال درخواست به:"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                        android:textColor="@color/colorAccent" />
+
+                    <View
+                        android:layout_width="@dimen/spacing_medium"
+                        android:layout_height="0dp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/name_text_view"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
@@ -116,6 +126,13 @@
 
 
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:layout_marginBottom="@dimen/spacing_medium"
+                    android:background="@color/colorAccent" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -132,6 +149,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="@string/teach_search_label"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                            android:textColor="@color/colorAccent" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/teach_skill_name_text_view"
@@ -154,6 +179,14 @@
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="@string/learn_search_label"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                            android:textColor="@color/colorAccent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/learn_skill_name_text_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -165,13 +198,6 @@
 
 
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/spacing_medium"
-                    android:layout_marginBottom="@dimen/spacing_medium"
-                    android:background="@color/grey_40" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/til_skill_description"
@@ -186,8 +212,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top"
-                    android:lines="4"
-                    android:maxLines="4"
+                    android:lines="3"
+                    android:maxLines="3"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                     android:textSize="14sp"
                     android:textStyle="bold" />
