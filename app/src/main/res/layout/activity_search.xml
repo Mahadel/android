@@ -78,7 +78,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="300dp"
             android:layoutDirection="locale"
             app:cardBackgroundColor="?attr/colorPrimary"
             app:cardCornerRadius="5dp"
@@ -105,30 +105,15 @@
                         android:layout_width="@dimen/spacing_large"
                         android:layout_height="0dp" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/name_text_view"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:gravity="center_vertical"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textStyle="bold" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/name_text_view"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/submit_btn"
-                        style="@style/StyleMaterialButtonLarge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="@string/submit_label"
-                        android:textColor="@color/grey_10" />
 
                 </LinearLayout>
 
@@ -188,28 +173,35 @@
                     android:layout_marginBottom="@dimen/spacing_medium"
                     android:background="@color/grey_40" />
 
-
-                <com.google.android.material.textfield.TextInputLayout
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/til_skill_description"
-                    style="@style/StyleMaterialTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/description_label"
-                    android:textColorHint="?attr/colorSecondary">
+                    android:text="@string/description_label"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textStyle="bold" />
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/request_description_edit_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:lines="4"
-                        android:maxLines="4"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-                </com.google.android.material.textfield.TextInputLayout>
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/request_description_edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:lines="4"
+                    android:maxLines="4"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/submit_btn"
+                    style="@style/StyleMaterialButtonLarge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/submit_label"
+                    android:textColor="@color/grey_10" />
             </LinearLayout>
+
         </com.google.android.material.card.MaterialCardView>
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
