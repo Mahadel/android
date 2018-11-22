@@ -66,4 +66,6 @@
     <string name="search_later_label">Please search later</string>
     <string name="gender_label">Gender:</string>
     <string name="search_item_found_label">Account that found:</string>
+    <string name="learn_search_label">Learns:</string>
+    <string name="teach_search_label">Teaches:</string>
 </resources>

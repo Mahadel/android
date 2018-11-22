@@ -65,4 +65,6 @@
     <string name="search_later_label">لطفا بعدا جستجو نمایید</string>
     <string name="gender_label">جنسیت:</string>
     <string name="search_item_found_label">کاربر یافت‌شده:</string>
+    <string name="learn_search_label">یاد می‌گیرد:</string>
+    <string name="teach_search_label">یاد می‌دهد:</string>
 </resources>

@@ -98,6 +98,13 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/teach_search_label"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                android:textColor="@color/colorAccent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/teach_skill_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -108,6 +115,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="@dimen/spacing_mxlarge"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_mxlarge"
+                android:layout_marginBottom="@dimen/spacing_medium"
+                android:background="?attr/colorSecondary" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/learn_search_label"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                android:textColor="@color/colorAccent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/learn_skill_name"
@@ -128,7 +151,7 @@
             style="@style/StyleMaterialButtonLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_gravity="end"
             android:text="@string/request_label"
             android:textColor="@color/grey_10" />
 
