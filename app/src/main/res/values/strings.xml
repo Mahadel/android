@@ -64,4 +64,6 @@
     <string name="category_label">Category</string>
     <string name="no_search_label">No search result</string>
     <string name="search_later_label">Please search later</string>
+    <string name="gender_label">Gender:</string>
+    <string name="search_item_found_label">Account that found:</string>
 </resources>

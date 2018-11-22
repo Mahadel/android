@@ -63,4 +63,6 @@
     <string name="category_label">دسته‌بندی</string>
     <string name="no_search_label">جستجو نتیجه‌ای نداشت</string>
     <string name="search_later_label">لطفا بعدا جستجو نمایید</string>
+    <string name="gender_label">جنسیت:</string>
+    <string name="search_item_found_label">کاربر یافت‌شده:</string>
 </resources>

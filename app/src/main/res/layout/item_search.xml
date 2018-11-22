@@ -32,7 +32,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="کاربر یافت‌شده:"
+                    android:text="@string/search_item_found_label"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textColor="?attr/colorSecondary" />
 
@@ -61,7 +61,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="جنسیت:"
+                    android:text="@string/gender_label"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textColor="?attr/colorSecondary" />
 
