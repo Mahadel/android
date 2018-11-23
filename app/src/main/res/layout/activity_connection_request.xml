@@ -83,13 +83,13 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="درخواستی یافت نشد"
+                        android:text="@string/no_request_found_label"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="در صورت ثبت درخواست، در اینجا نمایش داده می‌شود"
+                        android:text="@string/no_request_found_description_label"
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
                 </LinearLayout>
 

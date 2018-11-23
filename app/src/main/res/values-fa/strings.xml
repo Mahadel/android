@@ -70,4 +70,9 @@
     <string name="request_sent_to_label">درخواست ارسال شده به:</string>
     <string name="email_label">ایمیل:</string>
     <string name="send_request_to_label">ارسال درخواست به:</string>
+    <string name="account_deleted_label">حساب‌کاربری شخص حذف شده است</string>
+    <string name="rejected_request_label">درخواست شما رد شده است</string>
+    <string name="no_response_label">هنوز پاسخ داده نشده است</string>
+    <string name="no_request_found_label">درخواستی یافت نشد</string>
+    <string name="no_request_found_description_label">در صورت ثبت درخواست، در اینجا نمایش داده می‌شود</string>
 </resources>

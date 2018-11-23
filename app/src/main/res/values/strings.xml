@@ -71,4 +71,9 @@
     <string name="request_sent_to_label">Request sent to:</string>
     <string name="email_label">Email:</string>
     <string name="send_request_to_label">Send request to:</string>
+    <string name="account_deleted_label">Account deleted</string>
+    <string name="rejected_request_label">Your request rejected</string>
+    <string name="no_response_label">No response yet</string>
+    <string name="no_request_found_label">No request found</string>
+    <string name="no_request_found_description_label">Submitted request will be showing here</string>
 </resources>

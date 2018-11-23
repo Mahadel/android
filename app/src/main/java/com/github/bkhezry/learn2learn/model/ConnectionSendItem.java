@@ -1,6 +1,7 @@
 package com.github.bkhezry.learn2learn.model;
 
 
+import android.content.Context;
 import android.view.View;
 
 import com.github.bkhezry.learn2learn.R;
@@ -222,8 +223,20 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
 
     @Override
     public void bindView(@NonNull ConnectionSendItem item, @NonNull List<Object> payloads) {
-      nameTextView.setText(String.format("%s %s", item.getUserInfo().getFirstName(), item.getUserInfo().getLastName()));
-      emailTextView.setText(item.getEmailTo());
+      Context context = view.getContext();
+      if (item.isDelete != 1) {
+        nameTextView.setText(String.format("%s %s", item.getUserInfo().getFirstName(), item.getUserInfo().getLastName()));
+        if (item.isAccept == 1) {
+          emailTextView.setText(item.getEmailTo());
+        } else if (item.isAccept == -1) {
+          emailTextView.setText(context.getString(R.string.no_response_label));
+        } else {
+          emailTextView.setText(context.getString(R.string.rejected_request_label));
+        }
+      } else {
+        nameTextView.setText(context.getString(R.string.account_deleted_label));
+        emailTextView.setText("");
+      }
       if (AppUtil.isRTL(view.getContext())) {
         learnSkillNameTextView.setText(getSkill(item.getLearnSkillUuidFrom()).getFaName());
         teachSkillNameTextView.setText(getSkill(item.getTeachSkillUuidFrom()).getFaName());
