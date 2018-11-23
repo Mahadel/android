@@ -206,7 +206,6 @@ public class ConnectionRequestActivity extends BaseActivity {
     Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
         "mailto", item.getEmailTo(), null));
     emailIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.request_skill_swap_label);
-    startActivity(emailIntent);
     try {
       startActivity(emailIntent);
     } catch (ActivityNotFoundException e) {
