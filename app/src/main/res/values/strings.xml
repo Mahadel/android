@@ -68,7 +68,7 @@
     <string name="search_item_found_label">Account that found:</string>
     <string name="learn_search_label">Learns:</string>
     <string name="teach_search_label">Teaches:</string>
-    <string name="request_sent_to_label">Request sent to:</string>
+    <string name="request_sent_to_label">Sent to:</string>
     <string name="email_label">Email:</string>
     <string name="send_request_to_label">Send request to:</string>
     <string name="account_deleted_label">Account deleted</string>
@@ -81,5 +81,5 @@
     <string name="mail_app_not_available_label">Mail app not available</string>
     <string name="me_learn_search_label">I learn:</string>
     <string name="me_teach_search_label">I teach:</string>
-    <string name="request_received_from_label">Request received from:</string>
+    <string name="request_received_from_label">Received from:</string>
 </resources>

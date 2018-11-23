@@ -67,7 +67,7 @@
     <string name="search_item_found_label">کاربر یافت‌شده:</string>
     <string name="learn_search_label">یاد می‌گیرد:</string>
     <string name="teach_search_label">یاد می‌دهد:</string>
-    <string name="request_sent_to_label">درخواست ارسال شده به:</string>
+    <string name="request_sent_to_label">ارسال شده به:</string>
     <string name="email_label">ایمیل:</string>
     <string name="send_request_to_label">ارسال درخواست به:</string>
     <string name="account_deleted_label">حساب‌کاربری شخص حذف شده است</string>
@@ -80,5 +80,5 @@
     <string name="mail_app_not_available_label">برنامه‌ ارسال ایمیل در دسترس نیست</string>
     <string name="me_learn_search_label">یاد می‌گیرم:</string>
     <string name="me_teach_search_label">یاد می‌دهم:</string>
-    <string name="request_received_from_label">درخواست دریافت شده از:</string>
+    <string name="request_received_from_label">دریافت شده از:</string>
 </resources>
