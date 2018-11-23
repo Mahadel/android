@@ -76,4 +76,5 @@
     <string name="no_response_label">No response yet</string>
     <string name="no_request_found_label">No request found</string>
     <string name="no_request_found_description_label">Submitted request will be showing here</string>
+    <string name="confirm_remove_request_label">Are you sure want remove this request?</string>
 </resources>

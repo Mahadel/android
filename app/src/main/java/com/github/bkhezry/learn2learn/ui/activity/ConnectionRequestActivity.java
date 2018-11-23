@@ -67,6 +67,7 @@ public class ConnectionRequestActivity extends BaseActivity {
   private ConnectionRequest connectionRequest;
   private int currentConnectionType = SENT_CONNECTION;
 
+  //TODO move it to AppUtils.
   private static int getThemeColorSecondary(Context context) {
     int colorAttr = context.getResources().getIdentifier("colorSecondary", "attr", context.getPackageName());
     TypedValue outValue = new TypedValue();
@@ -217,6 +218,20 @@ public class ConnectionRequestActivity extends BaseActivity {
   }
 
   private void deleteConnection(ConnectionSendItem item, int position) {
+    AppUtil.showConfirmDialog(getString(R.string.confirm_remove_request_label), this, new AppUtil.ConfirmDialogClickListener() {
+      @Override
+      public void ok() {
+        delete(item, position);
+      }
+
+      @Override
+      public void cancel() {
+
+      }
+    });
+  }
+
+  private void delete(ConnectionSendItem item, int position) {
     loadingDialog.show();
     //TODO get authentication info only one time.
     AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
@@ -242,7 +257,6 @@ public class ConnectionRequestActivity extends BaseActivity {
 
       }
     });
-
   }
 
   @OnClick({R.id.sent_layout, R.id.received_layout, R.id.sent_image_button, R.id.received_image_button})

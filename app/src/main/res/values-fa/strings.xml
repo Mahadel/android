@@ -75,4 +75,5 @@
     <string name="no_response_label">هنوز پاسخ داده نشده است</string>
     <string name="no_request_found_label">درخواستی یافت نشد</string>
     <string name="no_request_found_description_label">در صورت ثبت درخواست، در اینجا نمایش داده می‌شود</string>
+    <string name="confirm_remove_request_label">از حذف این درخواست مطمئن هستید؟</string>
 </resources>
