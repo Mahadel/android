@@ -7,6 +7,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
@@ -55,6 +56,8 @@ public class ConnectionRequestActivity extends BaseActivity {
   AppCompatImageButton receivedImageButton;
   @BindView(R.id.received_text_view)
   AppCompatTextView receivedTextView;
+  @BindView(R.id.layout_empty)
+  LinearLayout layoutEmpty;
   private Prefser prefser;
   private Dialog loadingDialog;
   private FastAdapter<ConnectionSendItem> mFastAdapterConnectionSend;
@@ -113,15 +116,35 @@ public class ConnectionRequestActivity extends BaseActivity {
   }
 
   private void displayConnectionSend(List<ConnectionSendItem> connectionSend) {
-    recyclerView.setAdapter(mFastAdapterConnectionSend);
-    mItemAdapterConnectionSend.clear();
-    mItemAdapterConnectionSend.add(connectionSend);
+    if (connectionSend.size() != 0) {
+      recyclerView.setAdapter(mFastAdapterConnectionSend);
+      mItemAdapterConnectionSend.clear();
+      mItemAdapterConnectionSend.add(connectionSend);
+      hideEmptyLayout();
+    } else {
+      showEmptyLayout();
+    }
   }
 
   private void displayConnectionReceive(List<ConnectionReceiveItem> connectionReceiveItems) {
-    recyclerView.setAdapter(mFastAdapterConnectionReceive);
-    mItemAdapterConnectionReceive.clear();
-    mItemAdapterConnectionReceive.add(connectionReceiveItems);
+    if (connectionReceiveItems.size() != 0) {
+      recyclerView.setAdapter(mFastAdapterConnectionReceive);
+      mItemAdapterConnectionReceive.clear();
+      mItemAdapterConnectionReceive.add(connectionReceiveItems);
+      hideEmptyLayout();
+    } else {
+      showEmptyLayout();
+    }
+  }
+
+  private void hideEmptyLayout() {
+    layoutEmpty.setVisibility(View.GONE);
+    recyclerView.setVisibility(View.VISIBLE);
+  }
+
+  private void showEmptyLayout() {
+    layoutEmpty.setVisibility(View.VISIBLE);
+    recyclerView.setVisibility(View.GONE);
   }
 
   private void initRecyclerView() {
@@ -205,6 +228,10 @@ public class ConnectionRequestActivity extends BaseActivity {
         loadingDialog.dismiss();
         if (response.isSuccessful()) {
           mItemAdapterConnectionSend.remove(position);
+          connectionRequest.getConnectionSend().remove(item);
+          if (mItemAdapterConnectionSend.getAdapterItemCount() == 0) {
+            showEmptyLayout();
+          }
         }
       }
 
