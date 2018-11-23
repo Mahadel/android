@@ -1,7 +1,10 @@
 package com.github.bkhezry.learn2learn.ui.activity;
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.SnackbarUtils;
 import com.github.bkhezry.learn2learn.R;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.ConnectionReceiveItem;
@@ -169,6 +173,11 @@ public class ConnectionRequestActivity extends BaseActivity {
     mFastAdapterConnectionSend.withEventHook(new ConnectionSendItem.EmailButtonClickEvent(new ConnectionSendItem.HandleEmailClickListener() {
       @Override
       public void sendEmail(ConnectionSendItem item, int position) {
+        if (item.getIsDelete() == 1 || item.getIsAccept() != 1) {
+          AppUtil.showSnackbar(recyclerView, "ایمیل کاربر در دسترس نیست", ConnectionRequestActivity.this, SnackbarUtils.LENGTH_LONG);
+        } else {
+          sendMail(item);
+        }
       }
     }));
     mItemAdapterConnectionReceive = new ItemAdapter<>();
@@ -191,6 +200,18 @@ public class ConnectionRequestActivity extends BaseActivity {
         editConnectionRequest(item, 0, position);
       }
     }));
+  }
+
+  private void sendMail(ConnectionSendItem item) {
+    Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+        "mailto", item.getEmailTo(), null));
+    emailIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.request_skill_swap_label);
+    startActivity(emailIntent);
+    try {
+      startActivity(emailIntent);
+    } catch (ActivityNotFoundException e) {
+      AppUtil.showSnackbar(recyclerView, getString(R.string.mail_app_not_available_label), this, SnackbarUtils.LENGTH_INDEFINITE);
+    }
   }
 
   private void editConnectionRequest(ConnectionReceiveItem item, int isAccept, int position) {

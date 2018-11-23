@@ -77,6 +77,7 @@ public class SearchActivity extends BaseActivity {
     requestWindowFeature(Window.FEATURE_NO_TITLE);
     getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    //TODO fixed size of request Ui in tablet.
     setContentView(R.layout.activity_search);
     ButterKnife.bind(this);
     BoxStore boxStore = MyApplication.getBoxStore();

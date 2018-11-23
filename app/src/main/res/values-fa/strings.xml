@@ -76,4 +76,6 @@
     <string name="no_request_found_label">درخواستی یافت نشد</string>
     <string name="no_request_found_description_label">در صورت ثبت درخواست، در اینجا نمایش داده می‌شود</string>
     <string name="confirm_remove_request_label">از حذف این درخواست مطمئن هستید؟</string>
+    <string name="request_skill_swap_label">درخواست تبادل مهارت</string>
+    <string name="mail_app_not_available_label">برنامه‌ ارسال ایمیل در دسترس نیست</string>
 </resources>
