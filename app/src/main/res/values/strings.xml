@@ -79,4 +79,7 @@
     <string name="confirm_remove_request_label">Are you sure want remove this request?</string>
     <string name="request_skill_swap_label">Request skill swap</string>
     <string name="mail_app_not_available_label">Mail app not available</string>
+    <string name="me_learn_search_label">I learn:</string>
+    <string name="me_teach_search_label">I teach:</string>
+    <string name="request_received_from_label">Request received from:</string>
 </resources>

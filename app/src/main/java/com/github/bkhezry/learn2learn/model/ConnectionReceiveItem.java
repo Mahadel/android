@@ -198,8 +198,6 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
     protected View view;
     @BindView(R.id.name_text_view)
     AppCompatTextView nameTextView;
-    @BindView(R.id.email_text_view)
-    AppCompatTextView emailTextView;
     @BindView(R.id.learn_skill_name_text_view)
     AppCompatTextView learnSkillNameTextView;
     @BindView(R.id.teach_skill_name_text_view)
@@ -233,7 +231,6 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
         rejectRequestButton.setVisibility(View.VISIBLE);
       }
       nameTextView.setText(String.format("%s %s", item.getUserInfo().getFirstName(), item.getUserInfo().getLastName()));
-      emailTextView.setText(item.getEmailTo());
       if (AppUtil.isRTL(view.getContext())) {
         learnSkillNameTextView.setText(getSkill(item.getLearnSkillUuidFrom()).getFaName());
         teachSkillNameTextView.setText(getSkill(item.getTeachSkillUuidFrom()).getFaName());
