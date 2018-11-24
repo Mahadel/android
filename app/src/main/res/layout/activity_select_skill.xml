@@ -20,34 +20,62 @@
             android:focusable="true"
             android:orientation="vertical">
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_margin="5dp"
+                android:clipToPadding="false"
+                app:cardBackgroundColor="?attr/colorPrimary"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="3dp"
+                app:cardUseCompatPadding="false"
+                app:layout_collapseMode="parallax">
 
-                <ImageView
-                    android:id="@+id/close_image_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/spacing_large"
-                    android:tint="@color/grey_40"
-                    app:srcCompat="@drawable/ic_close_black_24dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="start|center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/spacing_medium">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/category_button"
-                    style="@style/StyleMaterialButtonBorderSimple"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/category_label"
-                    android:visibility="gone" />
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/close_image_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tint="@color/grey_60"
+                        app:srcCompat="@drawable/ic_close_black_24dp" />
+
+                    <View
+                        android:layout_width="@dimen/spacing_medium"
+                        android:layout_height="0dp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/select_skill_label"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead" />
+
+                    <View
+                        android:layout_width="@dimen/spacing_medium"
+                        android:layout_height="0dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/category_button"
+                        style="@style/StyleMaterialButtonBorderSimple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/category_label"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/spacing_large"
                 android:clipChildren="false"
                 android:overScrollMode="never"
                 android:padding="@dimen/spacing_medium" />
