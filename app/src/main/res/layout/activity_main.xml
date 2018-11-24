@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:tint="?attr/colorSecondary"
                 app:backgroundTint="?attr/colorPrimary"
-                app:elevation="10dp"
+                app:elevation="5dp"
                 app:layout_anchor="@id/bar"
                 app:srcCompat="@drawable/ic_add_24px" />
 
