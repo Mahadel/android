@@ -238,11 +238,11 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
         emailTextView.setText("");
       }
       if (AppUtil.isRTL(view.getContext())) {
-        learnSkillNameTextView.setText(getSkill(item.getLearnSkillUuidFrom()).getFaName());
-        teachSkillNameTextView.setText(getSkill(item.getTeachSkillUuidFrom()).getFaName());
+        learnSkillNameTextView.setText(AppUtil.getSkill(skillsItemBox, item.getLearnSkillUuidFrom()).getFaName());
+        teachSkillNameTextView.setText(AppUtil.getSkill(skillsItemBox, item.getTeachSkillUuidFrom()).getFaName());
       } else {
-        learnSkillNameTextView.setText(getSkill(item.getLearnSkillUuidFrom()).getEnName());
-        teachSkillNameTextView.setText(getSkill(item.getTeachSkillUuidFrom()).getEnName());
+        learnSkillNameTextView.setText(AppUtil.getSkill(skillsItemBox, item.getLearnSkillUuidFrom()).getEnName());
+        teachSkillNameTextView.setText(AppUtil.getSkill(skillsItemBox, item.getTeachSkillUuidFrom()).getEnName());
       }
       descriptionTextView.setText(item.getDescription());
     }
@@ -250,11 +250,6 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
     @Override
     public void unbindView(@NonNull ConnectionSendItem item) {
 
-    }
-
-    //TODO move to AppUtil class.
-    private SkillsItem getSkill(String skillUuid) {
-      return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
     }
   }
 
