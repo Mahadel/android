@@ -167,16 +167,19 @@
                             android:layout_height="wrap_content" />
 
                         <com.google.android.material.button.MaterialButton
+                            android:id="@+id/update_button"
                             style="@style/StyleMaterialButtonBorderSimple"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/update_label"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                            android:visibility="gone" />
 
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/changelog_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
@@ -212,6 +215,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/license_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
@@ -333,6 +337,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/sponsor_website"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
@@ -378,7 +383,6 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible"
                 app:cardBackgroundColor="?attr/colorPrimary"
                 app:cardCornerRadius="2dp"
                 app:cardElevation="2dp"
@@ -402,6 +406,7 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
                     <LinearLayout
+                        android:id="@+id/developer_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="?attr/selectableItemBackground"
