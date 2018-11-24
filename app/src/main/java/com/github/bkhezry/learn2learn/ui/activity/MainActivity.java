@@ -265,9 +265,8 @@ public class MainActivity extends BaseActivity {
     skillFragment.setOnCallbackResult(new CallbackResult() {
       @Override
       public void sendResult(Object obj, AppUtil.SkillType skillType) {
-        //TODO check return object from fragment and isAdd to DB or get it.
         UserSkill userSkill = (UserSkill) obj;
-        handleUserSkill(userSkill, skillType);
+        handleAddedUserSkill(userSkill, skillType);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
       }
     });
@@ -286,12 +285,14 @@ public class MainActivity extends BaseActivity {
     AppUtil.showFragment(new AboutFragment(), getSupportFragmentManager());
   }
 
-  private void handleUserSkill(UserSkill userSkill, AppUtil.SkillType skillType) {
+  private void handleAddedUserSkill(UserSkill userSkill, AppUtil.SkillType skillType) {
     userSkillBox.put(userSkill);
     if (skillType == AppUtil.SkillType.WANT_TEACH) {
       mItemAdapter_1.add(0, userSkill);
+      mFastAdapter_1.notifyAdapterItemChanged(0);
     } else {
       mItemAdapter_2.add(0, userSkill);
+      mFastAdapter_2.notifyAdapterItemChanged(0);
     }
   }
 
