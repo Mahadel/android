@@ -71,14 +71,6 @@ public class ConnectionRequestActivity extends BaseActivity {
   private ConnectionRequest connectionRequest;
   private int currentConnectionType = SENT_CONNECTION;
 
-  //TODO move it to AppUtils.
-  private static int getThemeColorSecondary(Context context) {
-    int colorAttr = context.getResources().getIdentifier("colorSecondary", "attr", context.getPackageName());
-    TypedValue outValue = new TypedValue();
-    context.getTheme().resolveAttribute(colorAttr, outValue, true);
-    return outValue.data;
-  }
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -326,13 +318,13 @@ public class ConnectionRequestActivity extends BaseActivity {
   }
 
   private void setSentDeselect() {
-    sentTextView.setTextColor(getThemeColorSecondary(this));
-    sentImageButton.setColorFilter(getThemeColorSecondary(this));
+    sentTextView.setTextColor(AppUtil.getThemeColorSecondary(this));
+    sentImageButton.setColorFilter(AppUtil.getThemeColorSecondary(this));
   }
 
   private void setReceivedDeselect() {
-    receivedTextView.setTextColor(getThemeColorSecondary(this));
-    receivedImageButton.setColorFilter(getThemeColorSecondary(this));
+    receivedTextView.setTextColor(AppUtil.getThemeColorSecondary(this));
+    receivedImageButton.setColorFilter(AppUtil.getThemeColorSecondary(this));
   }
 
   @OnClick(R.id.close_image_view)

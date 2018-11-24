@@ -219,4 +219,11 @@ public class AppUtil {
   public static SkillsItem getSkill(Box<SkillsItem> skillsItemBox, String skillUuid) {
     return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
   }
+
+  public static int getThemeColorSecondary(Context context) {
+    int colorAttr = context.getResources().getIdentifier("colorSecondary", "attr", context.getPackageName());
+    TypedValue outValue = new TypedValue();
+    context.getTheme().resolveAttribute(colorAttr, outValue, true);
+    return outValue.data;
+  }
 }
