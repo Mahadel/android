@@ -154,7 +154,7 @@ public class AboutFragment extends DialogFragment {
       Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
       startActivity(browserIntent);
     } catch (ActivityNotFoundException e) {
-      AppUtil.showSnackbar(view, "برنامه مرورگر یافت نشد", activity, SnackbarUtils.LENGTH_INDEFINITE);
+      AppUtil.showSnackbar(view, getString(R.string.browser_not_found_label), activity, SnackbarUtils.LENGTH_INDEFINITE);
       e.printStackTrace();
     }
 
