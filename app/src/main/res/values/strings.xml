@@ -82,4 +82,5 @@
     <string name="me_learn_search_label">I learn:</string>
     <string name="me_teach_search_label">I teach:</string>
     <string name="request_received_from_label">Received from:</string>
+    <string name="bkhezry_twitter_url" translatable="false">https://twitter.com/bkhezry</string>
 </resources>
