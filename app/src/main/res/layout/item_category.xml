@@ -17,8 +17,8 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/skill"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="@dimen/spacing_large"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
