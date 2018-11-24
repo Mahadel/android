@@ -113,10 +113,6 @@ public class LauncherActivity extends BaseActivity implements
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
     userSkillBox = boxStore.boxFor(UserSkill.class);
     loadingDialog = AppUtil.getDialogLoading(this);
-    loadActivity();
-  }
-
-  private void loadActivity() {
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     if (prefser.contains(Constant.TOKEN)) {
 
