@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.github.bkhezry.learn2learn.R;
+import com.github.bkhezry.learn2learn.model.SkillsItem;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 
 import java.util.Locale;
@@ -25,6 +26,7 @@ import androidx.core.os.ConfigurationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import io.objectbox.Box;
 
 public class AppUtil {
 
@@ -212,5 +214,9 @@ public class AppUtil {
 
   public static boolean isAtLeastVersion(int version) {
     return Build.VERSION.SDK_INT >= version;
+  }
+
+  public static SkillsItem getSkill(Box<SkillsItem> skillsItemBox, String skillUuid) {
+    return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
   }
 }

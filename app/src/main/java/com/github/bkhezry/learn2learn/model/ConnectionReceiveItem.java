@@ -232,11 +232,11 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
       }
       nameTextView.setText(String.format("%s %s", item.getUserInfo().getFirstName(), item.getUserInfo().getLastName()));
       if (AppUtil.isRTL(view.getContext())) {
-        learnSkillNameTextView.setText(getSkill(item.getLearnSkillUuidFrom()).getFaName());
-        teachSkillNameTextView.setText(getSkill(item.getTeachSkillUuidFrom()).getFaName());
+        learnSkillNameTextView.setText(AppUtil.getSkill(skillsItemBox, item.getLearnSkillUuidFrom()).getFaName());
+        teachSkillNameTextView.setText(AppUtil.getSkill(skillsItemBox, item.getTeachSkillUuidFrom()).getFaName());
       } else {
-        learnSkillNameTextView.setText(getSkill(item.getLearnSkillUuidFrom()).getEnName());
-        teachSkillNameTextView.setText(getSkill(item.getTeachSkillUuidFrom()).getEnName());
+        learnSkillNameTextView.setText(AppUtil.getSkill(skillsItemBox, item.getLearnSkillUuidFrom()).getEnName());
+        teachSkillNameTextView.setText(AppUtil.getSkill(skillsItemBox, item.getTeachSkillUuidFrom()).getEnName());
       }
       descriptionTextView.setText(item.getDescription());
     }
@@ -244,11 +244,6 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
     @Override
     public void unbindView(@NonNull ConnectionReceiveItem item) {
 
-    }
-
-    //TODO move to AppUtil class.
-    private SkillsItem getSkill(String skillUuid) {
-      return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
     }
   }
 
