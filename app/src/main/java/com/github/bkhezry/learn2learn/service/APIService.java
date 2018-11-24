@@ -1,5 +1,6 @@
 package com.github.bkhezry.learn2learn.service;
 
+import com.github.bkhezry.learn2learn.model.About;
 import com.github.bkhezry.learn2learn.model.AuthenticationInfo;
 import com.github.bkhezry.learn2learn.model.Category;
 import com.github.bkhezry.learn2learn.model.ConnectionReceiveItem;
@@ -88,4 +89,7 @@ public interface APIService {
 
   @DELETE("user/{uuid}")
   Call<ResponseMessage> deleteUserAccount(@Path("uuid") String uuid);
+
+  @GET("about")
+  Call<About> getAbout();
 }
