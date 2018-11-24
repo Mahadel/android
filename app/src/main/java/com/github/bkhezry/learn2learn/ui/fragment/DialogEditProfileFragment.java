@@ -55,6 +55,7 @@ public class DialogEditProfileFragment extends DialogFragment {
   private UserInfo userInfo;
   private CallbackListener listener;
   private Dialog loadingDialog;
+  private AuthenticationInfo info;
 
   void setOnCallbackResult(CallbackListener listener) {
     this.listener = listener;
@@ -66,6 +67,7 @@ public class DialogEditProfileFragment extends DialogFragment {
     ButterKnife.bind(this, rootView);
     activity = getActivity();
     prefser = new Prefser(activity);
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     loadingDialog = AppUtil.getDialogLoading(activity);
     firstNameEditText.setText(userInfo.getFirstName());
     lastNameEditText.setText(userInfo.getLastName());
@@ -119,7 +121,6 @@ public class DialogEditProfileFragment extends DialogFragment {
 
   private void updateUser(final String firstName, final String lastName, final int gender) {
     loadingDialog.show();
-    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.updateUser(info.getUuid(), firstName, lastName, gender);
     call.enqueue(new Callback<ResponseMessage>() {

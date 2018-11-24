@@ -51,6 +51,7 @@ public class AddSkillFragment extends Fragment {
   private SkillsItem skillsItem;
   private Prefser prefser;
   private Dialog loadingDialog;
+  private AuthenticationInfo info;
 
 
   public void setOnCallbackResult(final CallbackResult callbackResult) {
@@ -71,6 +72,7 @@ public class AddSkillFragment extends Fragment {
       prefser = new Prefser(activity);
       loadingDialog = AppUtil.getDialogLoading(activity);
     }
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     if (skillType == AppUtil.SkillType.WANT_LEARN) {
       skillTypeTextView.setText(R.string.add_skill_learn_label);
     } else {
@@ -98,7 +100,6 @@ public class AddSkillFragment extends Fragment {
     }
     if (skillsItem != null) {
       loadingDialog.show();
-      AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
       APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
       Call<UserSkill> call = apiService.addUserSkill(info.getUuid(), skillsItem.getUuid(), description, skillTypeInt);
       call.enqueue(new Callback<UserSkill>() {

@@ -51,6 +51,7 @@ public class SkillDetailFragment extends Fragment {
   private Prefser prefser;
   private Box<SkillsItem> skillsItemBox;
   private Dialog loadingDialog;
+  private AuthenticationInfo info;
 
 
   public void setOnCallbackResult(SkillDetailCallbackResult callbackResult) {
@@ -77,6 +78,7 @@ public class SkillDetailFragment extends Fragment {
     ButterKnife.bind(this, rootView);
     activity = getActivity();
     loadingDialog = AppUtil.getDialogLoading(activity);
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
     prefser = new Prefser(activity);
@@ -110,7 +112,6 @@ public class SkillDetailFragment extends Fragment {
   private void editUserSkill() {
     loadingDialog.show();
     String description = skillDescriptionEditText.getText().toString();
-    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<UserSkill> call = apiService.editUserSkill(info.getUuid(), userSkill.getUuid(), description);
     call.enqueue(new Callback<UserSkill>() {
@@ -160,7 +161,6 @@ public class SkillDetailFragment extends Fragment {
 
   private void removeSkillServer() {
     loadingDialog.show();
-    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.deleteUserSkill(info.getUuid(), userSkill.getUuid());
     call.enqueue(new Callback<ResponseMessage>() {

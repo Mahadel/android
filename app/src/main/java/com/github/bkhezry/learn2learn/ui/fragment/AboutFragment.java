@@ -51,6 +51,7 @@ public class AboutFragment extends DialogFragment {
   private Activity activity;
   private About about;
   private String versionName;
+  private AuthenticationInfo info;
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class AboutFragment extends DialogFragment {
     ButterKnife.bind(this, rootView);
     activity = getActivity();
     prefser = new Prefser(activity);
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     loadingDialog = AppUtil.getDialogLoading(activity);
     setAppVersion();
     getAbout();
@@ -66,7 +68,6 @@ public class AboutFragment extends DialogFragment {
 
   private void getAbout() {
     loadingDialog.show();
-    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<About> call = apiService.getAbout();
     call.enqueue(new Callback<About>() {

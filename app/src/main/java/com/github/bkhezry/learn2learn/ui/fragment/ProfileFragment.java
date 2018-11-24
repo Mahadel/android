@@ -59,6 +59,7 @@ public class ProfileFragment extends DialogFragment implements
   private GoogleApiClient mGoogleApiClient;
   private UserInfo userInfo;
   private Dialog loadingDialog;
+  private AuthenticationInfo info;
 
 
   @Override
@@ -69,7 +70,7 @@ public class ProfileFragment extends DialogFragment implements
     prefser = new Prefser(activity);
     loadingDialog = AppUtil.getDialogLoading(activity);
     setUpGoogleSignIn();
-    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     emailTextView.setText(info.getEmail());
     String profilePicURL = Constant.GRAVATAR_URL + md5(info.getEmail()).toLowerCase() + "?size=400";
     Glide.with(activity).load(profilePicURL).into(profilePic);
@@ -79,7 +80,6 @@ public class ProfileFragment extends DialogFragment implements
 
   private void requestProfileInfo() {
     loadingDialog.show();
-    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<UserInfo> call = apiService.getUserInfo(info.getUuid());
     call.enqueue(new Callback<UserInfo>() {
@@ -144,7 +144,6 @@ public class ProfileFragment extends DialogFragment implements
       @Override
       public void ok() {
         loadingDialog.show();
-        AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
         APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
         Call<ResponseMessage> call = apiService.deleteUserAccount(info.getUuid());
         call.enqueue(new Callback<ResponseMessage>() {

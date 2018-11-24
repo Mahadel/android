@@ -69,6 +69,7 @@ public class SearchActivity extends BaseActivity {
   private BottomSheetBehavior bottomSheetBehavior;
   private Box<SkillsItem> skillsItemBox;
   private SearchResult selectedResult;
+  private AuthenticationInfo info;
 
 
   @Override
@@ -80,6 +81,7 @@ public class SearchActivity extends BaseActivity {
     //TODO fixed size of request Ui in tablet.
     setContentView(R.layout.activity_search);
     ButterKnife.bind(this);
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
     setUpBottomSheet();
@@ -122,7 +124,6 @@ public class SearchActivity extends BaseActivity {
 
   private void doSearch() {
     loadingDialog.show();
-    final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<List<SearchResult>> call = apiService.search(info.getUuid());
     call.enqueue(new Callback<List<SearchResult>>() {
@@ -174,7 +175,6 @@ public class SearchActivity extends BaseActivity {
     loadingDialog.show();
     AppUtil.hideSoftInput(SearchActivity.this);
     String description = requestDescriptionEditText.getText().toString();
-    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.requestConnection(
         info.getUuid(),

@@ -95,6 +95,7 @@ public class LauncherActivity extends BaseActivity implements
   private Box<SkillsItem> skillsItemBox;
   private Box<UserSkill> userSkillBox;
   private Dialog loadingDialog;
+  private AuthenticationInfo info;
 
 
   @Override
@@ -105,6 +106,7 @@ public class LauncherActivity extends BaseActivity implements
         WindowManager.LayoutParams.FLAG_FULLSCREEN);
     setContentView(R.layout.activity_launcher);
     ButterKnife.bind(this);
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     prefser = new Prefser(this);
     BoxStore boxStore = MyApplication.getBoxStore();
     categoryBox = boxStore.boxFor(Category.class);
@@ -112,7 +114,7 @@ public class LauncherActivity extends BaseActivity implements
     userSkillBox = boxStore.boxFor(UserSkill.class);
     loadingDialog = AppUtil.getDialogLoading(this);
     if (prefser.contains(Constant.TOKEN)) {
-      AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+
       if (info.getFillInfo()) {
         retrieveData(rootCardView);
       } else {
@@ -256,7 +258,6 @@ public class LauncherActivity extends BaseActivity implements
 
   private void updateUser(final String firstName, final String lastName, final int gender) {
     //TODO add loading if need.
-    final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.updateUser(info.getUuid(), firstName, lastName, gender);
     call.enqueue(new Callback<ResponseMessage>() {
@@ -327,7 +328,6 @@ public class LauncherActivity extends BaseActivity implements
 
   private void retrieveSkillsData() {
     loadingLayout();
-    final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<List<Category>> call = apiService.getCategories();
     call.enqueue(new Callback<List<Category>>() {
@@ -353,7 +353,6 @@ public class LauncherActivity extends BaseActivity implements
   }
 
   private void retrieveUserSkillsData() {
-    final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<List<UserSkill>> call = apiService.getUserSkills(info.getUuid());
     call.enqueue(new Callback<List<UserSkill>>() {

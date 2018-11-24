@@ -2,11 +2,9 @@ package com.github.bkhezry.learn2learn.ui.activity;
 
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -70,6 +68,7 @@ public class ConnectionRequestActivity extends BaseActivity {
   private ItemAdapter<ConnectionReceiveItem> mItemAdapterConnectionReceive;
   private ConnectionRequest connectionRequest;
   private int currentConnectionType = SENT_CONNECTION;
+  private AuthenticationInfo info;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +80,7 @@ public class ConnectionRequestActivity extends BaseActivity {
     ButterKnife.bind(this);
     prefser = new Prefser(this);
     loadingDialog = AppUtil.getDialogLoading(this);
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     setSentSelect();
     initRecyclerView();
     getConnectionRequests();
@@ -88,7 +88,6 @@ public class ConnectionRequestActivity extends BaseActivity {
 
   private void getConnectionRequests() {
     loadingDialog.show();
-    final AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ConnectionRequest> call = apiService.getUserConnectionRequest(info.getUuid());
     call.enqueue(new Callback<ConnectionRequest>() {
@@ -207,7 +206,6 @@ public class ConnectionRequestActivity extends BaseActivity {
 
   private void editConnectionRequest(ConnectionReceiveItem item, int isAccept, int position) {
     loadingDialog.show();
-    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ConnectionReceiveItem> call = apiService.editConnection(info.getUuid(), item.getUuid(), isAccept);
     call.enqueue(new Callback<ConnectionReceiveItem>() {
@@ -246,7 +244,6 @@ public class ConnectionRequestActivity extends BaseActivity {
   private void delete(ConnectionSendItem item, int position) {
     loadingDialog.show();
     //TODO get authentication info only one time.
-    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.deleteConnectionRequest(info.getUuid(), item.getUuid());
     call.enqueue(new Callback<ResponseMessage>() {
