@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
@@ -107,12 +108,16 @@ public class LauncherActivity extends BaseActivity implements
     setContentView(R.layout.activity_launcher);
     ButterKnife.bind(this);
     prefser = new Prefser(this);
-    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     BoxStore boxStore = MyApplication.getBoxStore();
     categoryBox = boxStore.boxFor(Category.class);
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
     userSkillBox = boxStore.boxFor(UserSkill.class);
     loadingDialog = AppUtil.getDialogLoading(this);
+    loadActivity();
+  }
+
+  private void loadActivity() {
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     if (prefser.contains(Constant.TOKEN)) {
 
       if (info.getFillInfo()) {
@@ -342,7 +347,7 @@ public class LauncherActivity extends BaseActivity implements
           }
           retrieveUserSkillsData();
         } else if (response.code() == 403) {
-          //TODO remove authentication info and start activity again.
+          removeToken();
         }
       }
 
@@ -352,6 +357,13 @@ public class LauncherActivity extends BaseActivity implements
         t.printStackTrace();
       }
     });
+  }
+
+  private void removeToken() {
+    prefser.remove(Constant.TOKEN);
+    startActivity(new Intent(this, LauncherActivity.class));
+    finish();
+    Toast.makeText(this, "دسترسی غیرمجاز. لطفا دوباره وارد شوید", Toast.LENGTH_LONG).show();
   }
 
   private void retrieveUserSkillsData() {
@@ -365,7 +377,7 @@ public class LauncherActivity extends BaseActivity implements
           storeUserSkill(userSkills);
           startMainActivity();
         } else if (response.code() == 403) {
-          //TODO remove authentication info and start activity again.
+          removeToken();
         }
       }
 
