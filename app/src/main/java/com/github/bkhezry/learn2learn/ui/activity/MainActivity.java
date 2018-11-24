@@ -296,7 +296,9 @@ public class MainActivity extends BaseActivity {
     if (skillType == AppUtil.SkillType.WANT_TEACH) {
       mItemAdapter_1.add(0, userSkill);
       mFastAdapter_1.notifyAdapterItemChanged(0);
+      hideEmptyLayout_1();
     } else {
+      hideEmptyLayout_2();
       mItemAdapter_2.add(0, userSkill);
       mFastAdapter_2.notifyAdapterItemChanged(0);
     }

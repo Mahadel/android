@@ -25,7 +25,7 @@ public class MyApplication extends Application {
     ViewPump.init(ViewPump.builder()
         .addInterceptor(new CalligraphyInterceptor(
             new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/DroidNaskh-Regular.ttf")
+                .setDefaultFontPath("fonts/IRANSansMobile.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()))
         .build());
