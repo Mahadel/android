@@ -257,12 +257,13 @@ public class LauncherActivity extends BaseActivity implements
   }
 
   private void updateUser(final String firstName, final String lastName, final int gender) {
-    //TODO add loading if need.
+    loadingDialog.show();
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.updateUser(info.getUuid(), firstName, lastName, gender);
     call.enqueue(new Callback<ResponseMessage>() {
       @Override
       public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
+        loadingDialog.dismiss();
         if (response.isSuccessful()) {
           info.setFillInfo(true);
           prefser.put(Constant.TOKEN, info);
@@ -272,6 +273,7 @@ public class LauncherActivity extends BaseActivity implements
 
       @Override
       public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
+        loadingDialog.dismiss();
         t.printStackTrace();
       }
     });

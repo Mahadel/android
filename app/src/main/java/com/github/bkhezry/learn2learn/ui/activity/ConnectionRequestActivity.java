@@ -243,7 +243,6 @@ public class ConnectionRequestActivity extends BaseActivity {
 
   private void delete(ConnectionSendItem item, int position) {
     loadingDialog.show();
-    //TODO get authentication info only one time.
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.deleteConnectionRequest(info.getUuid(), item.getUuid());
     call.enqueue(new Callback<ResponseMessage>() {
