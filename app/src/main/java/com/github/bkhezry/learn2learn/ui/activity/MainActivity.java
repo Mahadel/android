@@ -213,8 +213,14 @@ public class MainActivity extends BaseActivity {
     userSkillBox.remove(userSkill1DB);
     if (skillType == AppUtil.SkillType.WANT_TEACH) {
       mItemAdapter_1.remove(lastPositionClicked);
+      if (mItemAdapter_1.getAdapterItemCount() == 0) {
+        showEmptyLayout_1();
+      }
     } else {
       mItemAdapter_2.remove(lastPositionClicked);
+      if (mItemAdapter_2.getAdapterItemCount() == 0) {
+        showEmptyLayout_2();
+      }
     }
 
   }
@@ -298,29 +304,46 @@ public class MainActivity extends BaseActivity {
 
 
   private void requestSkills() {
-    //TODO add listener to DB for handle empty of list when add first item or remove last item.
     mItemAdapter_1.clear();
     List<UserSkill> userSkills1 = DatabaseUtil.getUserSkillWithType(userSkillBox, 1).find();
     mItemAdapter_1.add(userSkills1);
     if (userSkills1.size() == 0) {
-      recyclerView_1.setVisibility(View.GONE);
-      layoutEmpty1.setVisibility(View.VISIBLE);
+      showEmptyLayout_1();
     } else {
-      recyclerView_1.setVisibility(View.VISIBLE);
-      layoutEmpty1.setVisibility(View.GONE);
+      hideEmptyLayout_1();
     }
     mItemAdapter_2.clear();
     List<UserSkill> userSkills2 = DatabaseUtil.getUserSkillWithType(userSkillBox, 2).find();
     mItemAdapter_2.add(userSkills2);
     if (userSkills2.size() == 0) {
-      recyclerView_2.setVisibility(View.GONE);
-      layoutEmpty2.setVisibility(View.VISIBLE);
+      showEmptyLayout_2();
     } else {
-      recyclerView_2.setVisibility(View.VISIBLE);
-      layoutEmpty2.setVisibility(View.GONE);
+      hideEmptyLayout_2();
 
     }
   }
+
+  private void showEmptyLayout_1() {
+    recyclerView_1.setVisibility(View.GONE);
+    layoutEmpty1.setVisibility(View.VISIBLE);
+  }
+
+  private void hideEmptyLayout_1() {
+    recyclerView_1.setVisibility(View.VISIBLE);
+    layoutEmpty1.setVisibility(View.GONE);
+  }
+
+
+  private void showEmptyLayout_2() {
+    recyclerView_2.setVisibility(View.GONE);
+    layoutEmpty2.setVisibility(View.VISIBLE);
+  }
+
+  private void hideEmptyLayout_2() {
+    recyclerView_2.setVisibility(View.VISIBLE);
+    layoutEmpty2.setVisibility(View.GONE);
+  }
+
 
   @OnClick(R.id.main_layout)
   public void hideBottomDrawer() {
