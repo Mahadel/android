@@ -73,7 +73,6 @@ public class SkillDetailFragment extends Fragment {
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    //TODO check font and color of skill name and title.
     View rootView = inflater.inflate(R.layout.fragment_skill_detail, container, false);
     ButterKnife.bind(this, rootView);
     activity = getActivity();

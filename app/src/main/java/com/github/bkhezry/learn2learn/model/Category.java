@@ -85,7 +85,6 @@ public class Category extends AbstractItem<Category, Category.ViewHolder> {
     return R.id.fastadapter_sample_item_id;
   }
 
-  //TODO change size of item in category
   @Override
   public int getLayoutRes() {
     return R.layout.item_category;
