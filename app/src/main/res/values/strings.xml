@@ -84,4 +84,5 @@
     <string name="request_received_from_label">Received from:</string>
     <string name="bkhezry_twitter_url" translatable="false">https://twitter.com/bkhezry</string>
     <string name="browser_not_found_label">Browser not found</string>
+    <string name="access_deny_label">Access is deny, Please login again</string>
 </resources>

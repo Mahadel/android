@@ -82,4 +82,5 @@
     <string name="me_teach_search_label">یاد می‌دهم:</string>
     <string name="request_received_from_label">دریافت شده از:</string>
     <string name="browser_not_found_label">برنامه مرورگر یافت نشد</string>
+    <string name="access_deny_label">دسترسی غیرمجاز. لطفا دوباره وارد شوید</string>
 </resources>

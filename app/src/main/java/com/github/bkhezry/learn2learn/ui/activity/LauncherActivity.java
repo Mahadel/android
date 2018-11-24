@@ -360,10 +360,11 @@ public class LauncherActivity extends BaseActivity implements
   }
 
   private void removeToken() {
+    loadingDialog.dismiss();
     prefser.remove(Constant.TOKEN);
     startActivity(new Intent(this, LauncherActivity.class));
     finish();
-    Toast.makeText(this, "دسترسی غیرمجاز. لطفا دوباره وارد شوید", Toast.LENGTH_LONG).show();
+    Toast.makeText(this, getString(R.string.access_deny_label), Toast.LENGTH_LONG).show();
   }
 
   private void retrieveUserSkillsData() {
