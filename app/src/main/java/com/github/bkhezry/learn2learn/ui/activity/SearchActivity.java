@@ -81,11 +81,11 @@ public class SearchActivity extends BaseActivity {
     //TODO fixed size of request Ui in tablet.
     setContentView(R.layout.activity_search);
     ButterKnife.bind(this);
-    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
     setUpBottomSheet();
     prefser = new Prefser(this);
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     loadingDialog = AppUtil.getDialogLoading(this);
     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
     recyclerView.setLayoutManager(mLayoutManager);

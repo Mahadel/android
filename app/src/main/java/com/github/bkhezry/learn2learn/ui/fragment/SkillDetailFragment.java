@@ -78,10 +78,10 @@ public class SkillDetailFragment extends Fragment {
     ButterKnife.bind(this, rootView);
     activity = getActivity();
     loadingDialog = AppUtil.getDialogLoading(activity);
-    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
     prefser = new Prefser(activity);
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     if (skillType == AppUtil.SkillType.WANT_LEARN) {
       skillTypeTextView.setText(R.string.add_skill_learn_label);
     } else {

@@ -106,8 +106,8 @@ public class LauncherActivity extends BaseActivity implements
         WindowManager.LayoutParams.FLAG_FULLSCREEN);
     setContentView(R.layout.activity_launcher);
     ButterKnife.bind(this);
-    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     prefser = new Prefser(this);
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     BoxStore boxStore = MyApplication.getBoxStore();
     categoryBox = boxStore.boxFor(Category.class);
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
