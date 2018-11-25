@@ -68,7 +68,7 @@ public class AppUtil {
   }
 
   public static void showConfirmDialog(String message, Context context, final ConfirmDialogClickListener listener) {
-    final Dialog dialog = new Dialog(context);
+    final Dialog dialog = new Dialog(context, R.style.DialogAnimationStyle);
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
     dialog.setContentView(R.layout.dialog_confirm);
     dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
