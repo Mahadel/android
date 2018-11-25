@@ -68,7 +68,7 @@ public class DialogEditProfileFragment extends DialogFragment {
     activity = getActivity();
     prefser = new Prefser(activity);
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
-    loadingDialog = AppUtil.getDialogLoading(activity);
+    loadingDialog = AppUtil.getLoadingDialog(activity);
     firstNameEditText.setText(userInfo.getFirstName());
     lastNameEditText.setText(userInfo.getLastName());
     if (userInfo.getGender() == 1) {

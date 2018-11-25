@@ -68,7 +68,7 @@ public class ProfileFragment extends DialogFragment implements
     ButterKnife.bind(this, rootView);
     activity = getActivity();
     prefser = new Prefser(activity);
-    loadingDialog = AppUtil.getDialogLoading(activity);
+    loadingDialog = AppUtil.getLoadingDialog(activity);
     setUpGoogleSignIn();
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     emailTextView.setText(info.getEmail());

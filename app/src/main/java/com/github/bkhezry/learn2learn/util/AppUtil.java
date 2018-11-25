@@ -190,7 +190,7 @@ public class AppUtil {
     }, 100);
   }
 
-  public static Dialog getDialogLoading(Context context) {
+  public static Dialog getLoadingDialog(Context context) {
     Dialog dialog = new Dialog(context);
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
     dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);

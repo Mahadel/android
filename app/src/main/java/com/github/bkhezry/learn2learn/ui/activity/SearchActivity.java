@@ -85,7 +85,7 @@ public class SearchActivity extends BaseActivity {
     setUpBottomSheet();
     prefser = new Prefser(this);
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
-    loadingDialog = AppUtil.getDialogLoading(this);
+    loadingDialog = AppUtil.getLoadingDialog(this);
     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
     recyclerView.setLayoutManager(mLayoutManager);
     recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(6, getResources()), true));

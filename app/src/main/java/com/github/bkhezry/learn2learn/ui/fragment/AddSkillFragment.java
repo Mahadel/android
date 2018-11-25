@@ -70,7 +70,7 @@ public class AddSkillFragment extends Fragment {
     activity = getActivity();
     if (activity != null) {
       prefser = new Prefser(activity);
-      loadingDialog = AppUtil.getDialogLoading(activity);
+      loadingDialog = AppUtil.getLoadingDialog(activity);
     }
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     if (skillType == AppUtil.SkillType.WANT_LEARN) {

@@ -76,7 +76,7 @@ public class SkillDetailFragment extends Fragment {
     View rootView = inflater.inflate(R.layout.fragment_skill_detail, container, false);
     ButterKnife.bind(this, rootView);
     activity = getActivity();
-    loadingDialog = AppUtil.getDialogLoading(activity);
+    loadingDialog = AppUtil.getLoadingDialog(activity);
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
     prefser = new Prefser(activity);

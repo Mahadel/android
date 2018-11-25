@@ -79,7 +79,7 @@ public class ConnectionRequestActivity extends BaseActivity {
     setContentView(R.layout.activity_connection_request);
     ButterKnife.bind(this);
     prefser = new Prefser(this);
-    loadingDialog = AppUtil.getDialogLoading(this);
+    loadingDialog = AppUtil.getLoadingDialog(this);
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     setSentSelect();
     initRecyclerView();
