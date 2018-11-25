@@ -331,6 +331,7 @@ public class LauncherActivity extends BaseActivity implements
 
   private void retrieveSkillsData() {
     loadingLayout();
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<List<Category>> call = apiService.getCategories();
     call.enqueue(new Callback<List<Category>>() {
