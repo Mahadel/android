@@ -36,7 +36,7 @@ public class AppUtil {
   }
 
   public static void showSkillTypeDialog(Context context, final DialogClickListener listener) {
-    final Dialog dialog = new Dialog(context);
+    final Dialog dialog = new Dialog(context, R.style.DialogAnimationStyle);
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
     dialog.setContentView(R.layout.dialog_skill_type);
     dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
