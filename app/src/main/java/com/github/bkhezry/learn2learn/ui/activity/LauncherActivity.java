@@ -10,6 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatRadioButton;
+import androidx.appcompat.widget.AppCompatTextView;
+
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.github.bkhezry.learn2learn.R;
@@ -38,10 +43,6 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatRadioButton;
-import androidx.appcompat.widget.AppCompatTextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -259,6 +260,7 @@ public class LauncherActivity extends BaseActivity implements
 
   private void updateUser(final String firstName, final String lastName, final int gender) {
     loadingDialog.show();
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.updateUser(info.getUuid(), firstName, lastName, gender);
     call.enqueue(new Callback<ResponseMessage>() {
