@@ -40,10 +40,14 @@ public class SettingsFragment extends DialogFragment {
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
     ButterKnife.bind(this, rootView);
-    activity = getActivity();
-    prefser = new Prefser(activity);
+    initVariables();
     setUpLocale();
     return rootView;
+  }
+
+  private void initVariables() {
+    activity = getActivity();
+    prefser = new Prefser(activity);
   }
 
   @NonNull
