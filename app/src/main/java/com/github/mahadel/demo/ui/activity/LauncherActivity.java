@@ -108,6 +108,11 @@ public class LauncherActivity extends BaseActivity implements
         WindowManager.LayoutParams.FLAG_FULLSCREEN);
     setContentView(R.layout.activity_launcher);
     ButterKnife.bind(this);
+    initVariables();
+    checkIsLogin();
+  }
+
+  private void initVariables() {
     prefser = new Prefser(this);
     BoxStore boxStore = MyApplication.getBoxStore();
     categoryBox = boxStore.boxFor(Category.class);
@@ -115,6 +120,9 @@ public class LauncherActivity extends BaseActivity implements
     userSkillBox = boxStore.boxFor(UserSkill.class);
     loadingDialog = AppUtil.getLoadingDialog(this);
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+  }
+
+  private void checkIsLogin() {
     if (prefser.contains(Constant.TOKEN)) {
 
       if (info.getFillInfo()) {
@@ -128,6 +136,14 @@ public class LauncherActivity extends BaseActivity implements
     }
   }
 
+  private void setUpLocale() {
+    if (MyApplication.localeManager.getLanguage().equals(LocaleManager.LANGUAGE_PERSIAN)) {
+      changeLanguagePersian();
+    } else {
+      changeLanguageEnglish();
+    }
+  }
+
   private void setUpGoogleSignIn() {
     GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestIdToken(getString(R.string.default_web_client_id))
@@ -137,14 +153,6 @@ public class LauncherActivity extends BaseActivity implements
         .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
         .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
         .build();
-  }
-
-  private void setUpLocale() {
-    if (MyApplication.localeManager.getLanguage().equals(LocaleManager.LANGUAGE_PERSIAN)) {
-      changeLanguagePersian();
-    } else {
-      changeLanguageEnglish();
-    }
   }
 
   @OnClick(R.id.google_login_button)
@@ -210,31 +218,6 @@ public class LauncherActivity extends BaseActivity implements
     emailTextView.setText(email);
     loginLayout.setVisibility(View.GONE);
     personalLayout.setVisibility(View.VISIBLE);
-  }
-
-
-  @Override
-  public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-  }
-
-  @Override
-  public void onPause() {
-    super.onPause();
-    if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-      mGoogleApiClient.stopAutoManage(this);
-      mGoogleApiClient.disconnect();
-    }
-  }
-
-  @Override
-  public void onResume() {
-    if (mGoogleApiClient != null) {
-      if (!mGoogleApiClient.isConnected()) {
-        mGoogleApiClient.connect();
-      }
-    }
-    super.onResume();
   }
 
   @OnClick(R.id.submit_info_button)
@@ -358,14 +341,6 @@ public class LauncherActivity extends BaseActivity implements
     });
   }
 
-  private void removeToken() {
-    loadingDialog.dismiss();
-    prefser.remove(Constant.TOKEN);
-    startActivity(new Intent(this, LauncherActivity.class));
-    finish();
-    Toast.makeText(this, getString(R.string.access_deny_label), Toast.LENGTH_LONG).show();
-  }
-
   private void retrieveUserSkillsData() {
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<List<UserSkill>> call = apiService.getUserSkills(info.getUuid());
@@ -389,9 +364,25 @@ public class LauncherActivity extends BaseActivity implements
     });
   }
 
+  private void removeToken() {
+    loadingDialog.dismiss();
+    prefser.remove(Constant.TOKEN);
+    startActivity(new Intent(this, LauncherActivity.class));
+    finish();
+    Toast.makeText(this, getString(R.string.access_deny_label), Toast.LENGTH_LONG).show();
+  }
+
   private void storeUserSkill(List<UserSkill> userSkills) {
     userSkillBox.removeAll();
     userSkillBox.put(userSkills);
+  }
+
+  private void storeCategoriesDB(List<Category> categories) {
+    removeDBData();
+    for (Category category : categories) {
+      categoryBox.put(category);
+      skillsItemBox.put(category.getSkills());
+    }
   }
 
   private void loadingLayout() {
@@ -410,14 +401,6 @@ public class LauncherActivity extends BaseActivity implements
     errorGetDataLayout.setVisibility(View.VISIBLE);
   }
 
-  private void storeCategoriesDB(List<Category> categories) {
-    removeDBData();
-    for (Category category : categories) {
-      categoryBox.put(category);
-      skillsItemBox.put(category.getSkills());
-    }
-  }
-
   private void removeDBData() {
     categoryBox.removeAll();
     skillsItemBox.removeAll();
@@ -426,6 +409,30 @@ public class LauncherActivity extends BaseActivity implements
   @OnClick(R.id.retry_button)
   public void retry() {
     retrieveData(rootCardView);
+  }
+
+  @Override
+  public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+      mGoogleApiClient.stopAutoManage(this);
+      mGoogleApiClient.disconnect();
+    }
+  }
+
+  @Override
+  public void onResume() {
+    if (mGoogleApiClient != null) {
+      if (!mGoogleApiClient.isConnected()) {
+        mGoogleApiClient.connect();
+      }
+    }
+    super.onResume();
   }
 }
 
