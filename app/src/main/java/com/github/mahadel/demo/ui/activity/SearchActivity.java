@@ -24,7 +24,6 @@ import com.github.mahadel.demo.model.SkillsItem;
 import com.github.mahadel.demo.service.APIService;
 import com.github.mahadel.demo.util.AppUtil;
 import com.github.mahadel.demo.util.Constant;
-import com.github.mahadel.demo.util.DatabaseUtil;
 import com.github.mahadel.demo.util.GridSpacingItemDecoration;
 import com.github.mahadel.demo.util.MyApplication;
 import com.github.mahadel.demo.util.RetrofitUtil;
@@ -63,7 +62,6 @@ public class SearchActivity extends BaseActivity {
   AppCompatEditText requestDescriptionEditText;
   @BindView(R.id.layout_empty)
   LinearLayout layoutEmpty;
-  private Prefser prefser;
   private Dialog loadingDialog;
   private FastAdapter<SearchResult> mFastAdapter;
   private ItemAdapter<SearchResult> mItemAdapter;
@@ -81,12 +79,26 @@ public class SearchActivity extends BaseActivity {
         WindowManager.LayoutParams.FLAG_FULLSCREEN);
     setContentView(R.layout.activity_search);
     ButterKnife.bind(this);
+    initVariables();
+    setUpBottomSheet();
+    initRecyclerView();
+    searching();
+  }
+
+  private void initVariables() {
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
-    setUpBottomSheet();
-    prefser = new Prefser(this);
+    Prefser prefser = new Prefser(this);
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     loadingDialog = AppUtil.getLoadingDialog(this);
+  }
+
+  private void setUpBottomSheet() {
+    bottomSheetBehavior = BottomSheetBehavior.from(requestLayout);
+    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+  }
+
+  private void initRecyclerView() {
     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
     recyclerView.setLayoutManager(mLayoutManager);
     recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(6, getResources()), true));
@@ -105,24 +117,18 @@ public class SearchActivity extends BaseActivity {
         selectedResult = item;
         nameTextView.setText(String.format("%s %s", item.getUser().getFirstName(), item.getUser().getLastName()));
         if (AppUtil.isRTL(SearchActivity.this)) {
-          teachSkillNameTextView.setText(getSkill(item.getTeachSkillUuid()).getFaName());
-          learnSkillNameTextView.setText(getSkill(item.getLearnSkillUuid()).getFaName());
+          teachSkillNameTextView.setText(AppUtil.getSkill(skillsItemBox, item.getTeachSkillUuid()).getFaName());
+          learnSkillNameTextView.setText(AppUtil.getSkill(skillsItemBox, item.getLearnSkillUuid()).getFaName());
         } else {
-          teachSkillNameTextView.setText(getSkill(item.getTeachSkillUuid()).getEnName());
-          learnSkillNameTextView.setText(getSkill(item.getLearnSkillUuid()).getEnName());
+          teachSkillNameTextView.setText(AppUtil.getSkill(skillsItemBox, item.getTeachSkillUuid()).getEnName());
+          learnSkillNameTextView.setText(AppUtil.getSkill(skillsItemBox, item.getLearnSkillUuid()).getEnName());
         }
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
       }
     }));
-    doSearch();
   }
 
-  private void setUpBottomSheet() {
-    bottomSheetBehavior = BottomSheetBehavior.from(requestLayout);
-    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-  }
-
-  private void doSearch() {
+  private void searching() {
     loadingDialog.show();
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<List<SearchResult>> call = apiService.search(info.getUuid());
@@ -154,11 +160,6 @@ public class SearchActivity extends BaseActivity {
       layoutEmpty.setVisibility(View.VISIBLE);
       recyclerView.setVisibility(View.GONE);
     }
-  }
-
-
-  private SkillsItem getSkill(String skillUuid) {
-    return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
   }
 
   @Override
