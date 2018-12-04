@@ -47,7 +47,6 @@ public class AboutFragment extends DialogFragment {
   AppCompatTextView sponsorName;
   @BindView(R.id.sponsor_description_text_view)
   AppCompatTextView sponsorDescriptionTextView;
-  private Prefser prefser;
   private Dialog loadingDialog;
   private Activity activity;
   private About about;
@@ -58,13 +57,27 @@ public class AboutFragment extends DialogFragment {
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_about, container, false);
     ButterKnife.bind(this, rootView);
-    activity = getActivity();
-    prefser = new Prefser(activity);
-    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
-    loadingDialog = AppUtil.getLoadingDialog(activity);
+    initVariables();
     setAppVersion();
     getAbout();
     return rootView;
+  }
+
+  private void initVariables() {
+    activity = getActivity();
+    Prefser prefser = new Prefser(activity);
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+    loadingDialog = AppUtil.getLoadingDialog(activity);
+  }
+
+  private void setAppVersion() {
+    versionName = "";
+    try {
+      versionName = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0).versionName;
+    } catch (PackageManager.NameNotFoundException e) {
+      e.printStackTrace();
+    }
+    versionAppTextView.setText(versionName);
   }
 
   private void getAbout() {
@@ -96,16 +109,6 @@ public class AboutFragment extends DialogFragment {
     sponsorName.setText(about.getSponsorName());
     sponsorDescriptionTextView.setText(about.getSponsorDescription());
 
-  }
-
-  private void setAppVersion() {
-    versionName = "";
-    try {
-      versionName = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
-    } catch (PackageManager.NameNotFoundException e) {
-      e.printStackTrace();
-    }
-    versionAppTextView.setText(versionName);
   }
 
   @NonNull
