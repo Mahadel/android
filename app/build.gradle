@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 apply plugin: 'io.objectbox'
 apply plugin: 'com.getkeepsafe.dexcount'
 apply plugin: 'com.jakewharton.butterknife'
@@ -36,7 +37,7 @@ dependencies {
 
     implementation 'com.mikepenz:fastadapter:3.3.0-rc01'
     implementation 'com.mikepenz:fastadapter-commons:3.3.0-rc01'
-    
+
 
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
@@ -62,6 +63,7 @@ dependencies {
     implementation 'com.mikhaellopez:circularimageview:3.2.0'
 
     implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.6'
 
 
     implementation 'com.jakewharton:butterknife:9.0.0-SNAPSHOT'
