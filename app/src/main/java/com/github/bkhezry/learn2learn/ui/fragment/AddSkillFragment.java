@@ -7,6 +7,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.fragment.app.Fragment;
 
 import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
@@ -23,10 +29,6 @@ import com.github.bkhezry.learn2learn.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.google.android.material.button.MaterialButton;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -119,7 +121,7 @@ public class AddSkillFragment extends Fragment {
         }
       });
     } else {
-      AppUtil.showSnackbar(selectSkillButton, getString(R.string.select_skill_message_label), activity, SnackbarUtils.LENGTH_LONG);
+      Toast.makeText(activity, getString(R.string.select_skill_message_label), Toast.LENGTH_LONG).show();
     }
   }
 
