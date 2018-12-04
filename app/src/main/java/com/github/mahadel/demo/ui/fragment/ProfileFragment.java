@@ -67,16 +67,24 @@ public class ProfileFragment extends DialogFragment implements
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
     ButterKnife.bind(this, rootView);
+    initVariables();
+    showProfileInfo();
+    setUpGoogleSignIn();
+    requestProfileInfo();
+    return rootView;
+  }
+
+  private void initVariables() {
     activity = getActivity();
     prefser = new Prefser(activity);
     loadingDialog = AppUtil.getLoadingDialog(activity);
-    setUpGoogleSignIn();
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+  }
+
+  private void showProfileInfo() {
     emailTextView.setText(info.getEmail());
     String profilePicURL = Constant.GRAVATAR_URL + md5(info.getEmail()).toLowerCase() + "?size=400";
     Glide.with(activity).load(profilePicURL).into(profilePic);
-    requestProfileInfo();
-    return rootView;
   }
 
   private void requestProfileInfo() {
@@ -238,7 +246,7 @@ public class ProfileFragment extends DialogFragment implements
   @Override
   public void onPause() {
     super.onPause();
-    if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+    if (mGoogleApiClient != null && mGoogleApiClient.isConnected() && getActivity() != null) {
       mGoogleApiClient.stopAutoManage(getActivity());
       mGoogleApiClient.disconnect();
     }
