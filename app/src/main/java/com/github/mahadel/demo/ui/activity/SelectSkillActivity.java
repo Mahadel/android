@@ -58,12 +58,22 @@ public class SelectSkillActivity extends BaseActivity {
         WindowManager.LayoutParams.FLAG_FULLSCREEN);
     setContentView(R.layout.activity_select_skill);
     ButterKnife.bind(this);
+    initVariables();
+    initRecyclerView();
+    initAdapters();
+  }
+
+  private void initVariables() {
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
     categoryBox = boxStore.boxFor(Category.class);
     userSkillBox = boxStore.boxFor(UserSkill.class);
-    initRecyclerView();
-    initAdapters();
+  }
+
+  private void initRecyclerView() {
+    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+    recyclerView.setLayoutManager(mLayoutManager);
+    recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(6, getResources()), true));
   }
 
   private void initAdapters() {
@@ -87,12 +97,6 @@ public class SelectSkillActivity extends BaseActivity {
       }
     });
     getCategory();
-  }
-
-  private void initRecyclerView() {
-    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
-    recyclerView.setLayoutManager(mLayoutManager);
-    recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(6, getResources()), true));
   }
 
   private void getSkills(Category item) {
