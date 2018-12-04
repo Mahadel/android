@@ -61,7 +61,6 @@ public class ConnectionRequestActivity extends BaseActivity {
   AppCompatTextView receivedTextView;
   @BindView(R.id.layout_empty)
   LinearLayout layoutEmpty;
-  private Prefser prefser;
   private Dialog loadingDialog;
   private FastAdapter<ConnectionSendItem> mFastAdapterConnectionSend;
   private ItemAdapter<ConnectionSendItem> mItemAdapterConnectionSend;
@@ -79,12 +78,66 @@ public class ConnectionRequestActivity extends BaseActivity {
         WindowManager.LayoutParams.FLAG_FULLSCREEN);
     setContentView(R.layout.activity_connection_request);
     ButterKnife.bind(this);
-    prefser = new Prefser(this);
-    loadingDialog = AppUtil.getLoadingDialog(this);
-    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+    initVariables();
     setSentSelect();
     initRecyclerView();
     getConnectionRequests();
+  }
+
+  private void initVariables() {
+    Prefser prefser = new Prefser(this);
+    loadingDialog = AppUtil.getLoadingDialog(this);
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+  }
+
+  private void initRecyclerView() {
+    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
+    recyclerView.setLayoutManager(mLayoutManager);
+    recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(6, getResources()), true));
+    mItemAdapterConnectionSend = new ItemAdapter<>();
+    mFastAdapterConnectionSend = FastAdapter.with(mItemAdapterConnectionSend);
+    mFastAdapterConnectionSend.withOnPreClickListener(new OnClickListener<ConnectionSendItem>() {
+      @Override
+      public boolean onClick(@Nullable View v, @NonNull IAdapter<ConnectionSendItem> adapter, @NonNull ConnectionSendItem item, int position) {
+        return true;
+      }
+    });
+    mFastAdapterConnectionSend.withEventHook(new ConnectionSendItem.DeleteButtonClickEvent(new ConnectionSendItem.HandleDeleteClickListener() {
+      @Override
+      public void delete(ConnectionSendItem item, int position) {
+        deleteConnection(item, position);
+      }
+    }));
+    mFastAdapterConnectionSend.withEventHook(new ConnectionSendItem.EmailButtonClickEvent(new ConnectionSendItem.HandleEmailClickListener() {
+      @Override
+      public void sendEmail(ConnectionSendItem item, int position) {
+        if (item.getIsDelete() == 1 || item.getIsAccept() != 1) {
+          AppUtil.showSnackbar(recyclerView, "ایمیل کاربر در دسترس نیست", ConnectionRequestActivity.this, SnackbarUtils.LENGTH_LONG);
+        } else {
+          sendMail(item);
+        }
+      }
+    }));
+    mItemAdapterConnectionReceive = new ItemAdapter<>();
+    mFastAdapterConnectionReceive = FastAdapter.with(mItemAdapterConnectionReceive);
+    mFastAdapterConnectionReceive.withOnPreClickListener(new OnClickListener<ConnectionReceiveItem>() {
+      @Override
+      public boolean onClick(@Nullable View v, @NonNull IAdapter<ConnectionReceiveItem> adapter, @NonNull ConnectionReceiveItem item, int position) {
+        return true;
+      }
+    });
+    mFastAdapterConnectionReceive.withEventHook(new ConnectionReceiveItem.AcceptButtonClickEvent(new ConnectionReceiveItem.HandleAcceptClickListener() {
+      @Override
+      public void accept(ConnectionReceiveItem item, int position) {
+        editConnectionRequest(item, 1, position);
+      }
+    }));
+    mFastAdapterConnectionReceive.withEventHook(new ConnectionReceiveItem.RejectButtonClickEvent(new ConnectionReceiveItem.HandleRejectClickListener() {
+      @Override
+      public void reject(ConnectionReceiveItem item, int position) {
+        editConnectionRequest(item, 0, position);
+      }
+    }));
   }
 
   private void getConnectionRequests() {
@@ -142,56 +195,6 @@ public class ConnectionRequestActivity extends BaseActivity {
   private void showEmptyLayout() {
     layoutEmpty.setVisibility(View.VISIBLE);
     recyclerView.setVisibility(View.GONE);
-  }
-
-  private void initRecyclerView() {
-    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
-    recyclerView.setLayoutManager(mLayoutManager);
-    recyclerView.addItemDecoration(new GridSpacingItemDecoration(1, dpToPx(6, getResources()), true));
-    mItemAdapterConnectionSend = new ItemAdapter<>();
-    mFastAdapterConnectionSend = FastAdapter.with(mItemAdapterConnectionSend);
-    mFastAdapterConnectionSend.withOnPreClickListener(new OnClickListener<ConnectionSendItem>() {
-      @Override
-      public boolean onClick(@Nullable View v, @NonNull IAdapter<ConnectionSendItem> adapter, @NonNull ConnectionSendItem item, int position) {
-        return true;
-      }
-    });
-    mFastAdapterConnectionSend.withEventHook(new ConnectionSendItem.DeleteButtonClickEvent(new ConnectionSendItem.HandleDeleteClickListener() {
-      @Override
-      public void delete(ConnectionSendItem item, int position) {
-        deleteConnection(item, position);
-      }
-    }));
-    mFastAdapterConnectionSend.withEventHook(new ConnectionSendItem.EmailButtonClickEvent(new ConnectionSendItem.HandleEmailClickListener() {
-      @Override
-      public void sendEmail(ConnectionSendItem item, int position) {
-        if (item.getIsDelete() == 1 || item.getIsAccept() != 1) {
-          AppUtil.showSnackbar(recyclerView, "ایمیل کاربر در دسترس نیست", ConnectionRequestActivity.this, SnackbarUtils.LENGTH_LONG);
-        } else {
-          sendMail(item);
-        }
-      }
-    }));
-    mItemAdapterConnectionReceive = new ItemAdapter<>();
-    mFastAdapterConnectionReceive = FastAdapter.with(mItemAdapterConnectionReceive);
-    mFastAdapterConnectionReceive.withOnPreClickListener(new OnClickListener<ConnectionReceiveItem>() {
-      @Override
-      public boolean onClick(@Nullable View v, @NonNull IAdapter<ConnectionReceiveItem> adapter, @NonNull ConnectionReceiveItem item, int position) {
-        return true;
-      }
-    });
-    mFastAdapterConnectionReceive.withEventHook(new ConnectionReceiveItem.AcceptButtonClickEvent(new ConnectionReceiveItem.HandleAcceptClickListener() {
-      @Override
-      public void accept(ConnectionReceiveItem item, int position) {
-        editConnectionRequest(item, 1, position);
-      }
-    }));
-    mFastAdapterConnectionReceive.withEventHook(new ConnectionReceiveItem.RejectButtonClickEvent(new ConnectionReceiveItem.HandleRejectClickListener() {
-      @Override
-      public void reject(ConnectionReceiveItem item, int position) {
-        editConnectionRequest(item, 0, position);
-      }
-    }));
   }
 
   private void sendMail(ConnectionSendItem item) {
