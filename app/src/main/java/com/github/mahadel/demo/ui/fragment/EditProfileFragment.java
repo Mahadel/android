@@ -35,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DialogEditProfileFragment extends DialogFragment {
+public class EditProfileFragment extends DialogFragment {
 
   @BindView(R.id.first_name_edit_text)
   TextInputEditText firstNameEditText;

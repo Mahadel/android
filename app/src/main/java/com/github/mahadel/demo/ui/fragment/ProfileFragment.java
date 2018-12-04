@@ -173,9 +173,9 @@ public class ProfileFragment extends DialogFragment implements
 
   private void editProfileInfo() {
     FragmentManager fragmentManager = getFragmentManager();
-    DialogEditProfileFragment editProfileFragment = new DialogEditProfileFragment();
+    EditProfileFragment editProfileFragment = new EditProfileFragment();
     editProfileFragment.setUserInfo(userInfo);
-    editProfileFragment.setOnCallbackResult(new DialogEditProfileFragment.CallbackListener() {
+    editProfileFragment.setOnCallbackResult(new EditProfileFragment.CallbackListener() {
       @Override
       public void sendResult(UserInfo userInfo) {
         updateUI(userInfo);
