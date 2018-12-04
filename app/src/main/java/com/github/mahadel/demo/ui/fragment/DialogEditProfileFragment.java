@@ -52,7 +52,6 @@ public class DialogEditProfileFragment extends DialogFragment {
   @BindView(R.id.radioGender)
   RadioGroup radioGender;
   private Activity activity;
-  private Prefser prefser;
   private UserInfo userInfo;
   private CallbackListener listener;
   private Dialog loadingDialog;
@@ -66,8 +65,13 @@ public class DialogEditProfileFragment extends DialogFragment {
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.dialog_edit_profile, container, false);
     ButterKnife.bind(this, rootView);
+    initVariables();
+    return rootView;
+  }
+
+  private void initVariables() {
     activity = getActivity();
-    prefser = new Prefser(activity);
+    Prefser prefser = new Prefser(activity);
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
     loadingDialog = AppUtil.getLoadingDialog(activity);
     firstNameEditText.setText(userInfo.getFirstName());
@@ -77,7 +81,6 @@ public class DialogEditProfileFragment extends DialogFragment {
     } else {
       radioFemale.setChecked(true);
     }
-    return rootView;
   }
 
 
