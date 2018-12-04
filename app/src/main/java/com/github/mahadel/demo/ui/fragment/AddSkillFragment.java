@@ -69,6 +69,11 @@ public class AddSkillFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_add_skill, container, false);
     ButterKnife.bind(this, rootView);
+    initVariables();
+    return rootView;
+  }
+
+  private void initVariables() {
     activity = getActivity();
     if (activity != null) {
       prefser = new Prefser(activity);
@@ -80,7 +85,6 @@ public class AddSkillFragment extends Fragment {
     } else {
       skillTypeTextView.setText(R.string.add_skill_teach_label);
     }
-    return rootView;
   }
 
   @OnClick(R.id.submit_btn)
@@ -156,5 +160,4 @@ public class AddSkillFragment extends Fragment {
 
     }
   }
-
 }
