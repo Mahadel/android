@@ -76,12 +76,21 @@ public class SkillDetailFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_skill_detail, container, false);
     ButterKnife.bind(this, rootView);
+    initVariables();
+    setUpValues();
+    return rootView;
+  }
+
+  private void initVariables() {
     activity = getActivity();
     loadingDialog = AppUtil.getLoadingDialog(activity);
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
     prefser = new Prefser(activity);
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+  }
+
+  private void setUpValues() {
     if (skillType == AppUtil.SkillType.WANT_LEARN) {
       skillTypeTextView.setText(R.string.add_skill_learn_label);
     } else {
@@ -97,7 +106,6 @@ public class SkillDetailFragment extends Fragment {
         skillNameTextView.setText(skillItem.getEnName());
       }
     }
-    return rootView;
   }
 
   @OnClick(R.id.submit_btn)
