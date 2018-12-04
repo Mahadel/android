@@ -86,14 +86,34 @@ public class MainActivity extends BaseActivity {
         WindowManager.LayoutParams.FLAG_FULLSCREEN);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
-    BoxStore boxStore = MyApplication.getBoxStore();
-    userSkillBox = boxStore.boxFor(UserSkill.class);
     setSupportActionBar(bar);
+    setUpDBAccess();
     setUpBottomDrawer();
     setUpBottomSheet();
     initNavigationView();
     initRecyclerViews();
     requestSkills();
+  }
+
+  private void setUpDBAccess() {
+    BoxStore boxStore = MyApplication.getBoxStore();
+    userSkillBox = boxStore.boxFor(UserSkill.class);
+  }
+
+  protected void setUpBottomDrawer() {
+    View bottomDrawer = coordinatorLayout.findViewById(R.id.bottom_drawer);
+    bottomDrawerBehavior = BottomSheetBehavior.from(bottomDrawer);
+    bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+
+    bar.setNavigationOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+          }
+        });
+    bar.setNavigationIcon(R.drawable.ic_drawer_menu_24px);
+    bar.replaceMenu(R.menu.menu_primary);
   }
 
   private void setUpBottomSheet() {
@@ -118,22 +138,6 @@ public class MainActivity extends BaseActivity {
             return false;
           }
         });
-  }
-
-  protected void setUpBottomDrawer() {
-    View bottomDrawer = coordinatorLayout.findViewById(R.id.bottom_drawer);
-    bottomDrawerBehavior = BottomSheetBehavior.from(bottomDrawer);
-    bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-
-    bar.setNavigationOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
-          }
-        });
-    bar.setNavigationIcon(R.drawable.ic_drawer_menu_24px);
-    bar.replaceMenu(R.menu.menu_primary);
   }
 
   private void initRecyclerViews() {
