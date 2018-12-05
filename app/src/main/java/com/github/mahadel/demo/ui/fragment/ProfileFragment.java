@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import butterknife.BindView;
@@ -71,7 +76,22 @@ public class ProfileFragment extends DialogFragment implements
     showProfileInfo();
     setUpGoogleSignIn();
     requestProfileInfo();
+    getFirebaseId();
     return rootView;
+  }
+
+  private void getFirebaseId() {
+    FirebaseInstanceId.getInstance().getInstanceId()
+        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+          @Override
+          public void onComplete(@NonNull Task<InstanceIdResult> task) {
+            if (!task.isSuccessful()) {
+              Log.w("Firebase TOKEN", "getInstanceId failed", task.getException());
+              return;
+            }
+            String token = task.getResult().getToken();
+          }
+        });
   }
 
   private void initVariables() {
