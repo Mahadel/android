@@ -8,13 +8,24 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.github.mahadel.demo.R;
+import com.github.mahadel.demo.model.AuthenticationInfo;
+import com.github.mahadel.demo.model.ResponseMessage;
 import com.github.mahadel.demo.ui.activity.MainActivity;
+import com.github.mahadel.demo.util.Constant;
+import com.github.mahadel.demo.util.RetrofitUtil;
+import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -58,7 +69,26 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
    * @param token The new token.
    */
   private void sendRegistrationToServer(String token) {
-    // TODO: Implement this method to send token to your app server.
+    Prefser prefser = new Prefser(this);
+    AuthenticationInfo info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
+    if (info != null) {
+      APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+      Call<ResponseMessage> call = apiService.setFirebaseId(info.getUuid(), token);
+      call.enqueue(new Callback<ResponseMessage>() {
+        @Override
+        public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
+          if (response.isSuccessful()) {
+            Log.d("submitToken", "success");
+          }
+        }
+
+        @Override
+        public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
+          Log.d("submitToken", "failed");
+          t.printStackTrace();
+        }
+      });
+    }
   }
 
   /**

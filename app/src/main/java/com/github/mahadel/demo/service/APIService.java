@@ -92,4 +92,9 @@ public interface APIService {
 
   @GET("about")
   Call<About> getAbout();
+
+  @PUT("user/{uuid}/firebase")
+  @FormUrlEncoded
+  Call<ResponseMessage> setFirebaseId(@Path("uuid") String uuid,
+                                      @Field("firebase_id") String firebaseId);
 }
