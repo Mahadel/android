@@ -90,6 +90,13 @@ public class ProfileFragment extends DialogFragment implements
               return;
             }
             String token = task.getResult().getToken();
+            if (info.getFirebaseId() != null) {
+              if (!info.getFirebaseId().equals(token)) {
+                sendRegistrationToServer(token);
+              }
+            } else {
+              sendRegistrationToServer(token);
+            }
           }
         });
   }
@@ -270,5 +277,26 @@ public class ProfileFragment extends DialogFragment implements
       mGoogleApiClient.stopAutoManage(getActivity());
       mGoogleApiClient.disconnect();
     }
+  }
+
+  private void sendRegistrationToServer(final String token) {
+    APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+    Call<ResponseMessage> call = apiService.setFirebaseId(info.getUuid(), token);
+    call.enqueue(new Callback<ResponseMessage>() {
+      @Override
+      public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
+        if (response.isSuccessful()) {
+          Log.d("submitToken", "success");
+          info.setFirebaseId(token);
+          prefser.put(Constant.TOKEN, info);
+        }
+      }
+
+      @Override
+      public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
+        Log.d("submitToken", "failed");
+        t.printStackTrace();
+      }
+    });
   }
 }

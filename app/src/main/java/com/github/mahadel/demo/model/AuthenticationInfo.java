@@ -23,6 +23,8 @@ public class AuthenticationInfo {
   @SerializedName("fill_info")
   private boolean fillInfo;
 
+  private String firebaseId;
+
   public void setMessage(String message) {
     this.message = message;
   }
@@ -69,5 +71,13 @@ public class AuthenticationInfo {
 
   public void setFillInfo(boolean fillInfo) {
     this.fillInfo = fillInfo;
+  }
+
+  public String getFirebaseId() {
+    return firebaseId;
+  }
+
+  public void setFirebaseId(String firebaseId) {
+    this.firebaseId = firebaseId;
   }
 }
