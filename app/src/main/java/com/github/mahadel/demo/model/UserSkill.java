@@ -7,7 +7,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 
 import com.github.mahadel.demo.R;
 import com.github.mahadel.demo.util.AppUtil;
-import com.github.mahadel.demo.util.DatabaseUtil;
 import com.github.mahadel.demo.util.MyApplication;
 import com.google.gson.annotations.SerializedName;
 import com.mikepenz.fastadapter.FastAdapter;
@@ -152,7 +151,7 @@ public class UserSkill extends AbstractItem<UserSkill, UserSkill.ViewHolder> {
 
     @Override
     public void bindView(@NonNull UserSkill item, @NonNull List<Object> payloads) {
-      SkillsItem skillsItem = getSkill(item.skillUuid);
+      SkillsItem skillsItem = AppUtil.getSkill(skillsItemBox, item.skillUuid);
       if (AppUtil.isRTL(view.getContext())) {
         AppUtil.rotateYView(view, 180);
         skill.setText(skillsItem.getFaName());
@@ -160,11 +159,6 @@ public class UserSkill extends AbstractItem<UserSkill, UserSkill.ViewHolder> {
         skill.setText(skillsItem.getEnName());
       }
 
-
-    }
-
-    private SkillsItem getSkill(String skillUuid) {
-      return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
 
     }
 
