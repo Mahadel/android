@@ -4,7 +4,7 @@ import com.github.mahadel.demo.model.UserSkill;
 import com.github.mahadel.demo.util.AppUtil;
 
 /**
- * send result of UserSkill that add to the user.
+ * Send result of UserSkill that add to the user.
  */
 public interface CallbackResult {
   /**
