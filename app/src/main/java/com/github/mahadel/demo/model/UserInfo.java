@@ -2,6 +2,9 @@ package com.github.mahadel.demo.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * UserInfo handle values of user information.
+ */
 public class UserInfo {
 
   @SerializedName("gender")
