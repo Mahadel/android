@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+/**
+ * ConnectionRequest class handle send and receive connections.
+ */
 public class ConnectionRequest {
 
   @SerializedName("connection_receive")
