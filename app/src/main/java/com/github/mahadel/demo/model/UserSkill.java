@@ -1,9 +1,9 @@
 package com.github.mahadel.demo.model;
 
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.github.mahadel.demo.R;
 import com.github.mahadel.demo.util.AppUtil;
@@ -139,7 +139,7 @@ public class UserSkill extends AbstractItem<UserSkill, UserSkill.ViewHolder> {
   protected static class ViewHolder extends FastAdapter.ViewHolder<UserSkill> {
     protected View view;
     @BindView(R.id.skill)
-    TextView skill;
+    AppCompatTextView skill;
     Box<SkillsItem> skillsItemBox;
 
     ViewHolder(View view) {

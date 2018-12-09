@@ -1,9 +1,9 @@
 package com.github.mahadel.demo.model;
 
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.github.mahadel.demo.R;
 import com.github.mahadel.demo.util.AppUtil;
@@ -103,8 +103,8 @@ public class Category extends AbstractItem<Category, Category.ViewHolder> {
    */
   protected static class ViewHolder extends FastAdapter.ViewHolder<Category> {
     protected View view;
-    @BindView(R.id.skill)
-    TextView skill;
+    @BindView(R.id.category)
+    AppCompatTextView category;
 
     ViewHolder(View view) {
       super(view);
@@ -115,9 +115,9 @@ public class Category extends AbstractItem<Category, Category.ViewHolder> {
     @Override
     public void bindView(@NonNull Category item, @NonNull List<Object> payloads) {
       if (AppUtil.isRTL(view.getContext())) {
-        skill.setText(item.getFaName());
+        category.setText(item.getFaName());
       } else {
-        skill.setText(item.getEnName());
+        category.setText(item.getEnName());
       }
 
 
@@ -125,7 +125,7 @@ public class Category extends AbstractItem<Category, Category.ViewHolder> {
 
     @Override
     public void unbindView(@NonNull Category item) {
-      skill.setText(null);
+      category.setText(null);
     }
   }
 }

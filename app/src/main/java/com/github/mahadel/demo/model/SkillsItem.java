@@ -3,9 +3,9 @@ package com.github.mahadel.demo.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.github.mahadel.demo.R;
 import com.github.mahadel.demo.util.AppUtil;
@@ -115,7 +115,7 @@ public class SkillsItem extends AbstractItem<SkillsItem, SkillsItem.ViewHolder> 
   protected static class ViewHolder extends FastAdapter.ViewHolder<SkillsItem> {
     protected View view;
     @BindView(R.id.skill)
-    TextView skill;
+    AppCompatTextView skill;
 
     ViewHolder(View view) {
       super(view);
