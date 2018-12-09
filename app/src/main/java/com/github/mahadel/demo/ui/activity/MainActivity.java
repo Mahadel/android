@@ -197,15 +197,13 @@ public class MainActivity extends BaseActivity {
     skillFragment.setSkillItem(item);
     skillFragment.setOnCallbackResult(new SkillDetailCallbackResult() {
       @Override
-      public void update(Object obj, AppUtil.SkillType skillType) {
-        UserSkill userSkill = (UserSkill) obj;
+      public void update(UserSkill userSkill, AppUtil.SkillType skillType) {
         updateUserSkill(userSkill, skillType);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
       }
 
       @Override
-      public void remove(Object obj, AppUtil.SkillType skillType) {
-        UserSkill userSkill = (UserSkill) obj;
+      public void remove(UserSkill userSkill, AppUtil.SkillType skillType) {
         removeUserSkill(userSkill, skillType);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
       }
