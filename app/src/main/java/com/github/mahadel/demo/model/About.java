@@ -2,7 +2,9 @@ package com.github.mahadel.demo.model;
 
 import com.google.gson.annotations.SerializedName;
 
-
+/**
+ * About class that handle value of about fragment.
+ */
 public class About {
 
   @SerializedName("sponsor_description")

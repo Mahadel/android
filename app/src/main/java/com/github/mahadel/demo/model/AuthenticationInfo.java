@@ -3,7 +3,9 @@ package com.github.mahadel.demo.model;
 
 import com.google.gson.annotations.SerializedName;
 
-
+/**
+ * AuthenticationInfo class that handle values of user authentication
+ */
 public class AuthenticationInfo {
 
   @SerializedName("message")
