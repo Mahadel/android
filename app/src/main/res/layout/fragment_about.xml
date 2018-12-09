@@ -91,8 +91,8 @@
                             android:layout_width="@dimen/spacing_xxlarge"
                             android:layout_height="@dimen/spacing_xxlarge"
                             android:background="@android:color/transparent"
-                            android:tint="?attr/colorSecondary"
-                            app:srcCompat="@drawable/ic_settings_white_24dp" />
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_launcher" />
 
                         <View
                             android:layout_width="@dimen/spacing_large"
