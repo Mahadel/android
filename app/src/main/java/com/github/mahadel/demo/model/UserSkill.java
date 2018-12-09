@@ -22,6 +22,10 @@ import io.objectbox.BoxStore;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
+/**
+ * UserSkill handle values of user skill of current user.
+ * Each item of it saved in local db.
+ */
 @Entity
 public class UserSkill extends AbstractItem<UserSkill, UserSkill.ViewHolder> {
 
@@ -129,6 +133,9 @@ public class UserSkill extends AbstractItem<UserSkill, UserSkill.ViewHolder> {
     return R.layout.item_user_skill;
   }
 
+  /**
+   * ViewHolder for handle {@link UserSkill} item in the recycler view
+   */
   protected static class ViewHolder extends FastAdapter.ViewHolder<UserSkill> {
     protected View view;
     @BindView(R.id.skill)
