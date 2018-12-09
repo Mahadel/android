@@ -24,6 +24,9 @@ import butterknife.ButterKnife;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 
+/**
+ * SearchResult handle values of search item that receive from server
+ */
 public class SearchResult extends AbstractItem<SearchResult, SearchResult.ViewHolder> {
 
   @SerializedName("learn_skill_uuid")
@@ -101,6 +104,9 @@ public class SearchResult extends AbstractItem<SearchResult, SearchResult.ViewHo
     void requestEmail(SearchResult item);
   }
 
+  /**
+   * ViewHolder for handle {@link SearchResult} item in the recycler view
+   */
   protected static class ViewHolder extends FastAdapter.ViewHolder<SearchResult> {
     protected View view;
     @BindView(R.id.name_text_view)
@@ -152,6 +158,9 @@ public class SearchResult extends AbstractItem<SearchResult, SearchResult.ViewHo
     }
   }
 
+  /**
+   * RequestButtonClickEvent handle click on request button in search result item.
+   */
   public static class RequestButtonClickEvent extends ClickEventHook<SearchResult> {
     private RequestClickListener listener;
 
