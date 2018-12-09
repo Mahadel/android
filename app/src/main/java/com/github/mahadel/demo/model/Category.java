@@ -18,6 +18,10 @@ import butterknife.ButterKnife;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
+/**
+ * Category class that handle values of skill category.
+ * Each item of it save in the local db.
+ */
 @Entity
 public class Category extends AbstractItem<Category, Category.ViewHolder> {
   @SerializedName("uuid")
@@ -75,6 +79,9 @@ public class Category extends AbstractItem<Category, Category.ViewHolder> {
     this.id = id;
   }
 
+  /**
+   * Handle values of item in recycler view with FastAdapter library.
+   */
   @NonNull
   @Override
   public ViewHolder getViewHolder(@NonNull View view) {
@@ -91,6 +98,9 @@ public class Category extends AbstractItem<Category, Category.ViewHolder> {
     return R.layout.item_category;
   }
 
+  /**
+   * ViewHolder for handle {@link Category} item in the recycler view
+   */
   protected static class ViewHolder extends FastAdapter.ViewHolder<Category> {
     protected View view;
     @BindView(R.id.skill)
