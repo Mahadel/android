@@ -2,6 +2,7 @@ package com.github.mahadel.demo.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -63,8 +64,6 @@ public class MainActivity extends BaseActivity {
   FrameLayout bottomDrawer;
   @BindView(R.id.coordinator_layout)
   CoordinatorLayout coordinatorLayout;
-  @BindView(R.id.contentFrameLayout)
-  View contentFrameLayout;
   @BindView(R.id.layout_empty_1)
   LinearLayout layoutEmpty1;
   @BindView(R.id.layout_empty_2)
@@ -117,6 +116,7 @@ public class MainActivity extends BaseActivity {
   }
 
   private void setUpBottomSheet() {
+    View contentFrameLayout = coordinatorLayout.findViewById(R.id.contentFrameLayout);
     bottomSheetBehavior = BottomSheetBehavior.from(contentFrameLayout);
     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
   }
@@ -188,7 +188,17 @@ public class MainActivity extends BaseActivity {
   private void showSkillDetail(UserSkill item, AppUtil.SkillType skillType) {
     Fragment fragment = createSkillDetailFragment(item, skillType);
     AppUtil.showFragmentInBottomSheet(fragment, getSupportFragmentManager());
-    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+    ExpandBottomSheet();
+  }
+
+  private void ExpandBottomSheet() {
+    Handler handler = new Handler();
+    handler.postDelayed(new Runnable() {
+      @Override
+      public void run() {
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HALF_EXPANDED);
+      }
+    }, 100);
   }
 
   private SkillDetailFragment createSkillDetailFragment(UserSkill item, AppUtil.SkillType skillType) {
@@ -265,7 +275,7 @@ public class MainActivity extends BaseActivity {
   private void showAddSkillDialog(AppUtil.SkillType skillType) {
     Fragment fragment = createAddSkillFragment(skillType);
     AppUtil.showFragmentInBottomSheet(fragment, getSupportFragmentManager());
-    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+    ExpandBottomSheet();
   }
 
   private AddSkillFragment createAddSkillFragment(AppUtil.SkillType skillType) {
