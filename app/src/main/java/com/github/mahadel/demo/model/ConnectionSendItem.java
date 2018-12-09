@@ -25,6 +25,9 @@ import butterknife.ButterKnife;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 
+/**
+ * ConnectionSendItem handle values of sent connection to other users.
+ */
 
 public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, ConnectionSendItem.ViewHolder> {
 
@@ -195,6 +198,9 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
     return R.layout.item_connection_sent;
   }
 
+  /**
+   * ViewHolder for handle {@link ConnectionSendItem} item in the recycler view
+   */
   protected static class ViewHolder extends FastAdapter.ViewHolder<ConnectionSendItem> {
     protected View view;
     @BindView(R.id.name_text_view)
@@ -253,6 +259,9 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
     }
   }
 
+  /**
+   * DeleteButtonClickEvent handle click on delete button in connection sent item.
+   */
   public static class DeleteButtonClickEvent extends ClickEventHook<ConnectionSendItem> {
     private HandleDeleteClickListener listener;
 
@@ -277,6 +286,9 @@ public class ConnectionSendItem extends AbstractItem<ConnectionSendItem, Connect
     }
   }
 
+  /**
+   * EmailButtonClickEvent handle click on email button in connection sent item.
+   */
   public static class EmailButtonClickEvent extends ClickEventHook<ConnectionSendItem> {
     private HandleEmailClickListener listener;
 
