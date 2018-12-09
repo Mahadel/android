@@ -20,6 +20,10 @@ import butterknife.ButterKnife;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 
+/**
+ * SkillsItem handle values of Skills that received from server.
+ * Each item of it saved in local db.
+ */
 @Entity
 public class SkillsItem extends AbstractItem<SkillsItem, SkillsItem.ViewHolder> implements Parcelable {
 
@@ -105,6 +109,9 @@ public class SkillsItem extends AbstractItem<SkillsItem, SkillsItem.ViewHolder> 
     return R.layout.item_skill;
   }
 
+  /**
+   * ViewHolder for handle {@link SkillsItem} item in the recycler view
+   */
   protected static class ViewHolder extends FastAdapter.ViewHolder<SkillsItem> {
     protected View view;
     @BindView(R.id.skill)
