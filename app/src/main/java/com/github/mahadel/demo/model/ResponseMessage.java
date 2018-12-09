@@ -2,7 +2,9 @@ package com.github.mahadel.demo.model;
 
 import com.google.gson.annotations.SerializedName;
 
-
+/**
+ * ResponseMessage handle values of each response from server.
+ */
 public class ResponseMessage {
 
   @SerializedName("message")
