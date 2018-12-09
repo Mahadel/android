@@ -24,7 +24,9 @@ import butterknife.ButterKnife;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 
-
+/**
+ * ConnectionReceiveItem handle values of connection that received from other users.
+ */
 public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, ConnectionReceiveItem.ViewHolder> {
 
   @SerializedName("email_to")
@@ -194,6 +196,9 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
     return R.layout.item_connection_received;
   }
 
+  /**
+   * ViewHolder for handle {@link ConnectionReceiveItem} item in the recycler view
+   */
   protected static class ViewHolder extends FastAdapter.ViewHolder<ConnectionReceiveItem> {
     protected View view;
     @BindView(R.id.name_text_view)
@@ -247,6 +252,9 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
     }
   }
 
+  /**
+   * AcceptButtonClickEvent handle click on accept button in connection received item.
+   */
   public static class AcceptButtonClickEvent extends ClickEventHook<ConnectionReceiveItem> {
     private HandleAcceptClickListener listener;
 
@@ -270,6 +278,10 @@ public class ConnectionReceiveItem extends AbstractItem<ConnectionReceiveItem, C
       return null;
     }
   }
+
+  /**
+   * RejectButtonClickEvent handle click on reject button in connection received item.
+   */
 
   public static class RejectButtonClickEvent extends ClickEventHook<ConnectionReceiveItem> {
     private HandleRejectClickListener listener;
