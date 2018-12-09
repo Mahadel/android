@@ -25,6 +25,21 @@
             android:orientation="vertical"
             android:visibility="visible">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_persian" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/spacing_large"
+                android:text="@string/app_name"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textStyle="bold|italic" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/google_login_button"
                 style="@style/StyleMaterialButtonLarge"

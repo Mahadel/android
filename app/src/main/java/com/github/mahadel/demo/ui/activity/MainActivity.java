@@ -275,8 +275,7 @@ public class MainActivity extends BaseActivity {
     skillFragment.setSkillType(skillType);
     skillFragment.setOnCallbackResult(new CallbackResult() {
       @Override
-      public void sendResult(Object obj, AppUtil.SkillType skillType) {
-        UserSkill userSkill = (UserSkill) obj;
+      public void sendResult(UserSkill userSkill, AppUtil.SkillType skillType) {
         handleAddedUserSkill(userSkill, skillType);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
       }
