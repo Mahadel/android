@@ -1,7 +1,5 @@
 package com.github.mahadel.demo.util;
 
-import com.github.mahadel.demo.model.Category;
-import com.github.mahadel.demo.model.Category_;
 import com.github.mahadel.demo.model.SkillsItem;
 import com.github.mahadel.demo.model.SkillsItem_;
 import com.github.mahadel.demo.model.UserSkill;
@@ -52,13 +50,6 @@ public class DatabaseUtil {
     return userSkillBox.query()
         .equal(UserSkill_.uuid, uuid)
         .build().findFirst();
-  }
-
-  public static Category getCategoryWithUUID(Box<Category> categoryBox, String uuid) {
-    Query<Category> query = categoryBox.query()
-        .equal(Category_.uuid, uuid)
-        .build();
-    return query.findFirst();
   }
 
   /**
