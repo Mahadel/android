@@ -38,6 +38,9 @@ import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
+/**
+ * AddSkillFragment Showing Ui for select skill and submit userSkill to the server
+ */
 public class AddSkillFragment extends Fragment {
 
   private static final int REQUEST_SELECT_SKILL = 10001;
@@ -56,10 +59,20 @@ public class AddSkillFragment extends Fragment {
   private AuthenticationInfo info;
 
 
+  /**
+   * Set callback listener for handle added userSkill to the MainActivity
+   *
+   * @param callbackResult CallbackResult
+   */
   public void setOnCallbackResult(final CallbackResult callbackResult) {
     this.callbackResult = callbackResult;
   }
 
+  /**
+   * Set SkillType
+   *
+   * @param skillType {@link com.github.mahadel.demo.util.AppUtil.SkillType}
+   */
   public void setSkillType(AppUtil.SkillType skillType) {
     this.skillType = skillType;
   }
@@ -73,6 +86,9 @@ public class AddSkillFragment extends Fragment {
     return rootView;
   }
 
+  /**
+   * Setup init values of variables
+   */
   private void initVariables() {
     activity = getActivity();
     if (activity != null) {
@@ -87,6 +103,11 @@ public class AddSkillFragment extends Fragment {
     }
   }
 
+  /**
+   * Submit click handler. Check internet connection before submit data to the server
+   *
+   * @param view {@link View}
+   */
   @OnClick(R.id.submit_btn)
   void submit(View view) {
     if (NetworkUtils.isConnected()) {
@@ -96,6 +117,9 @@ public class AddSkillFragment extends Fragment {
     }
   }
 
+  /**
+   * Submit userSkill to the server
+   */
   private void submitUserSkill() {
     String description = skillDescriptionEditText.getText().toString();
     int skillTypeInt;
@@ -129,6 +153,11 @@ public class AddSkillFragment extends Fragment {
     }
   }
 
+  /**
+   * Send back userSkill that added to the server to MainActivity
+   *
+   * @param userSkill {@link UserSkill}
+   */
   private void handleUserSkill(UserSkill userSkill) {
     if (callbackResult != null) {
       callbackResult.sendResult(userSkill, skillType);
@@ -141,6 +170,10 @@ public class AddSkillFragment extends Fragment {
   void selectSkill() {
     showSelectSkillDialog();
   }
+
+  /**
+   * Start {@link SelectSkillActivity} for getting skill
+   */
 
   private void showSelectSkillDialog() {
     Intent intent = new Intent(activity, SelectSkillActivity.class);
