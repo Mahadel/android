@@ -25,10 +25,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
+/**
+ * SettingsFragment change language & theme of application
+ */
 public class SettingsFragment extends DialogFragment {
-
-
   @BindView(R.id.persian_image_view)
   AppCompatImageView persianImageView;
   @BindView(R.id.english_image_view)
@@ -45,6 +45,9 @@ public class SettingsFragment extends DialogFragment {
     return rootView;
   }
 
+  /**
+   * Setup init values of variables
+   */
   private void initVariables() {
     activity = getActivity();
     prefser = new Prefser(activity);
@@ -72,6 +75,12 @@ public class SettingsFragment extends DialogFragment {
     }
   }
 
+  /**
+   * Handle change language click event
+   *
+   * @param view {@link View}
+   */
+
   @OnClick({R.id.persian_image_view, R.id.english_image_view})
   void handleLanguage(View view) {
     switch (view.getId()) {
@@ -84,6 +93,9 @@ public class SettingsFragment extends DialogFragment {
     }
   }
 
+  /**
+   * Setup locale layout
+   */
   private void setUpLocale() {
     if (MyApplication.localeManager.getLanguage().equals(LocaleManager.LANGUAGE_PERSIAN)) {
       changeLanguagePersian();
@@ -92,6 +104,11 @@ public class SettingsFragment extends DialogFragment {
     }
   }
 
+  /**
+   * Set new locale & restart app
+   *
+   * @param language String selected language
+   */
   private void restartApp(String language) {
     MyApplication.localeManager.setNewLocale(activity, language);
     Intent i = new Intent(activity, MainActivity.class);
@@ -109,6 +126,11 @@ public class SettingsFragment extends DialogFragment {
     persianImageView.setBackgroundResource(android.R.color.transparent);
   }
 
+  /**
+   * Handle change theme click event
+   *
+   * @param view View {@link View}
+   */
   @OnClick({R.id.dark_theme_button, R.id.light_theme_button})
   void handleThemeClick(View view) {
     switch (view.getId()) {
@@ -122,6 +144,10 @@ public class SettingsFragment extends DialogFragment {
         break;
     }
   }
+
+  /**
+   * Restart app after change theme of it
+   */
 
   private void restartActivity() {
     activity.finish();
