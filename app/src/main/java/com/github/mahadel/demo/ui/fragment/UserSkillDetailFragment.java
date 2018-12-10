@@ -37,6 +37,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Showing userSkill detail
+ * Provide edit or delete option
+ */
 public class UserSkillDetailFragment extends Fragment {
 
   @BindView(R.id.skill_type_text_view)
@@ -53,15 +57,30 @@ public class UserSkillDetailFragment extends Fragment {
   private Dialog loadingDialog;
   private AuthenticationInfo info;
 
+  /**
+   * Set callback listener  for edit or remove event
+   *
+   * @param callbackResult {@link SkillDetailCallbackResult}
+   */
 
   public void setOnCallbackResult(SkillDetailCallbackResult callbackResult) {
     this.callbackResult = callbackResult;
   }
 
+  /**
+   * Set skill type
+   *
+   * @param skillType {@link com.github.mahadel.demo.util.AppUtil.SkillType}
+   */
   public void setSkillType(AppUtil.SkillType skillType) {
     this.skillType = skillType;
   }
 
+  /**
+   * Set userSkill instance to the fragment
+   *
+   * @param item {@link UserSkill}
+   */
   public void setSkillItem(UserSkill item) {
     userSkill = item;
   }
@@ -80,6 +99,9 @@ public class UserSkillDetailFragment extends Fragment {
     return rootView;
   }
 
+  /**
+   * Setup init values of variables
+   */
   private void initVariables() {
     activity = getActivity();
     loadingDialog = AppUtil.getLoadingDialog(activity);
@@ -89,6 +111,9 @@ public class UserSkillDetailFragment extends Fragment {
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
   }
 
+  /**
+   * Set values of {@link UserSkill} in the UI
+   */
   private void setUpValues() {
     if (skillType == AppUtil.SkillType.WANT_LEARN) {
       skillTypeTextView.setText(R.string.add_skill_learn_label);
@@ -107,6 +132,11 @@ public class UserSkillDetailFragment extends Fragment {
     }
   }
 
+  /**
+   * Handle submit click event
+   *
+   * @param view {@link View}
+   */
   @OnClick(R.id.submit_btn)
   void submit(View view) {
     if (NetworkUtils.isConnected()) {
@@ -115,6 +145,10 @@ public class UserSkillDetailFragment extends Fragment {
       AppUtil.showSnackbar(view, getString(R.string.no_internet_label), activity, SnackbarUtils.LENGTH_LONG);
     }
   }
+
+  /**
+   * Edit userSkill description in the server
+   */
 
   private void editUserSkill() {
     loadingDialog.show();
@@ -139,6 +173,11 @@ public class UserSkillDetailFragment extends Fragment {
     });
   }
 
+  /**
+   * Send back the userSkill edited to the MainActivity
+   *
+   * @param userSkill {@link UserSkill}
+   */
   private void handleUserSkill(UserSkill userSkill) {
     if (callbackResult != null) {
       callbackResult.update(userSkill, skillType);
@@ -146,6 +185,11 @@ public class UserSkillDetailFragment extends Fragment {
     }
   }
 
+  /**
+   * Handle remove click event & confirm remove skill before request
+   *
+   * @param view {@link View}
+   */
   @OnClick(R.id.remove_btn)
   void removeSkill(View view) {
     if (NetworkUtils.isConnected()) {
@@ -166,6 +210,9 @@ public class UserSkillDetailFragment extends Fragment {
 
   }
 
+  /**
+   * Request remove userSkill from the server
+   */
   private void removeSkillServer() {
     loadingDialog.show();
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
