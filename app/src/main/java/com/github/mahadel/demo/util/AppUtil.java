@@ -36,6 +36,12 @@ public class AppUtil {
     return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
   }
 
+  /**
+   * Show select skill type dialog
+   *
+   * @param context  {@link Context}
+   * @param listener {@link DialogClickListener}
+   */
   public static void showSkillTypeDialog(Context context, final DialogClickListener listener) {
     final Dialog dialog = new Dialog(context, R.style.DialogAnimationStyle);
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
@@ -68,6 +74,13 @@ public class AppUtil {
     dialog.getWindow().setAttributes(lp);
   }
 
+  /**
+   * Showing confirm dialog
+   *
+   * @param message  String message of dialog
+   * @param context  {@link Context}
+   * @param listener {@link ConfirmDialogClickListener}
+   */
   public static void showConfirmDialog(String message, Context context, final ConfirmDialogClickListener listener) {
     final Dialog dialog = new Dialog(context, R.style.DialogAnimationStyle);
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
@@ -135,6 +148,12 @@ public class AppUtil {
     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
   }
 
+  /**
+   * Check current locale of app for isRTL or not
+   *
+   * @param context {@link Context}
+   * @return Boolean true for isRTL
+   */
   public static boolean isRTL(Context context) {
     Locale locale = ConfigurationCompat.getLocales(context.getResources().getConfiguration()).get(0);
     final int directionality = Character.getDirectionality(locale.getDisplayName().charAt(0));
@@ -142,6 +161,12 @@ public class AppUtil {
         directionality == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC;
   }
 
+  /**
+   * Rotate view with degree that pass to it
+   *
+   * @param view   {@link View} view that should be rotate
+   * @param degree Int degree of rotation
+   */
   public static void rotateYView(View view, int degree) {
     view.setRotationY(degree);
   }
@@ -152,6 +177,14 @@ public class AppUtil {
     ft.commit();
   }
 
+  /**
+   * Showing custom snackbar with message
+   *
+   * @param view     {@link View}
+   * @param message  String message of snackbar
+   * @param context  {@link Context}
+   * @param duration Int duration of snackbar
+   */
   public static void showSnackbar(View view, String message, Context context, int duration) {
     final Handler handler = new Handler();
     handler.postDelayed(new Runnable() {
@@ -173,6 +206,12 @@ public class AppUtil {
     }, 100);
   }
 
+  /**
+   * Get loading dialog
+   *
+   * @param context {@link Context}
+   * @return instance of {@link Dialog}
+   */
   public static Dialog getLoadingDialog(Context context) {
     Dialog dialog = new Dialog(context);
     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -189,20 +228,45 @@ public class AppUtil {
     return dialog;
   }
 
+  /**
+   * Showing passed fragment with fragment manager
+   *
+   * @param fragment        {@link Fragment}
+   * @param fragmentManager {@link FragmentManager}
+   */
   public static void showFragment(Fragment fragment, FragmentManager fragmentManager) {
     FragmentTransaction transaction = fragmentManager.beginTransaction();
     transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
     transaction.add(android.R.id.content, fragment).addToBackStack(null).commit();
   }
 
+  /**
+   * Check version of app for isLast version or not
+   *
+   * @param version String version of app
+   * @return Boolean
+   */
   public static boolean isAtLeastVersion(int version) {
     return Build.VERSION.SDK_INT >= version;
   }
 
+  /**
+   * Get skill with uuid of it
+   *
+   * @param skillsItemBox {@link Box} of skills that saved in local db
+   * @param skillUuid     String uuid of skill
+   * @return Instance of {@link SkillsItem}
+   */
   public static SkillsItem getSkill(Box<SkillsItem> skillsItemBox, String skillUuid) {
     return DatabaseUtil.getSkillItemQueryWithUUID(skillsItemBox, skillUuid).findFirst();
   }
 
+  /**
+   * Get colorSecondary attr with programming
+   *
+   * @param context {@link Context}
+   * @return Int color
+   */
   public static int getThemeColorSecondary(Context context) {
     int colorAttr = context.getResources().getIdentifier("colorSecondary", "attr", context.getPackageName());
     TypedValue outValue = new TypedValue();
