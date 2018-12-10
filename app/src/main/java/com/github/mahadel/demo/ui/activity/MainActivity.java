@@ -25,7 +25,7 @@ import com.github.mahadel.demo.ui.fragment.AboutFragment;
 import com.github.mahadel.demo.ui.fragment.AddSkillFragment;
 import com.github.mahadel.demo.ui.fragment.ProfileFragment;
 import com.github.mahadel.demo.ui.fragment.SettingsFragment;
-import com.github.mahadel.demo.ui.fragment.SkillDetailFragment;
+import com.github.mahadel.demo.ui.fragment.UserSkillDetailFragment;
 import com.github.mahadel.demo.util.AppUtil;
 import com.github.mahadel.demo.util.DatabaseUtil;
 import com.github.mahadel.demo.util.MyApplication;
@@ -234,10 +234,10 @@ public class MainActivity extends BaseActivity {
    *
    * @param item‌     {@link UserSkill}
    * @param skillType {@link com.github.mahadel.demo.util.AppUtil.SkillType}
-   * @return SkillDetailFragment
+   * @return UserSkillDetailFragment
    */
-  private SkillDetailFragment createSkillDetailFragment(UserSkill item, AppUtil.SkillType skillType) {
-    SkillDetailFragment skillFragment = new SkillDetailFragment();
+  private UserSkillDetailFragment createSkillDetailFragment(UserSkill item, AppUtil.SkillType skillType) {
+    UserSkillDetailFragment skillFragment = new UserSkillDetailFragment();
     skillFragment.setSkillType(skillType);
     skillFragment.setSkillItem(item);
     skillFragment.setOnCallbackResult(new SkillDetailCallbackResult() {

@@ -37,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SkillDetailFragment extends Fragment {
+public class UserSkillDetailFragment extends Fragment {
 
   @BindView(R.id.skill_type_text_view)
   AppCompatTextView skillTypeTextView;
@@ -49,7 +49,6 @@ public class SkillDetailFragment extends Fragment {
   private AppUtil.SkillType skillType;
   private Activity activity;
   private UserSkill userSkill;
-  private Prefser prefser;
   private Box<SkillsItem> skillsItemBox;
   private Dialog loadingDialog;
   private AuthenticationInfo info;
@@ -86,7 +85,7 @@ public class SkillDetailFragment extends Fragment {
     loadingDialog = AppUtil.getLoadingDialog(activity);
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
-    prefser = new Prefser(activity);
+    Prefser prefser = new Prefser(activity);
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
   }
 
