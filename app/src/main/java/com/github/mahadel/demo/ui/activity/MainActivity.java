@@ -48,6 +48,12 @@ import butterknife.OnClick;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
 
+/**
+ * MainActivity showing list of userSkill that submit to the server in two part
+ * UI of adding new userSkill
+ * Access to the menu of app
+ * Search for user that match with user data
+ */
 public class MainActivity extends BaseActivity {
 
   @BindView(R.id.recycler_view_1)
@@ -140,6 +146,10 @@ public class MainActivity extends BaseActivity {
         });
   }
 
+  /**
+   * Setup recycler view for two type of userSkill
+   */
+
   private void initRecyclerViews() {
     mItemAdapter_1 = new ItemAdapter<>();
     mFastAdapter_1 = FastAdapter.with(mItemAdapter_1);
@@ -167,24 +177,42 @@ public class MainActivity extends BaseActivity {
     handleLocaleDirection();
   }
 
+  /**
+   * Handle click of recycler view items
+   *
+   * @param v            {@link View}
+   * @param recyclerView {@link RecyclerView}
+   * @param item         {@link UserSkill}
+   * @param skillType    {@link com.github.mahadel.demo.util.AppUtil.SkillType}
+   * @return boolean
+   */
+
   private boolean handleRecyclerViewOnClick(View v, RecyclerView recyclerView, UserSkill item, AppUtil.SkillType skillType) {
     final CardSliderLayoutManager lm = (CardSliderLayoutManager) recyclerView.getLayoutManager();
-    if (lm.isSmoothScrolling()) {
-      return false;
-    }
-    final int activeCardPosition = lm.getActiveCardPosition();
-    if (activeCardPosition == RecyclerView.NO_POSITION) {
-      return false;
-    }
-    final int clickedPosition = recyclerView.getChildAdapterPosition(v);
-    if (clickedPosition == activeCardPosition) {
-      showSkillDetail(item, skillType);
-    } else if (clickedPosition > activeCardPosition) {
-      recyclerView.smoothScrollToPosition(clickedPosition);
+    if (lm != null) {
+      if (lm.isSmoothScrolling()) {
+        return false;
+      }
+      final int activeCardPosition = lm.getActiveCardPosition();
+      if (activeCardPosition == RecyclerView.NO_POSITION) {
+        return false;
+      }
+      final int clickedPosition = recyclerView.getChildAdapterPosition(v);
+      if (clickedPosition == activeCardPosition) {
+        showSkillDetail(item, skillType);
+      } else if (clickedPosition > activeCardPosition) {
+        recyclerView.smoothScrollToPosition(clickedPosition);
+      }
     }
     return false;
   }
 
+  /**
+   * Showing data of userSkill that selected in fragment
+   *
+   * @param item      {@link UserSkill}
+   * @param skillType {@link com.github.mahadel.demo.util.AppUtil.SkillType}
+   */
   private void showSkillDetail(UserSkill item, AppUtil.SkillType skillType) {
     Fragment fragment = createSkillDetailFragment(item, skillType);
     AppUtil.showFragmentInBottomSheet(fragment, getSupportFragmentManager());
@@ -201,6 +229,13 @@ public class MainActivity extends BaseActivity {
     }, 100);
   }
 
+  /**
+   * Create fragment for showing userSkill detail
+   *
+   * @param item‌     {@link UserSkill}
+   * @param skillType {@link com.github.mahadel.demo.util.AppUtil.SkillType}
+   * @return SkillDetailFragment
+   */
   private SkillDetailFragment createSkillDetailFragment(UserSkill item, AppUtil.SkillType skillType) {
     SkillDetailFragment skillFragment = new SkillDetailFragment();
     skillFragment.setSkillType(skillType);
@@ -221,6 +256,12 @@ public class MainActivity extends BaseActivity {
     return skillFragment;
   }
 
+  /**
+   * Remove userSkill from recycler view & local db
+   *
+   * @param userSkill {@link UserSkill}
+   * @param skillType {@link com.github.mahadel.demo.util.AppUtil.SkillType}
+   */
   private void removeUserSkill(UserSkill userSkill, AppUtil.SkillType skillType) {
     UserSkill userSkill1DB = DatabaseUtil.getUserSkillWithUUID(userSkillBox, userSkill.getUuid());
     userSkillBox.remove(userSkill1DB);
@@ -238,6 +279,12 @@ public class MainActivity extends BaseActivity {
 
   }
 
+  /**
+   * Update userSkill data in recycler view
+   *
+   * @param userSkill {@link UserSkill}
+   * @param skillType {@link com.github.mahadel.demo.util.AppUtil.SkillType}
+   */
   private void updateUserSkill(UserSkill userSkill, AppUtil.SkillType skillType) {
     UserSkill userSkill1DB = DatabaseUtil.getUserSkillWithUUID(userSkillBox, userSkill.getUuid());
     userSkill1DB.setDescription(userSkill.getDescription());
@@ -272,12 +319,23 @@ public class MainActivity extends BaseActivity {
 
   }
 
+  /**
+   * Show add skill dialog with selected type of skill
+   *
+   * @param skillType {@link com.github.mahadel.demo.util.AppUtil.SkillType}
+   */
   private void showAddSkillDialog(AppUtil.SkillType skillType) {
     Fragment fragment = createAddSkillFragment(skillType);
     AppUtil.showFragmentInBottomSheet(fragment, getSupportFragmentManager());
     ExpandBottomSheet();
   }
 
+  /**
+   * Create fragment of add skill
+   *
+   * @param skillType {@link com.github.mahadel.demo.util.AppUtil.SkillType}
+   * @return AddSkillFragment {@link Fragment}
+   */
   private AddSkillFragment createAddSkillFragment(AppUtil.SkillType skillType) {
     AddSkillFragment skillFragment = new AddSkillFragment();
     skillFragment.setSkillType(skillType);
@@ -303,6 +361,12 @@ public class MainActivity extends BaseActivity {
     AppUtil.showFragment(new AboutFragment(), getSupportFragmentManager());
   }
 
+  /**
+   * Add userSkill to recycler view
+   *
+   * @param userSkill {@link UserSkill}
+   * @param skillType {@link com.github.mahadel.demo.util.AppUtil.SkillType}
+   */
   private void handleAddedUserSkill(UserSkill userSkill, AppUtil.SkillType skillType) {
     userSkillBox.put(userSkill);
     if (skillType == AppUtil.SkillType.WANT_TEACH) {
@@ -317,6 +381,9 @@ public class MainActivity extends BaseActivity {
   }
 
 
+  /**
+   * Get userSkills from local db and showing in recycler views
+   */
   private void requestSkills() {
     mItemAdapter_1.clear();
     List<UserSkill> userSkills1 = DatabaseUtil.getUserSkillWithType(userSkillBox, 1).find();
