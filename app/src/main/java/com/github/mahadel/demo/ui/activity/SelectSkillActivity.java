@@ -37,6 +37,9 @@ import io.objectbox.BoxStore;
 
 import static com.github.mahadel.demo.util.AppUtil.dpToPx;
 
+/**
+ * SelectSkillActivity select skill from list and return to fragment of requester
+ */
 public class SelectSkillActivity extends BaseActivity {
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
@@ -63,6 +66,9 @@ public class SelectSkillActivity extends BaseActivity {
     initAdapters();
   }
 
+  /**
+   * Setup init values of variables
+   */
   private void initVariables() {
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
@@ -70,12 +76,19 @@ public class SelectSkillActivity extends BaseActivity {
     userSkillBox = boxStore.boxFor(UserSkill.class);
   }
 
+  /**
+   * Setup recycler view
+   */
+
   private void initRecyclerView() {
     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
     recyclerView.setLayoutManager(mLayoutManager);
     recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(6, getResources()), true));
   }
 
+  /**
+   * Setup FastAdapter variables & handle event of them
+   */
   private void initAdapters() {
     mItemAdapterCategory = new ItemAdapter<>();
     mFastAdapterCategory = FastAdapter.with(mItemAdapterCategory);
@@ -99,6 +112,11 @@ public class SelectSkillActivity extends BaseActivity {
     getCategory();
   }
 
+  /**
+   * Get skills from local db that belong to selected category
+   *
+   * @param item {@link Category}
+   */
   private void getSkills(Category item) {
     List<SkillsItem> skillsItems = DatabaseUtil.getSkillItemOfCategory(skillsItemBox, item.getUuid());
     recyclerView.setAdapter(mFastAdapterSkill);
@@ -108,12 +126,20 @@ public class SelectSkillActivity extends BaseActivity {
 
   }
 
+  /**
+   * Get categories from local db
+   */
   private void getCategory() {
     List<Category> categories = categoryBox.getAll();
     mItemAdapterCategory.clear();
     mItemAdapterCategory.add(categories);
   }
 
+  /**
+   * Return selected skill to the fragment that request it
+   *
+   * @param item {@link SkillsItem}
+   */
   private void returnResult(@NonNull SkillsItem item) {
     if (!isUserSkillDuplicate(item)) {
       Intent resultIntent = new Intent();
@@ -125,6 +151,12 @@ public class SelectSkillActivity extends BaseActivity {
     }
   }
 
+  /**
+   * Check for duplicate select items
+   *
+   * @param item {@link SkillsItem}
+   * @return Boolean
+   */
   private boolean isUserSkillDuplicate(SkillsItem item) {
     UserSkill userSkill = DatabaseUtil.getUserSkillWithSkillUUID(userSkillBox, item.getUuid());
     return userSkill != null;
