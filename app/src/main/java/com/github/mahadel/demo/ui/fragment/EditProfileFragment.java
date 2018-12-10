@@ -35,6 +35,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * EditProfileFragment Edit information of user
+ */
 public class EditProfileFragment extends DialogFragment {
 
   @BindView(R.id.first_name_edit_text)
@@ -57,6 +60,11 @@ public class EditProfileFragment extends DialogFragment {
   private Dialog loadingDialog;
   private AuthenticationInfo info;
 
+  /**
+   * Set callback listener for handle edit event
+   *
+   * @param listener {@link CallbackListener}
+   */
   void setOnCallbackResult(CallbackListener listener) {
     this.listener = listener;
   }
@@ -69,6 +77,9 @@ public class EditProfileFragment extends DialogFragment {
     return rootView;
   }
 
+  /**
+   * Setup init values of variables
+   */
   private void initVariables() {
     activity = getActivity();
     Prefser prefser = new Prefser(activity);
@@ -98,10 +109,20 @@ public class EditProfileFragment extends DialogFragment {
     return dialog;
   }
 
+  /**
+   * Set user information to the fragment
+   *
+   * @param userInfo {@link UserInfo}
+   */
   void setUserInfo(UserInfo userInfo) {
     this.userInfo = userInfo;
   }
 
+  /**
+   * Handle edit profile click event
+   *
+   * @param view {@link View}
+   */
   @OnClick(R.id.submit_info_button)
   void editProfileInfo(View view) {
     int gender;
@@ -123,6 +144,13 @@ public class EditProfileFragment extends DialogFragment {
     }
   }
 
+  /**
+   * Update user information in the server
+   *
+   * @param firstName String first name
+   * @param lastName  String last name
+   * @param gender    Int gender
+   */
   private void updateUser(final String firstName, final String lastName, final int gender) {
     loadingDialog.show();
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
