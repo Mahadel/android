@@ -35,7 +35,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
+/**
+ * AboutFragment showing {@link About} instance values in the fragment
+ */
 public class AboutFragment extends DialogFragment {
 
 
@@ -63,6 +65,9 @@ public class AboutFragment extends DialogFragment {
     return rootView;
   }
 
+  /**
+   * Setup init values of variables
+   */
   private void initVariables() {
     activity = getActivity();
     Prefser prefser = new Prefser(activity);
@@ -70,6 +75,9 @@ public class AboutFragment extends DialogFragment {
     loadingDialog = AppUtil.getLoadingDialog(activity);
   }
 
+  /**
+   * Get app version
+   */
   private void setAppVersion() {
     versionName = "";
     try {
@@ -80,6 +88,9 @@ public class AboutFragment extends DialogFragment {
     versionAppTextView.setText(versionName);
   }
 
+  /**
+   * Get {@link About} instance from server
+   */
   private void getAbout() {
     loadingDialog.show();
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
@@ -102,6 +113,9 @@ public class AboutFragment extends DialogFragment {
     });
   }
 
+  /**
+   * Showing values of {@link About} in the UI
+   */
   private void handleAbout() {
     if (!about.getAppVersion().equals(versionName)) {
       updateButton.setVisibility(View.VISIBLE);
@@ -133,6 +147,11 @@ public class AboutFragment extends DialogFragment {
     }
   }
 
+  /**
+   * Handle view click and opening Website in the default browser app
+   *
+   * @param view {@link View}
+   */
   @OnClick({R.id.update_button, R.id.changelog_layout, R.id.license_layout, R.id.sponsor_website, R.id.developer_layout})
   void handleLayoutClicks(View view) {
     switch (view.getId()) {
@@ -154,6 +173,12 @@ public class AboutFragment extends DialogFragment {
     }
   }
 
+  /**
+   * Showing url in the browser
+   *
+   * @param url  String
+   * @param view {@link View}
+   */
   private void startBrowser(String url, View view) {
     try {
       Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
