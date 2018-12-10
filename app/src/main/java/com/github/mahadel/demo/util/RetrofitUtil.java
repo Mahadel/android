@@ -12,8 +12,17 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Retrofit Utils
+ */
 public class RetrofitUtil {
 
+  /**
+   * Get retrofit instance
+   *
+   * @param token String token of user
+   * @return Instance of {@link Retrofit}
+   */
   public static Retrofit getRetrofit(String token) {
     return new Retrofit.Builder().baseUrl(Constant.BASE_URL)
         .client(getHeader(token))
@@ -21,6 +30,12 @@ public class RetrofitUtil {
         .build();
   }
 
+  /**
+   * Get OkHttpClient with authorization header & logging interceptor
+   *
+   * @param authorizationValue String user token
+   * @return Instance of {@link OkHttpClient}
+   */
   private static OkHttpClient getHeader(final String authorizationValue) {
     //delete this interceptor in released app
     HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
