@@ -17,6 +17,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.blankj.utilcode.util.NetworkUtils;
+import com.blankj.utilcode.util.SnackbarUtils;
 import com.bumptech.glide.Glide;
 import com.github.mahadel.demo.R;
 import com.github.mahadel.demo.model.AuthenticationInfo;
@@ -52,21 +54,18 @@ import static org.greenrobot.essentials.StringUtils.md5;
 public class ProfileFragment extends DialogFragment implements
     GoogleApiClient.OnConnectionFailedListener {
 
-
   @BindView(R.id.email_text_view)
   AppCompatTextView emailTextView;
   @BindView(R.id.name_text_view)
   AppCompatTextView nameTextView;
   @BindView(R.id.profile_pic)
   CircularImageView profilePic;
-
   private Activity activity;
   private Prefser prefser;
   private GoogleApiClient mGoogleApiClient;
   private UserInfo userInfo;
   private Dialog loadingDialog;
   private AuthenticationInfo info;
-
 
   @Override
   public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,26 +79,9 @@ public class ProfileFragment extends DialogFragment implements
     return rootView;
   }
 
-  private void getFirebaseId() {
-    FirebaseInstanceId.getInstance().getInstanceId()
-        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-          @Override
-          public void onComplete(@NonNull Task<InstanceIdResult> task) {
-            if (!task.isSuccessful()) {
-              Log.w("Firebase TOKEN", "getInstanceId failed", task.getException());
-              return;
-            }
-            String token = task.getResult().getToken();
-            if (info.getFirebaseId() != null) {
-              if (!info.getFirebaseId().equals(token)) {
-                sendRegistrationToServer(token);
-              }
-            } else {
-              sendRegistrationToServer(token);
-            }
-          }
-        });
-  }
+  /**
+   * Setup init values of variables
+   */
 
   private void initVariables() {
     activity = getActivity();
@@ -108,12 +90,18 @@ public class ProfileFragment extends DialogFragment implements
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
   }
 
+  /**
+   * Show user email & gravatar image
+   */
   private void showProfileInfo() {
     emailTextView.setText(info.getEmail());
     String profilePicURL = Constant.GRAVATAR_URL + md5(info.getEmail()).toLowerCase() + "?size=400";
     Glide.with(activity).load(profilePicURL).into(profilePic);
   }
 
+  /**
+   * Get {@link UserInfo} instance from the server
+   */
   private void requestProfileInfo() {
     loadingDialog.show();
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
@@ -136,6 +124,30 @@ public class ProfileFragment extends DialogFragment implements
         t.printStackTrace();
       }
     });
+  }
+
+  /**
+   * Get firebase id token
+   */
+  private void getFirebaseId() {
+    FirebaseInstanceId.getInstance().getInstanceId()
+        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+          @Override
+          public void onComplete(@NonNull Task<InstanceIdResult> task) {
+            if (!task.isSuccessful()) {
+              Log.w("Firebase TOKEN", "getInstanceId failed", task.getException());
+              return;
+            }
+            String token = task.getResult().getToken();
+            if (info.getFirebaseId() != null) {
+              if (!info.getFirebaseId().equals(token)) {
+                sendRegistrationToServer(token);
+              }
+            } else {
+              sendRegistrationToServer(token);
+            }
+          }
+        });
   }
 
   @NonNull
@@ -175,37 +187,55 @@ public class ProfileFragment extends DialogFragment implements
     }
   }
 
+  /**
+   * Confirm before request to delete user account
+   */
   private void deleteAccount() {
-    AppUtil.showConfirmDialog(activity.getString(R.string.delete_account_message), activity, new AppUtil.ConfirmDialogClickListener() {
-      @Override
-      public void ok() {
-        loadingDialog.show();
-        APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
-        Call<ResponseMessage> call = apiService.deleteUserAccount(info.getUuid());
-        call.enqueue(new Callback<ResponseMessage>() {
-          @Override
-          public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
-            loadingDialog.dismiss();
-            if (response.isSuccessful()) {
-              revoke();
-            }
-          }
+    if (NetworkUtils.isConnected()) {
+      AppUtil.showConfirmDialog(activity.getString(R.string.delete_account_message), activity, new AppUtil.ConfirmDialogClickListener() {
+        @Override
+        public void ok() {
+          requestDeleteAccount();
+        }
 
-          @Override
-          public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
-            loadingDialog.dismiss();
-            t.printStackTrace();
-          }
-        });
+        @Override
+        public void cancel() {
+
+        }
+      });
+    } else {
+      AppUtil.showSnackbar(emailTextView, getString(R.string.no_internet_label), activity, SnackbarUtils.LENGTH_LONG);
+    }
+  }
+
+  /**
+   * Delete user account from server
+   */
+
+  private void requestDeleteAccount() {
+    loadingDialog.show();
+    APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+    Call<ResponseMessage> call = apiService.deleteUserAccount(info.getUuid());
+    call.enqueue(new Callback<ResponseMessage>() {
+      @Override
+      public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
+        loadingDialog.dismiss();
+        if (response.isSuccessful()) {
+          revoke();
+        }
       }
 
       @Override
-      public void cancel() {
-
+      public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
+        loadingDialog.dismiss();
+        t.printStackTrace();
       }
     });
   }
 
+  /**
+   * Showing edit profile info dialog
+   */
   private void editProfileInfo() {
     FragmentManager fragmentManager = getFragmentManager();
     EditProfileFragment editProfileFragment = new EditProfileFragment();
@@ -221,10 +251,18 @@ public class ProfileFragment extends DialogFragment implements
     transaction.add(android.R.id.content, editProfileFragment).addToBackStack(null).commit();
   }
 
+  /**
+   * Showing edited info of user
+   *
+   * @param userInfoResult {@link UserInfo}
+   */
   private void updateUI(UserInfo userInfoResult) {
     nameTextView.setText(String.format("%s %s", userInfoResult.getFirstName(), userInfoResult.getLastName()));
   }
 
+  /**
+   * Confirm before logout user
+   */
   private void revokeAccess() {
     AppUtil.showConfirmDialog(activity.getString(R.string.logout_message_label), activity, new AppUtil.ConfirmDialogClickListener() {
       @Override
@@ -239,6 +277,10 @@ public class ProfileFragment extends DialogFragment implements
     });
   }
 
+  /**
+   * Logout user and remove token of it
+   * Start Launcher activity
+   */
   private void revoke() {
     loadingDialog.show();
     Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
@@ -266,9 +308,7 @@ public class ProfileFragment extends DialogFragment implements
 
   @Override
   public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
   }
-
 
   @Override
   public void onPause() {
@@ -278,6 +318,12 @@ public class ProfileFragment extends DialogFragment implements
       mGoogleApiClient.disconnect();
     }
   }
+
+  /**
+   * Send firebase id token to the server
+   *
+   * @param token String firebase id token
+   */
 
   private void sendRegistrationToServer(final String token) {
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
