@@ -29,22 +29,18 @@ import retrofit2.Response;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-  private static final String TAG = "MyFirebaseMsgService";
-
   /**
    * Called when message is received.
    *
    * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
    */
-  // [START receive_message]
   @Override
   public void onMessageReceived(RemoteMessage remoteMessage) {
-    sendNotification(remoteMessage.getNotification().getBody(), remoteMessage.getNotification().getTitle());
+    if (remoteMessage.getNotification() != null) {
+      sendNotification(remoteMessage.getNotification().getBody(), remoteMessage.getNotification().getTitle());
+    }
   }
-  // [END receive_message]
 
-
-  // [START on_new_token]
 
   /**
    * Called if InstanceID token is updated. This may occur if the security of
