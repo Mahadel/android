@@ -3,7 +3,6 @@ package com.github.mahadel.demo.util;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.util.Log;
 
 import com.github.mahadel.demo.BuildConfig;
 import com.github.mahadel.demo.R;
@@ -34,30 +33,35 @@ public class MyApplication extends Application {
 
   }
 
+  /**
+   * Return instance of box store
+   *
+   * @return Instance of {@link BoxStore}
+   */
+
+  public static BoxStore getBoxStore() {
+    return boxStore;
+  }
+
+  /**
+   * Create static {@link BoxStore} instance
+   */
   private void createBoxStore() {
     boxStore = MyObjectBox.builder().androidContext(MyApplication.this).build();
     if (BuildConfig.DEBUG) {
       new AndroidObjectBrowser(boxStore).start(this);
     }
-
-    Log.d("App", "Using ObjectBox " + BoxStore.getVersion() + " (" + BoxStore.getVersionNative() + ")");
-  }
-
-  public static BoxStore getBoxStore() {
-    return boxStore;
   }
 
   @Override
   protected void attachBaseContext(Context base) {
     localeManager = new LocaleManager(base);
     super.attachBaseContext(localeManager.setLocale(base));
-    Log.d("MyApplication", "attachBaseContext");
   }
 
   @Override
   public void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
     localeManager.setLocale(this);
-    Log.d("MyApplication", "onConfigurationChanged: " + newConfig.locale.getLanguage());
   }
 }
