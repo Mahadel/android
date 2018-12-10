@@ -47,6 +47,10 @@ import retrofit2.Response;
 
 import static com.github.mahadel.demo.util.AppUtil.dpToPx;
 
+/**
+ * SearchActivity searching for user skill matching with user
+ * Send connection request to the other users
+ */
 public class SearchActivity extends BaseActivity {
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
@@ -85,6 +89,9 @@ public class SearchActivity extends BaseActivity {
     searching();
   }
 
+  /**
+   * Setup init values of variables
+   */
   private void initVariables() {
     BoxStore boxStore = MyApplication.getBoxStore();
     skillsItemBox = boxStore.boxFor(SkillsItem.class);
@@ -98,6 +105,9 @@ public class SearchActivity extends BaseActivity {
     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
   }
 
+  /**
+   * Setup recycler view of searched items
+   */
   private void initRecyclerView() {
     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
     recyclerView.setLayoutManager(mLayoutManager);
@@ -128,6 +138,9 @@ public class SearchActivity extends BaseActivity {
     }));
   }
 
+  /**
+   * Searching for matched userSkill from server
+   */
   private void searching() {
     loadingDialog.show();
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
@@ -152,6 +165,11 @@ public class SearchActivity extends BaseActivity {
     });
   }
 
+  /**
+   * Showing search result items in recycler view
+   *
+   * @param searchResults List of {@link SearchResult}
+   */
   private void handleSearchResults(List<SearchResult> searchResults) {
     if (searchResults.size() != 0) {
       mItemAdapter.clear();
@@ -171,6 +189,11 @@ public class SearchActivity extends BaseActivity {
     }
   }
 
+  /**
+   * Submit request connection to server
+   *
+   * @param view {@link View}
+   */
   @OnClick(R.id.submit_btn)
   public void submitRequestConnection(final View view) {
     loadingDialog.show();
