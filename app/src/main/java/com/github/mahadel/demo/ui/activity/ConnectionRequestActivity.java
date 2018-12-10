@@ -46,6 +46,10 @@ import retrofit2.Response;
 
 import static com.github.mahadel.demo.util.AppUtil.dpToPx;
 
+/**
+ * ConnectionRequestActivity handle sent and received connection
+ * Show theme in recycler view with options for handle them
+ */
 public class ConnectionRequestActivity extends BaseActivity {
   private static final int SENT_CONNECTION = 1;
   private static final int RECEIVED_CONNECTION = 2;
@@ -84,12 +88,18 @@ public class ConnectionRequestActivity extends BaseActivity {
     getConnectionRequests();
   }
 
+  /**
+   * Setup init values of variables
+   */
   private void initVariables() {
     Prefser prefser = new Prefser(this);
     loadingDialog = AppUtil.getLoadingDialog(this);
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
   }
 
+  /**
+   * Setup recycler view & FastAdapter events for both sent & received connection
+   */
   private void initRecyclerView() {
     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 1);
     recyclerView.setLayoutManager(mLayoutManager);
@@ -114,7 +124,7 @@ public class ConnectionRequestActivity extends BaseActivity {
         if (item.getIsDelete() == 1 || item.getIsAccept() != 1) {
           AppUtil.showSnackbar(recyclerView, "ایمیل کاربر در دسترس نیست", ConnectionRequestActivity.this, SnackbarUtils.LENGTH_LONG);
         } else {
-          sendMail(item);
+          sendMail(item.getEmailTo());
         }
       }
     }));
@@ -140,6 +150,9 @@ public class ConnectionRequestActivity extends BaseActivity {
     }));
   }
 
+  /**
+   * Get list of sent & received connection from server
+   */
   private void getConnectionRequests() {
     loadingDialog.show();
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
@@ -165,6 +178,11 @@ public class ConnectionRequestActivity extends BaseActivity {
     });
   }
 
+  /**
+   * Showing items of connection that sent to users
+   *
+   * @param connectionSend List of {@link ConnectionSendItem}
+   */
   private void displayConnectionSend(List<ConnectionSendItem> connectionSend) {
     if (connectionSend.size() != 0) {
       recyclerView.setAdapter(mFastAdapterConnectionSend);
@@ -176,6 +194,11 @@ public class ConnectionRequestActivity extends BaseActivity {
     }
   }
 
+  /**
+   * Showing items of connection that received from users
+   *
+   * @param connectionReceiveItems List of {@link ConnectionReceiveItem}
+   */
   private void displayConnectionReceive(List<ConnectionReceiveItem> connectionReceiveItems) {
     if (connectionReceiveItems.size() != 0) {
       recyclerView.setAdapter(mFastAdapterConnectionReceive);
@@ -197,9 +220,14 @@ public class ConnectionRequestActivity extends BaseActivity {
     recyclerView.setVisibility(View.GONE);
   }
 
-  private void sendMail(ConnectionSendItem item) {
+  /**
+   * Open default mail application from device
+   *
+   * @param email String email of user
+   */
+  private void sendMail(String email) {
     Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-        "mailto", item.getEmailTo(), null));
+        "mailto", email, null));
     emailIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.request_skill_swap_label);
     try {
       startActivity(emailIntent);
@@ -208,6 +236,13 @@ public class ConnectionRequestActivity extends BaseActivity {
     }
   }
 
+  /**
+   * Edit connection request status with 1 for accept or 0 for deny
+   *
+   * @param item     {@link ConnectionReceiveItem} connection receive item
+   * @param isAccept Int status of connection is accept or deny
+   * @param position Int position of item in recycler view
+   */
   private void editConnectionRequest(ConnectionReceiveItem item, int isAccept, int position) {
     loadingDialog.show();
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
@@ -231,6 +266,12 @@ public class ConnectionRequestActivity extends BaseActivity {
     });
   }
 
+  /**
+   * Showing confirm dialog before delete connection
+   *
+   * @param item     {@link ConnectionSendItem} connection send item
+   * @param position Int position of connection in recycler view
+   */
   private void deleteConnection(ConnectionSendItem item, int position) {
     AppUtil.showConfirmDialog(getString(R.string.confirm_remove_request_label), this, new AppUtil.ConfirmDialogClickListener() {
       @Override
@@ -244,6 +285,13 @@ public class ConnectionRequestActivity extends BaseActivity {
       }
     });
   }
+
+  /**
+   * Request delete connection from server
+   *
+   * @param item     {@link ConnectionSendItem} connection send item
+   * @param position Int position of connection in recycler view
+   */
 
   private void delete(ConnectionSendItem item, int position) {
     loadingDialog.show();
@@ -271,6 +319,11 @@ public class ConnectionRequestActivity extends BaseActivity {
     });
   }
 
+  /**
+   * Handle bottom navigation items click
+   *
+   * @param view {@link View}
+   */
   @OnClick({R.id.sent_layout, R.id.received_layout, R.id.sent_image_button, R.id.received_image_button})
   public void handleBottomNavigationClick(View view) {
     switch (view.getId()) {
