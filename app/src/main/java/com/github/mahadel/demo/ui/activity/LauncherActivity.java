@@ -52,6 +52,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * First activity that launch in start application
+ * Handle sign up UI & procedure of submit user info
+ * Getting categories & skills data from server
+ * Getting userSkill of user from server
+ */
 public class LauncherActivity extends BaseActivity implements
     GoogleApiClient.OnConnectionFailedListener {
   private static final int RC_SIGN_IN = 10001;
@@ -112,6 +118,9 @@ public class LauncherActivity extends BaseActivity implements
     checkIsLogin();
   }
 
+  /**
+   * Setup init value of variables
+   */
   private void initVariables() {
     prefser = new Prefser(this);
     BoxStore boxStore = MyApplication.getBoxStore();
@@ -122,6 +131,9 @@ public class LauncherActivity extends BaseActivity implements
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
   }
 
+  /**
+   * Check for previous login. showing sign up UI or getting data from server
+   */
   private void checkIsLogin() {
     if (prefser.contains(Constant.TOKEN)) {
 
@@ -136,6 +148,9 @@ public class LauncherActivity extends BaseActivity implements
     }
   }
 
+  /**
+   * Setup locale language. Persian or English
+   */
   private void setUpLocale() {
     if (MyApplication.localeManager.getLanguage().equals(LocaleManager.LANGUAGE_PERSIAN)) {
       changeLanguagePersian();
@@ -183,6 +198,11 @@ public class LauncherActivity extends BaseActivity implements
     }
   }
 
+  /**
+   * Store user token in server
+   *
+   * @param acct {@link GoogleSignInAccount} data of login with google
+   */
   private void storeUser(final GoogleSignInAccount acct) {
     loadingDialog.show();
     APIService apiService = RetrofitUtil.getRetrofit("").create(APIService.class);
@@ -214,12 +234,20 @@ public class LauncherActivity extends BaseActivity implements
     });
   }
 
+  /**
+   * Show email in personal layout UI
+   *
+   * @param email String email
+   */
   private void showGetAccountInfoLayout(String email) {
     emailTextView.setText(email);
     loginLayout.setVisibility(View.GONE);
     personalLayout.setVisibility(View.VISIBLE);
   }
 
+  /**
+   * Handle submit info of user to server
+   */
   @OnClick(R.id.submit_info_button)
   public void submitInfo() {
     String firstName = firstNameEditText.getText().toString();
@@ -241,6 +269,13 @@ public class LauncherActivity extends BaseActivity implements
     }
   }
 
+  /**
+   * Update user info with information that user provided.
+   *
+   * @param firstName String first name of user
+   * @param lastName  String last name of user
+   * @param gender    Int gender of user
+   */
   private void updateUser(final String firstName, final String lastName, final int gender) {
     loadingDialog.show();
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
@@ -266,6 +301,11 @@ public class LauncherActivity extends BaseActivity implements
 
   }
 
+  /**
+   * Handle change language of application
+   *
+   * @param view {@link View}
+   */
   @OnClick({R.id.persian_image_view, R.id.english_image_view})
   public void handleLanguage(View view) {
     switch (view.getId()) {
@@ -290,7 +330,11 @@ public class LauncherActivity extends BaseActivity implements
     persianImageView.setBackgroundResource(android.R.color.transparent);
   }
 
-
+  /**
+   * Set locale to the language & restart app
+   *
+   * @param language String name of language
+   */
   private void setNewLocale(String language) {
     MyApplication.localeManager.setNewLocale(this, language);
     Intent i = new Intent(this, LauncherActivity.class);
@@ -314,6 +358,9 @@ public class LauncherActivity extends BaseActivity implements
     }
   }
 
+  /**
+   * Get categories & skills data from server
+   */
   private void retrieveSkillsData() {
     loadingLayout();
     info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
@@ -341,6 +388,9 @@ public class LauncherActivity extends BaseActivity implements
     });
   }
 
+  /**
+   * Get userSkill from server
+   */
   private void retrieveUserSkillsData() {
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<List<UserSkill>> call = apiService.getUserSkills(info.getUuid());
@@ -372,11 +422,21 @@ public class LauncherActivity extends BaseActivity implements
     Toast.makeText(this, getString(R.string.access_deny_label), Toast.LENGTH_LONG).show();
   }
 
+  /**
+   * Store list of userSkill in local db
+   *
+   * @param userSkills List of {@link UserSkill}
+   */
   private void storeUserSkill(List<UserSkill> userSkills) {
     userSkillBox.removeAll();
     userSkillBox.put(userSkills);
   }
 
+  /**
+   * Store list of category in local db
+   *
+   * @param categories List of {@link Category}
+   */
   private void storeCategoriesDB(List<Category> categories) {
     removeDBData();
     for (Category category : categories) {
