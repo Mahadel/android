@@ -24,6 +24,7 @@ import com.github.mahadel.demo.service.APIService;
 import com.github.mahadel.demo.util.AppUtil;
 import com.github.mahadel.demo.util.Constant;
 import com.github.mahadel.demo.util.DatabaseUtil;
+import com.github.mahadel.demo.util.FirebaseEventLog;
 import com.github.mahadel.demo.util.MyApplication;
 import com.github.mahadel.demo.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
@@ -43,6 +44,7 @@ import retrofit2.Response;
  */
 public class UserSkillDetailFragment extends Fragment {
 
+  private static final String TAG = "UserSkillDetailFragment";
   @BindView(R.id.skill_type_text_view)
   AppCompatTextView skillTypeTextView;
   @BindView(R.id.skill_description_edit_text)
@@ -169,6 +171,7 @@ public class UserSkillDetailFragment extends Fragment {
       public void onFailure(@NonNull Call<UserSkill> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "editUsersSkill", t.getMessage());
       }
     });
   }
@@ -234,6 +237,7 @@ public class UserSkillDetailFragment extends Fragment {
       public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "removeUsersSkill", t.getMessage());
       }
     });
   }
