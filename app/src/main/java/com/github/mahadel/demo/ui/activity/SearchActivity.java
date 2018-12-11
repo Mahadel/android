@@ -15,6 +15,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.github.mahadel.demo.R;
 import com.github.mahadel.demo.model.AuthenticationInfo;
@@ -24,6 +25,7 @@ import com.github.mahadel.demo.model.SkillsItem;
 import com.github.mahadel.demo.service.APIService;
 import com.github.mahadel.demo.util.AppUtil;
 import com.github.mahadel.demo.util.Constant;
+import com.github.mahadel.demo.util.FirebaseEventLog;
 import com.github.mahadel.demo.util.GridSpacingItemDecoration;
 import com.github.mahadel.demo.util.MyApplication;
 import com.github.mahadel.demo.util.RetrofitUtil;
@@ -52,6 +54,7 @@ import static com.github.mahadel.demo.util.AppUtil.dpToPx;
  * Send connection request to the other users
  */
 public class SearchActivity extends BaseActivity {
+  private static final String TAG = "SearchActivity";
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
   @BindView(R.id.requestLayout)
@@ -161,6 +164,7 @@ public class SearchActivity extends BaseActivity {
       public void onFailure(@NonNull Call<List<SearchResult>> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "searching", t.getMessage());
       }
     });
   }
@@ -196,6 +200,14 @@ public class SearchActivity extends BaseActivity {
    */
   @OnClick(R.id.submit_btn)
   public void submitRequestConnection(final View view) {
+    if (NetworkUtils.isConnected()) {
+      requestConnection(view);
+    } else {
+      AppUtil.showSnackbar(view, getString(R.string.no_internet_label), this, SnackbarUtils.LENGTH_LONG);
+    }
+  }
+
+  private void requestConnection(View view) {
     loadingDialog.show();
     AppUtil.hideSoftInput(SearchActivity.this);
     String description = requestDescriptionEditText.getText().toString();
@@ -218,8 +230,9 @@ public class SearchActivity extends BaseActivity {
 
       @Override
       public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
-        t.printStackTrace();
         loadingDialog.dismiss();
+        t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "requestConnection", t.getMessage());
       }
     });
   }
