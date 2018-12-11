@@ -28,6 +28,7 @@ import com.github.mahadel.demo.service.APIService;
 import com.github.mahadel.demo.ui.activity.LauncherActivity;
 import com.github.mahadel.demo.util.AppUtil;
 import com.github.mahadel.demo.util.Constant;
+import com.github.mahadel.demo.util.FirebaseEventLog;
 import com.github.mahadel.demo.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.google.android.gms.auth.api.Auth;
@@ -54,6 +55,7 @@ import static org.greenrobot.essentials.StringUtils.md5;
 public class ProfileFragment extends DialogFragment implements
     GoogleApiClient.OnConnectionFailedListener {
 
+  private static final String TAG = "ProfileFragment";
   @BindView(R.id.email_text_view)
   AppCompatTextView emailTextView;
   @BindView(R.id.name_text_view)
@@ -122,6 +124,7 @@ public class ProfileFragment extends DialogFragment implements
       public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "requestProfileInfo", t.getMessage());
       }
     });
   }
@@ -141,10 +144,10 @@ public class ProfileFragment extends DialogFragment implements
             String token = task.getResult().getToken();
             if (info.getFirebaseId() != null) {
               if (!info.getFirebaseId().equals(token)) {
-                sendRegistrationToServer(token);
+                sendFirebaseIdToken(token);
               }
             } else {
-              sendRegistrationToServer(token);
+              sendFirebaseIdToken(token);
             }
           }
         });
@@ -229,6 +232,7 @@ public class ProfileFragment extends DialogFragment implements
       public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "requestDeleteAccount", t.getMessage());
       }
     });
   }
@@ -325,7 +329,7 @@ public class ProfileFragment extends DialogFragment implements
    * @param token String firebase id token
    */
 
-  private void sendRegistrationToServer(final String token) {
+  private void sendFirebaseIdToken(final String token) {
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.setFirebaseId(info.getUuid(), token);
     call.enqueue(new Callback<ResponseMessage>() {
@@ -340,8 +344,8 @@ public class ProfileFragment extends DialogFragment implements
 
       @Override
       public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
-        Log.d("submitToken", "failed");
         t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "sendFirebaseIdToken", t.getMessage());
       }
     });
   }
