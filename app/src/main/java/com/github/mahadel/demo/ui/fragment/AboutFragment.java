@@ -24,6 +24,7 @@ import com.github.mahadel.demo.model.AuthenticationInfo;
 import com.github.mahadel.demo.service.APIService;
 import com.github.mahadel.demo.util.AppUtil;
 import com.github.mahadel.demo.util.Constant;
+import com.github.mahadel.demo.util.FirebaseEventLog;
 import com.github.mahadel.demo.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.google.android.material.button.MaterialButton;
@@ -39,8 +40,7 @@ import retrofit2.Response;
  * AboutFragment showing {@link About} instance values in the fragment
  */
 public class AboutFragment extends DialogFragment {
-
-
+  private static final String TAG = "AboutFragment";
   @BindView(R.id.version_app_text_view)
   AppCompatTextView versionAppTextView;
   @BindView(R.id.update_button)
@@ -107,8 +107,9 @@ public class AboutFragment extends DialogFragment {
 
       @Override
       public void onFailure(@NonNull Call<About> call, @NonNull Throwable t) {
-        t.printStackTrace();
         loadingDialog.dismiss();
+        t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "getAbout", t.getMessage());
       }
     });
   }
