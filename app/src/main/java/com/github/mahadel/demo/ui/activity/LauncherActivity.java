@@ -26,6 +26,7 @@ import com.github.mahadel.demo.model.UserSkill;
 import com.github.mahadel.demo.service.APIService;
 import com.github.mahadel.demo.util.AppUtil;
 import com.github.mahadel.demo.util.Constant;
+import com.github.mahadel.demo.util.FirebaseEventLog;
 import com.github.mahadel.demo.util.LocaleManager;
 import com.github.mahadel.demo.util.MyApplication;
 import com.github.mahadel.demo.util.RetrofitUtil;
@@ -61,6 +62,7 @@ import retrofit2.Response;
 public class LauncherActivity extends BaseActivity implements
     GoogleApiClient.OnConnectionFailedListener {
   private static final int RC_SIGN_IN = 10001;
+  private static final String TAG = "LauncherActivity";
   @BindView(R.id.login_layout)
   LinearLayout loginLayout;
   @BindView(R.id.email_text_view)
@@ -230,6 +232,7 @@ public class LauncherActivity extends BaseActivity implements
       public void onFailure(@NonNull Call<AuthenticationInfo> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "storeUser", t.getMessage());
       }
     });
   }
@@ -296,6 +299,7 @@ public class LauncherActivity extends BaseActivity implements
       public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "updateUser", t.getMessage());
       }
     });
 
@@ -384,6 +388,7 @@ public class LauncherActivity extends BaseActivity implements
       public void onFailure(@NonNull Call<List<Category>> call, @NonNull Throwable t) {
         hiddenLoadingLayout();
         t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "retrieveSkillData", t.getMessage());
       }
     });
   }
@@ -410,6 +415,7 @@ public class LauncherActivity extends BaseActivity implements
       public void onFailure(@NonNull Call<List<UserSkill>> call, @NonNull Throwable t) {
         hiddenLoadingLayout();
         t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "retrieveUserSkillData", t.getMessage());
       }
     });
   }
