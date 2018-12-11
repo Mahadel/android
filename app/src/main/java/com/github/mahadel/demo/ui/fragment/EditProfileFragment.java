@@ -23,6 +23,7 @@ import com.github.mahadel.demo.model.UserInfo;
 import com.github.mahadel.demo.service.APIService;
 import com.github.mahadel.demo.util.AppUtil;
 import com.github.mahadel.demo.util.Constant;
+import com.github.mahadel.demo.util.FirebaseEventLog;
 import com.github.mahadel.demo.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.google.android.material.textfield.TextInputEditText;
@@ -40,6 +41,7 @@ import retrofit2.Response;
  */
 public class EditProfileFragment extends DialogFragment {
 
+  private static final String TAG = "EditProfileFragment";
   @BindView(R.id.first_name_edit_text)
   TextInputEditText firstNameEditText;
   @BindView(R.id.til_first_name)
@@ -174,6 +176,7 @@ public class EditProfileFragment extends DialogFragment {
       public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "updateUser", t.getMessage());
       }
     });
 
