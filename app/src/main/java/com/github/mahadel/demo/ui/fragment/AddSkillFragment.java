@@ -25,6 +25,7 @@ import com.github.mahadel.demo.service.APIService;
 import com.github.mahadel.demo.ui.activity.SelectSkillActivity;
 import com.github.mahadel.demo.util.AppUtil;
 import com.github.mahadel.demo.util.Constant;
+import com.github.mahadel.demo.util.FirebaseEventLog;
 import com.github.mahadel.demo.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.google.android.material.button.MaterialButton;
@@ -44,6 +45,7 @@ import static android.app.Activity.RESULT_OK;
 public class AddSkillFragment extends Fragment {
 
   private static final int REQUEST_SELECT_SKILL = 10001;
+  private static final String TAG = "AddSkillFragment";
   @BindView(R.id.skill_type_text_view)
   AppCompatTextView skillTypeTextView;
   @BindView(R.id.skill_description_edit_text)
@@ -146,6 +148,7 @@ public class AddSkillFragment extends Fragment {
         public void onFailure(@NonNull Call<UserSkill> call, @NonNull Throwable t) {
           loadingDialog.dismiss();
           t.printStackTrace();
+          FirebaseEventLog.log("server_failure", TAG, "submitUserSkill", t.getMessage());
         }
       });
     } else {
