@@ -27,6 +27,7 @@ import com.github.mahadel.demo.model.ResponseMessage;
 import com.github.mahadel.demo.service.APIService;
 import com.github.mahadel.demo.util.AppUtil;
 import com.github.mahadel.demo.util.Constant;
+import com.github.mahadel.demo.util.FirebaseEventLog;
 import com.github.mahadel.demo.util.GridSpacingItemDecoration;
 import com.github.mahadel.demo.util.RetrofitUtil;
 import com.github.pwittchen.prefser.library.rx2.Prefser;
@@ -53,6 +54,7 @@ import static com.github.mahadel.demo.util.AppUtil.dpToPx;
 public class ConnectionRequestActivity extends BaseActivity {
   private static final int SENT_CONNECTION = 1;
   private static final int RECEIVED_CONNECTION = 2;
+  private static final String TAG = "ConnectionRequestActivity";
   @BindView(R.id.recycler_view)
   RecyclerView recyclerView;
   @BindView(R.id.sent_image_button)
@@ -173,7 +175,7 @@ public class ConnectionRequestActivity extends BaseActivity {
       public void onFailure(@NonNull Call<ConnectionRequest> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
-
+        FirebaseEventLog.log("server_failure", TAG, "getConnectionRequests", t.getMessage());
       }
     });
   }
@@ -260,8 +262,9 @@ public class ConnectionRequestActivity extends BaseActivity {
 
       @Override
       public void onFailure(@NonNull Call<ConnectionReceiveItem> call, @NonNull Throwable t) {
-        t.printStackTrace();
         loadingDialog.dismiss();
+        t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "editConnectionRequests", t.getMessage());
       }
     });
   }
@@ -314,6 +317,7 @@ public class ConnectionRequestActivity extends BaseActivity {
       public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "delete", t.getMessage());
 
       }
     });
