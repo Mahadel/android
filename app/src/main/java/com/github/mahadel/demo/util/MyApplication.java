@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import com.github.mahadel.demo.BuildConfig;
 import com.github.mahadel.demo.R;
 import com.github.mahadel.demo.model.MyObjectBox;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import io.github.inflationx.calligraphy3.CalligraphyConfig;
 import io.github.inflationx.calligraphy3.CalligraphyInterceptor;
@@ -17,6 +18,11 @@ import io.objectbox.android.AndroidObjectBrowser;
 public class MyApplication extends Application {
   private static BoxStore boxStore;
   public static LocaleManager localeManager;
+  private static FirebaseAnalytics firebaseAnalytics;
+
+  public static FirebaseAnalytics getFirebaseAnalytics() {
+    return firebaseAnalytics;
+  }
 
   @Override
   public void onCreate() {
@@ -28,10 +34,11 @@ public class MyApplication extends Application {
                 .setFontAttrId(R.attr.fontPath)
                 .build()))
         .build());
-
+    firebaseAnalytics = FirebaseAnalytics.getInstance(this);
     createBoxStore();
 
   }
+
 
   /**
    * Return instance of box store
