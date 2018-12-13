@@ -21,7 +21,7 @@ public class BaseActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     //Get type of theme from shared preferences
     Prefser prefser = new Prefser(this);
-    if (prefser.get(Constant.IS_DARK_THEME, Boolean.class, false)) {
+    if (prefser.get(Constant.IS_DARK_THEME, Boolean.class, true)) {
       setTheme(R.style.BaseAppTheme_Dark);
     } else {
       setTheme(R.style.BaseAppTheme);
