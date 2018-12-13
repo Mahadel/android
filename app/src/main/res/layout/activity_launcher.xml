@@ -56,16 +56,16 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/google_login_button"
-                    style="@style/StyleMaterialButtonLarge"
+                    style="@style/StyleMaterialButtonBorderAccent"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_marginBottom="@dimen/spacing_large"
                     android:text="@string/login_with_google_label"
                     android:textAllCaps="false"
-                    android:textColor="@color/grey_10"
+                    android:textColor="@color/colorAccent"
                     app:icon="@drawable/ic_google_plus_32px"
                     app:iconSize="@dimen/spacing_xlarge"
-                    app:iconTint="@color/grey_10" />
+                    app:iconTint="@color/colorAccent" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
