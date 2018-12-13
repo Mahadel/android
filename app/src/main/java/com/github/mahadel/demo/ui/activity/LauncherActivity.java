@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -64,7 +65,7 @@ public class LauncherActivity extends BaseActivity implements
   private static final int RC_SIGN_IN = 10001;
   private static final String TAG = "LauncherActivity";
   @BindView(R.id.login_layout)
-  LinearLayout loginLayout;
+  RelativeLayout loginLayout;
   @BindView(R.id.email_text_view)
   AppCompatTextView emailTextView;
   @BindView(R.id.first_name_edit_text)

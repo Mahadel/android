@@ -17,67 +17,82 @@
         app:strokeColor="#00004b"
         app:strokeWidth="1dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/login_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:orientation="vertical"
             android:visibility="visible">
-
-            <ImageView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_launcher" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="@dimen/spacing_large"
-                android:text="@string/app_name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textStyle="bold|italic" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/google_login_button"
-                style="@style/StyleMaterialButtonLarge"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginBottom="@dimen/spacing_large"
-                android:text="@string/login_with_google_label"
-                android:textAllCaps="false"
-                android:textColor="@color/grey_10"
-                app:icon="@drawable/ic_google_plus_32px"
-                app:iconSize="@dimen/spacing_xlarge"
-                app:iconTint="@color/grey_10" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layoutDirection="rtl"
-                android:orientation="horizontal">
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/spacing_mxlarge"
+                android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/persian_image_view"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:background="@drawable/image_border"
-                    android:src="@drawable/ic_persian" />
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_launcher" />
 
-                <View
-                    android:layout_width="@dimen/spacing_large"
-                    android:layout_height="1dp" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/english_image_view"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:src="@drawable/ic_english" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/spacing_large"
+                    android:text="@string/app_name"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    android:textStyle="bold|italic" />
             </LinearLayout>
-        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/spacing_mxlarge"
+                android:orientation="vertical">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/google_login_button"
+                    style="@style/StyleMaterialButtonLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginBottom="@dimen/spacing_large"
+                    android:text="@string/login_with_google_label"
+                    android:textAllCaps="false"
+                    android:textColor="@color/grey_10"
+                    app:icon="@drawable/ic_google_plus_32px"
+                    app:iconSize="@dimen/spacing_xlarge"
+                    app:iconTint="@color/grey_10" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layoutDirection="rtl"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/persian_image_view"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:background="@drawable/image_border"
+                        android:src="@drawable/ic_persian" />
+
+                    <View
+                        android:layout_width="@dimen/spacing_large"
+                        android:layout_height="1dp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/english_image_view"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:src="@drawable/ic_english" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/personal_layout"
