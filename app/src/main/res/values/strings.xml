@@ -63,7 +63,7 @@
     <string name="no_search_label">No search result</string>
     <string name="search_later_label">Please search later</string>
     <string name="gender_label">Gender:</string>
-    <string name="search_item_found_label">Account that found:</string>
+    <string name="search_item_found_label">Account found:</string>
     <string name="learn_search_label">Learns:</string>
     <string name="teach_search_label">Teaches:</string>
     <string name="request_sent_to_label">Sent to:</string>
