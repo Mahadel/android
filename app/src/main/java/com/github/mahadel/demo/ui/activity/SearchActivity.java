@@ -90,6 +90,7 @@ public class SearchActivity extends BaseActivity {
     setUpBottomSheet();
     initRecyclerView();
     searching();
+    AppUtil.hideSoftInput(this);
   }
 
   /**
