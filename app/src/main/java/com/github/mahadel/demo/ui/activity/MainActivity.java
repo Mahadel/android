@@ -449,6 +449,7 @@ public class MainActivity extends BaseActivity {
   public void hideBottomDrawer() {
     bottomDrawerBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    AppUtil.hideSoftInput(this);
   }
 
   @Override
