@@ -8,6 +8,7 @@
     <color name="grey_80">#37474F</color>
     <color name="grey_90">#263238</color>
     <color name="grey_100">#000a12</color>
+    <color name="dark_100">#141d26</color>
     <color name="transparent">#00ffffff</color>
     <!--<color name="mtrl_textinput_default_box_stroke_color">#fff</color>-->
 

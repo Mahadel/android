@@ -17,7 +17,7 @@
     <style name="BaseAppTheme.Dark" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- color palette -->
         <item name="colorPrimary">@color/grey_90</item>
-        <item name="colorPrimaryDark">@color/grey_100</item>
+        <item name="colorPrimaryDark">@color/dark_100</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorSecondary">@color/grey_10</item>
         <item name="android:textColorPrimary">@android:color/white</item>
