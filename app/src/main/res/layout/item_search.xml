@@ -107,6 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -114,6 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
             <View
@@ -137,6 +139,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -144,6 +147,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
         </LinearLayout>
