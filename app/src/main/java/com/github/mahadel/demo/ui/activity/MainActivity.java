@@ -3,6 +3,7 @@ package com.github.mahadel.demo.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,10 +30,13 @@ import com.github.mahadel.demo.ui.fragment.UserSkillDetailFragment;
 import com.github.mahadel.demo.util.AppUtil;
 import com.github.mahadel.demo.util.DatabaseUtil;
 import com.github.mahadel.demo.util.MyApplication;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
@@ -98,6 +102,21 @@ public class MainActivity extends BaseActivity {
     initNavigationView();
     initRecyclerViews();
     requestSkills();
+    subscribeFirebaseTopic();
+  }
+
+  private void subscribeFirebaseTopic() {
+    FirebaseMessaging.getInstance().subscribeToTopic("update_app")
+        .addOnCompleteListener(new OnCompleteListener<Void>() {
+          @Override
+          public void onComplete(@NonNull Task<Void> task) {
+            if (task.isSuccessful()) {
+              Log.d("subscribe", "success");
+            } else {
+              Log.d("subscribe", "failed");
+            }
+          }
+        });
   }
 
   private void setUpDBAccess() {
