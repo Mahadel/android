@@ -90,6 +90,28 @@
                         android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/search_again_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/error_request_message"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/retry_button"
+                        android:layout_width="?android:actionBarSize"
+                        android:layout_height="?android:actionBarSize"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:tint="?attr/colorSecondary"
+                        app:srcCompat="@drawable/ic_search_24px" />
+                </LinearLayout>
+
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

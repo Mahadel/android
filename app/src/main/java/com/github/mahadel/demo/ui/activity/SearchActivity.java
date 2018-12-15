@@ -69,6 +69,8 @@ public class SearchActivity extends BaseActivity {
   AppCompatEditText requestDescriptionEditText;
   @BindView(R.id.layout_empty)
   LinearLayout layoutEmpty;
+  @BindView(R.id.search_again_layout)
+  LinearLayout searchAgainLayout;
   private Dialog loadingDialog;
   private FastAdapter<SearchResult> mFastAdapter;
   private ItemAdapter<SearchResult> mItemAdapter;
@@ -165,6 +167,10 @@ public class SearchActivity extends BaseActivity {
       public void onFailure(@NonNull Call<List<SearchResult>> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        AppUtil.showSnackbar(recyclerView, getString(R.string.error_request_message), SearchActivity.this, SnackbarUtils.LENGTH_LONG);
+        recyclerView.setVisibility(View.GONE);
+        layoutEmpty.setVisibility(View.GONE);
+        searchAgainLayout.setVisibility(View.VISIBLE);
         FirebaseEventLog.log("server_failure", TAG, "searching", t.getMessage());
       }
     });
@@ -179,9 +185,13 @@ public class SearchActivity extends BaseActivity {
     if (searchResults.size() != 0) {
       mItemAdapter.clear();
       mItemAdapter.add(searchResults);
+      layoutEmpty.setVisibility(View.GONE);
+      searchAgainLayout.setVisibility(View.GONE);
+      recyclerView.setVisibility(View.VISIBLE);
     } else {
       layoutEmpty.setVisibility(View.VISIBLE);
       recyclerView.setVisibility(View.GONE);
+      searchAgainLayout.setVisibility(View.GONE);
     }
   }
 
@@ -241,6 +251,11 @@ public class SearchActivity extends BaseActivity {
   @OnClick(R.id.close_image_view)
   public void close() {
     finish();
+  }
+
+  @OnClick(R.id.retry_button)
+  public void retry() {
+    searching();
   }
 }
 
