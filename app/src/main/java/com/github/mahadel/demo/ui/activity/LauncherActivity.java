@@ -233,6 +233,7 @@ public class LauncherActivity extends BaseActivity implements
       public void onFailure(@NonNull Call<AuthenticationInfo> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        AppUtil.showSnackbar(emailTextView, getString(R.string.error_request_message), LauncherActivity.this, SnackbarUtils.LENGTH_LONG);
         FirebaseEventLog.log("server_failure", TAG, "storeUser", t.getMessage());
       }
     });
@@ -300,6 +301,7 @@ public class LauncherActivity extends BaseActivity implements
       public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        AppUtil.showSnackbar(emailTextView, getString(R.string.error_request_message), LauncherActivity.this, SnackbarUtils.LENGTH_LONG);
         FirebaseEventLog.log("server_failure", TAG, "updateUser", t.getMessage());
       }
     });
@@ -389,6 +391,7 @@ public class LauncherActivity extends BaseActivity implements
       public void onFailure(@NonNull Call<List<Category>> call, @NonNull Throwable t) {
         hiddenLoadingLayout();
         t.printStackTrace();
+        AppUtil.showSnackbar(emailTextView, getString(R.string.error_request_message), LauncherActivity.this, SnackbarUtils.LENGTH_LONG);
         FirebaseEventLog.log("server_failure", TAG, "retrieveSkillData", t.getMessage());
       }
     });
@@ -416,6 +419,7 @@ public class LauncherActivity extends BaseActivity implements
       public void onFailure(@NonNull Call<List<UserSkill>> call, @NonNull Throwable t) {
         hiddenLoadingLayout();
         t.printStackTrace();
+        AppUtil.showSnackbar(emailTextView, getString(R.string.error_request_message), LauncherActivity.this, SnackbarUtils.LENGTH_LONG);
         FirebaseEventLog.log("server_failure", TAG, "retrieveUserSkillData", t.getMessage());
       }
     });
