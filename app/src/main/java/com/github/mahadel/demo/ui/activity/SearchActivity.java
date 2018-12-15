@@ -168,9 +168,7 @@ public class SearchActivity extends BaseActivity {
         loadingDialog.dismiss();
         t.printStackTrace();
         AppUtil.showSnackbar(recyclerView, getString(R.string.error_request_message), SearchActivity.this, SnackbarUtils.LENGTH_LONG);
-        recyclerView.setVisibility(View.GONE);
-        layoutEmpty.setVisibility(View.GONE);
-        searchAgainLayout.setVisibility(View.VISIBLE);
+        showAgainLayout();
         FirebaseEventLog.log("server_failure", TAG, "searching", t.getMessage());
       }
     });
@@ -185,14 +183,28 @@ public class SearchActivity extends BaseActivity {
     if (searchResults.size() != 0) {
       mItemAdapter.clear();
       mItemAdapter.add(searchResults);
-      layoutEmpty.setVisibility(View.GONE);
-      searchAgainLayout.setVisibility(View.GONE);
-      recyclerView.setVisibility(View.VISIBLE);
+      showRecyclerView();
     } else {
-      layoutEmpty.setVisibility(View.VISIBLE);
-      recyclerView.setVisibility(View.GONE);
-      searchAgainLayout.setVisibility(View.GONE);
+      showEmptyLayout();
     }
+  }
+
+  private void showRecyclerView() {
+    layoutEmpty.setVisibility(View.GONE);
+    searchAgainLayout.setVisibility(View.GONE);
+    recyclerView.setVisibility(View.VISIBLE);
+  }
+
+  private void showEmptyLayout() {
+    layoutEmpty.setVisibility(View.VISIBLE);
+    recyclerView.setVisibility(View.GONE);
+    searchAgainLayout.setVisibility(View.GONE);
+  }
+
+  private void showAgainLayout() {
+    recyclerView.setVisibility(View.GONE);
+    layoutEmpty.setVisibility(View.GONE);
+    searchAgainLayout.setVisibility(View.VISIBLE);
   }
 
   @Override
