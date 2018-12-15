@@ -17,6 +17,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.NetworkUtils;
 import com.blankj.utilcode.util.SnackbarUtils;
 import com.github.mahadel.demo.R;
 import com.github.mahadel.demo.model.AuthenticationInfo;
@@ -67,6 +68,8 @@ public class ConnectionRequestActivity extends BaseActivity {
   AppCompatTextView receivedTextView;
   @BindView(R.id.layout_empty)
   LinearLayout layoutEmpty;
+  @BindView(R.id.get_data_layout)
+  LinearLayout getDataLayout;
   private Dialog loadingDialog;
   private FastAdapter<ConnectionSendItem> mFastAdapterConnectionSend;
   private ItemAdapter<ConnectionSendItem> mItemAdapterConnectionSend;
@@ -87,7 +90,14 @@ public class ConnectionRequestActivity extends BaseActivity {
     initVariables();
     setSentSelect();
     initRecyclerView();
-    getConnectionRequests();
+    if (NetworkUtils.isConnected()) {
+      getConnectionRequests();
+    } else {
+      recyclerView.setVisibility(View.GONE);
+      layoutEmpty.setVisibility(View.GONE);
+      getDataLayout.setVisibility(View.VISIBLE);
+      AppUtil.showSnackbar(recyclerView, getString(R.string.no_internet_label), this, SnackbarUtils.LENGTH_LONG);
+    }
   }
 
   /**
