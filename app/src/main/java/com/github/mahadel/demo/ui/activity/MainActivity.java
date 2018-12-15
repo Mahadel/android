@@ -21,21 +21,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.mahadel.demo.R;
 import com.github.mahadel.demo.listener.CallbackResult;
 import com.github.mahadel.demo.listener.SkillDetailCallbackResult;
+import com.github.mahadel.demo.model.AuthenticationInfo;
+import com.github.mahadel.demo.model.ResponseMessage;
 import com.github.mahadel.demo.model.UserSkill;
+import com.github.mahadel.demo.service.APIService;
 import com.github.mahadel.demo.ui.fragment.AboutFragment;
 import com.github.mahadel.demo.ui.fragment.AddSkillFragment;
 import com.github.mahadel.demo.ui.fragment.ProfileFragment;
 import com.github.mahadel.demo.ui.fragment.SettingsFragment;
 import com.github.mahadel.demo.ui.fragment.UserSkillDetailFragment;
 import com.github.mahadel.demo.util.AppUtil;
+import com.github.mahadel.demo.util.Constant;
 import com.github.mahadel.demo.util.DatabaseUtil;
+import com.github.mahadel.demo.util.FirebaseEventLog;
 import com.github.mahadel.demo.util.MyApplication;
+import com.github.mahadel.demo.util.RetrofitUtil;
+import com.github.pwittchen.prefser.library.rx2.Prefser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.IAdapter;
@@ -51,6 +60,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * MainActivity showing list of userSkill that submit to the server in two part
@@ -60,6 +72,7 @@ import io.objectbox.BoxStore;
  */
 public class MainActivity extends BaseActivity {
 
+  private static final String TAG = "MainActivity";
   @BindView(R.id.recycler_view_1)
   RecyclerView recyclerView_1;
   @BindView(R.id.recycler_view_2)
@@ -86,6 +99,8 @@ public class MainActivity extends BaseActivity {
   private Box<UserSkill> userSkillBox;
   private int lastPositionClicked;
   private BottomSheetBehavior bottomSheetBehavior;
+  private Prefser prefser;
+  private AuthenticationInfo info;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +111,7 @@ public class MainActivity extends BaseActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
     setSupportActionBar(bar);
+    initVariables();
     setUpDBAccess();
     setUpBottomDrawer();
     setUpBottomSheet();
@@ -103,6 +119,12 @@ public class MainActivity extends BaseActivity {
     initRecyclerViews();
     requestSkills();
     subscribeFirebaseTopic();
+    getFirebaseId();
+  }
+
+  private void initVariables() {
+    prefser = new Prefser(this);
+    info = prefser.get(Constant.TOKEN, AuthenticationInfo.class, null);
   }
 
   private void subscribeFirebaseTopic() {
@@ -476,5 +498,56 @@ public class MainActivity extends BaseActivity {
     } else {
       super.onBackPressed();
     }
+  }
+
+  /**
+   * Send firebase id token to the server
+   *
+   * @param token String firebase id token
+   */
+
+  private void sendFirebaseIdToken(final String token) {
+    APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
+    Call<ResponseMessage> call = apiService.setFirebaseId(info.getUuid(), token);
+    call.enqueue(new Callback<ResponseMessage>() {
+      @Override
+      public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
+        if (response.isSuccessful()) {
+          Log.d("submitToken", "success");
+          info.setFirebaseId(token);
+          prefser.put(Constant.TOKEN, info);
+        }
+      }
+
+      @Override
+      public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
+        t.printStackTrace();
+        FirebaseEventLog.log("server_failure", TAG, "sendFirebaseIdToken", t.getMessage());
+      }
+    });
+  }
+
+  /**
+   * Get firebase id token
+   */
+  private void getFirebaseId() {
+    FirebaseInstanceId.getInstance().getInstanceId()
+        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+          @Override
+          public void onComplete(@NonNull Task<InstanceIdResult> task) {
+            if (!task.isSuccessful()) {
+              Log.w("Firebase TOKEN", "getInstanceId failed", task.getException());
+              return;
+            }
+            String token = task.getResult().getToken();
+            if (info.getFirebaseId() != null) {
+              if (!info.getFirebaseId().equals(token)) {
+                sendFirebaseIdToken(token);
+              }
+            } else {
+              sendFirebaseIdToken(token);
+            }
+          }
+        });
   }
 }

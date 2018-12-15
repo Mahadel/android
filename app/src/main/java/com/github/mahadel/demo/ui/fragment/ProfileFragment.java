@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,10 +36,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import butterknife.BindView;
@@ -77,7 +72,6 @@ public class ProfileFragment extends DialogFragment implements
     showProfileInfo();
     setUpGoogleSignIn();
     requestProfileInfo();
-    getFirebaseId();
     return rootView;
   }
 
@@ -127,30 +121,6 @@ public class ProfileFragment extends DialogFragment implements
         FirebaseEventLog.log("server_failure", TAG, "requestProfileInfo", t.getMessage());
       }
     });
-  }
-
-  /**
-   * Get firebase id token
-   */
-  private void getFirebaseId() {
-    FirebaseInstanceId.getInstance().getInstanceId()
-        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-          @Override
-          public void onComplete(@NonNull Task<InstanceIdResult> task) {
-            if (!task.isSuccessful()) {
-              Log.w("Firebase TOKEN", "getInstanceId failed", task.getException());
-              return;
-            }
-            String token = task.getResult().getToken();
-            if (info.getFirebaseId() != null) {
-              if (!info.getFirebaseId().equals(token)) {
-                sendFirebaseIdToken(token);
-              }
-            } else {
-              sendFirebaseIdToken(token);
-            }
-          }
-        });
   }
 
   @NonNull
@@ -321,32 +291,5 @@ public class ProfileFragment extends DialogFragment implements
       mGoogleApiClient.stopAutoManage(getActivity());
       mGoogleApiClient.disconnect();
     }
-  }
-
-  /**
-   * Send firebase id token to the server
-   *
-   * @param token String firebase id token
-   */
-
-  private void sendFirebaseIdToken(final String token) {
-    APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
-    Call<ResponseMessage> call = apiService.setFirebaseId(info.getUuid(), token);
-    call.enqueue(new Callback<ResponseMessage>() {
-      @Override
-      public void onResponse(@NonNull Call<ResponseMessage> call, @NonNull Response<ResponseMessage> response) {
-        if (response.isSuccessful()) {
-          Log.d("submitToken", "success");
-          info.setFirebaseId(token);
-          prefser.put(Constant.TOKEN, info);
-        }
-      }
-
-      @Override
-      public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
-        t.printStackTrace();
-        FirebaseEventLog.log("server_failure", TAG, "sendFirebaseIdToken", t.getMessage());
-      }
-    });
   }
 }
