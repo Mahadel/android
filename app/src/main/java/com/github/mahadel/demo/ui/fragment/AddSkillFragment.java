@@ -148,6 +148,7 @@ public class AddSkillFragment extends Fragment {
         public void onFailure(@NonNull Call<UserSkill> call, @NonNull Throwable t) {
           loadingDialog.dismiss();
           t.printStackTrace();
+          AppUtil.showSnackbar(skillTypeTextView, getString(R.string.error_request_message), activity, SnackbarUtils.LENGTH_LONG);
           FirebaseEventLog.log("server_failure", TAG, "submitUserSkill", t.getMessage());
         }
       });

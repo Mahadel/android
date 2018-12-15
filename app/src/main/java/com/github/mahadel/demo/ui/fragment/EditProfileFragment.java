@@ -137,7 +137,7 @@ public class EditProfileFragment extends DialogFragment {
         gender = 1;
       }
       if (NetworkUtils.isConnected()) {
-        updateUser(firstName, lastName, gender);
+        updateUser(view, firstName, lastName, gender);
       } else {
         AppUtil.showSnackbar(view, getString(R.string.no_internet_label), activity, SnackbarUtils.LENGTH_LONG);
       }
@@ -149,11 +149,12 @@ public class EditProfileFragment extends DialogFragment {
   /**
    * Update user information in the server
    *
+   * @param view
    * @param firstName String first name
    * @param lastName  String last name
    * @param gender    Int gender
    */
-  private void updateUser(final String firstName, final String lastName, final int gender) {
+  private void updateUser(View view, final String firstName, final String lastName, final int gender) {
     loadingDialog.show();
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ResponseMessage> call = apiService.updateUser(info.getUuid(), firstName, lastName, gender);
@@ -176,6 +177,7 @@ public class EditProfileFragment extends DialogFragment {
       public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        AppUtil.showSnackbar(view, getString(R.string.error_request_message), activity, SnackbarUtils.LENGTH_LONG);
         FirebaseEventLog.log("server_failure", TAG, "updateUser", t.getMessage());
       }
     });

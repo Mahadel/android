@@ -155,22 +155,27 @@ public class AboutFragment extends DialogFragment {
    */
   @OnClick({R.id.update_button, R.id.changelog_layout, R.id.license_layout, R.id.sponsor_website, R.id.developer_layout})
   void handleLayoutClicks(View view) {
-    switch (view.getId()) {
-      case R.id.update_button:
-        startBrowser(about.getAppUrl(), view);
-        break;
-      case R.id.changelog_layout:
-        startBrowser(about.getChangelogUrl(), view);
-        break;
-      case R.id.license_layout:
-        startBrowser(about.getLicenseUrl(), view);
-        break;
-      case R.id.sponsor_website:
-        startBrowser(about.getSponsorUrl(), view);
-        break;
-      case R.id.developer_layout:
-        startBrowser(getString(R.string.bkhezry_twitter_url), view);
-        break;
+    if (about != null) {
+      switch (view.getId()) {
+        case R.id.update_button:
+          startBrowser(about.getAppUrl(), view);
+          break;
+        case R.id.changelog_layout:
+          startBrowser(about.getChangelogUrl(), view);
+          break;
+        case R.id.license_layout:
+          startBrowser(about.getLicenseUrl(), view);
+          break;
+        case R.id.sponsor_website:
+          startBrowser(about.getSponsorUrl(), view);
+          break;
+        case R.id.developer_layout:
+          startBrowser(getString(R.string.bkhezry_twitter_url), view);
+          break;
+      }
+    } else {
+      AppUtil.showSnackbar(view, getString(R.string.error_request_message), activity, SnackbarUtils.LENGTH_LONG);
+      getAbout();
     }
   }
 
