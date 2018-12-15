@@ -82,4 +82,5 @@
     <string name="browser_not_found_label">برنامه مرورگر یافت نشد</string>
     <string name="access_deny_label">دسترسی غیرمجاز. لطفا دوباره وارد شوید</string>
     <string name="error_request_message">خطایی روی داد. دوباره تلاش کنید</string>
+    <string name="no_email_available_label">ایمیل کاربر در دسترس نیست</string>
 </resources>

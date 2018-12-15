@@ -85,4 +85,5 @@
     <string name="access_deny_label">Access is deny, Please login again</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="error_request_message">Error occurred. Please try again</string>
+    <string name="no_email_available_label">Email of user not available</string>
 </resources>

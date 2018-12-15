@@ -124,7 +124,7 @@ public class ConnectionRequestActivity extends BaseActivity {
       @Override
       public void sendEmail(ConnectionSendItem item, int position) {
         if (item.getIsDelete() == 1 || item.getIsAccept() != 1) {
-          AppUtil.showSnackbar(recyclerView, "ایمیل کاربر در دسترس نیست", ConnectionRequestActivity.this, SnackbarUtils.LENGTH_LONG);
+          AppUtil.showSnackbar(recyclerView, getString(R.string.no_email_available_label), ConnectionRequestActivity.this, SnackbarUtils.LENGTH_LONG);
         } else {
           sendMail(item.getEmailTo());
         }
