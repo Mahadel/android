@@ -202,6 +202,7 @@ public class ProfileFragment extends DialogFragment implements
       public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        AppUtil.showSnackbar(emailTextView, getString(R.string.error_request_message), activity, SnackbarUtils.LENGTH_LONG);
         FirebaseEventLog.log("server_failure", TAG, "requestDeleteAccount", t.getMessage());
       }
     });
@@ -211,18 +212,23 @@ public class ProfileFragment extends DialogFragment implements
    * Showing edit profile info dialog
    */
   private void editProfileInfo() {
-    FragmentManager fragmentManager = getFragmentManager();
-    EditProfileFragment editProfileFragment = new EditProfileFragment();
-    editProfileFragment.setUserInfo(userInfo);
-    editProfileFragment.setOnCallbackResult(new EditProfileFragment.CallbackListener() {
-      @Override
-      public void sendResult(UserInfo userInfo) {
-        updateUI(userInfo);
-      }
-    });
-    FragmentTransaction transaction = fragmentManager.beginTransaction();
-    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-    transaction.add(android.R.id.content, editProfileFragment).addToBackStack(null).commit();
+    if (userInfo != null) {
+      FragmentManager fragmentManager = getFragmentManager();
+      EditProfileFragment editProfileFragment = new EditProfileFragment();
+      editProfileFragment.setUserInfo(userInfo);
+      editProfileFragment.setOnCallbackResult(new EditProfileFragment.CallbackListener() {
+        @Override
+        public void sendResult(UserInfo userInfo) {
+          updateUI(userInfo);
+        }
+      });
+      FragmentTransaction transaction = fragmentManager.beginTransaction();
+      transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+      transaction.add(android.R.id.content, editProfileFragment).addToBackStack(null).commit();
+    } else {
+      AppUtil.showSnackbar(emailTextView, getString(R.string.error_request_message), activity, SnackbarUtils.LENGTH_LONG);
+      requestProfileInfo();
+    }
   }
 
   /**
