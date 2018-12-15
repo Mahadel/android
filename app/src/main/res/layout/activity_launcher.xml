@@ -227,12 +227,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/error_get_data_label"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Title" />
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/retry_button"
-                        style="@style/StyleMaterialButton"
-                        android:layout_width="match_parent"
+                        style="@style/StyleMaterialButtonBorderAccent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@color/transparent"
                         android:text="@string/retry_label"
