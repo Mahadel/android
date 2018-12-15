@@ -90,14 +90,7 @@ public class ConnectionRequestActivity extends BaseActivity {
     initVariables();
     setSentSelect();
     initRecyclerView();
-    if (NetworkUtils.isConnected()) {
-      getConnectionRequests();
-    } else {
-      recyclerView.setVisibility(View.GONE);
-      layoutEmpty.setVisibility(View.GONE);
-      getDataLayout.setVisibility(View.VISIBLE);
-      AppUtil.showSnackbar(recyclerView, getString(R.string.no_internet_label), this, SnackbarUtils.LENGTH_LONG);
-    }
+    getConnectionRequests();
   }
 
   /**
@@ -166,6 +159,15 @@ public class ConnectionRequestActivity extends BaseActivity {
    * Get list of sent & received connection from server
    */
   private void getConnectionRequests() {
+    if (NetworkUtils.isConnected()) {
+      requestConnections();
+    } else {
+      showErrorGetDataLayout();
+      AppUtil.showSnackbar(recyclerView, getString(R.string.no_internet_label), this, SnackbarUtils.LENGTH_LONG);
+    }
+  }
+
+  private void requestConnections() {
     loadingDialog.show();
     APIService apiService = RetrofitUtil.getRetrofit(info.getToken()).create(APIService.class);
     Call<ConnectionRequest> call = apiService.getUserConnectionRequest(info.getUuid());
@@ -185,6 +187,8 @@ public class ConnectionRequestActivity extends BaseActivity {
       public void onFailure(@NonNull Call<ConnectionRequest> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        showErrorGetDataLayout();
+        AppUtil.showSnackbar(recyclerView, getString(R.string.error_request_message), ConnectionRequestActivity.this, SnackbarUtils.LENGTH_LONG);
         FirebaseEventLog.log("server_failure", TAG, "getConnectionRequests", t.getMessage());
       }
     });
@@ -200,7 +204,7 @@ public class ConnectionRequestActivity extends BaseActivity {
       recyclerView.setAdapter(mFastAdapterConnectionSend);
       mItemAdapterConnectionSend.clear();
       mItemAdapterConnectionSend.add(connectionSend);
-      hideEmptyLayout();
+      showRecyclerView();
     } else {
       showEmptyLayout();
     }
@@ -216,20 +220,28 @@ public class ConnectionRequestActivity extends BaseActivity {
       recyclerView.setAdapter(mFastAdapterConnectionReceive);
       mItemAdapterConnectionReceive.clear();
       mItemAdapterConnectionReceive.add(connectionReceiveItems);
-      hideEmptyLayout();
+      showRecyclerView();
     } else {
       showEmptyLayout();
     }
   }
 
-  private void hideEmptyLayout() {
+  private void showRecyclerView() {
     layoutEmpty.setVisibility(View.GONE);
     recyclerView.setVisibility(View.VISIBLE);
+    getDataLayout.setVisibility(View.GONE);
   }
 
   private void showEmptyLayout() {
     layoutEmpty.setVisibility(View.VISIBLE);
+    getDataLayout.setVisibility(View.GONE);
     recyclerView.setVisibility(View.GONE);
+  }
+
+  private void showErrorGetDataLayout() {
+    recyclerView.setVisibility(View.GONE);
+    layoutEmpty.setVisibility(View.GONE);
+    getDataLayout.setVisibility(View.VISIBLE);
   }
 
   /**
@@ -402,4 +414,8 @@ public class ConnectionRequestActivity extends BaseActivity {
     finish();
   }
 
+  @OnClick(R.id.retry_button)
+  public void retry() {
+    getConnectionRequests();
+  }
 }
