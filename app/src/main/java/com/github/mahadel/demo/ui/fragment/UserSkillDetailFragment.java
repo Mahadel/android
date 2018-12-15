@@ -237,6 +237,7 @@ public class UserSkillDetailFragment extends Fragment {
       public void onFailure(@NonNull Call<ResponseMessage> call, @NonNull Throwable t) {
         loadingDialog.dismiss();
         t.printStackTrace();
+        AppUtil.showSnackbar(skillNameTextView, getString(R.string.error_request_message), activity, SnackbarUtils.LENGTH_LONG);
         FirebaseEventLog.log("server_failure", TAG, "removeUsersSkill", t.getMessage());
       }
     });

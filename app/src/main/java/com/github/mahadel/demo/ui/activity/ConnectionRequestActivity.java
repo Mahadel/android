@@ -318,7 +318,6 @@ public class ConnectionRequestActivity extends BaseActivity {
         loadingDialog.dismiss();
         t.printStackTrace();
         FirebaseEventLog.log("server_failure", TAG, "delete", t.getMessage());
-
       }
     });
   }
