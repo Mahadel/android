@@ -346,20 +346,24 @@ public class ConnectionRequestActivity extends BaseActivity {
   }
 
   private void selectReceivedConnection() {
-    if (currentConnectionType != RECEIVED_CONNECTION) {
-      displayConnectionReceive(connectionRequest.getConnectionReceive());
-      currentConnectionType = RECEIVED_CONNECTION;
-      setReceivedSelect();
-      setSentDeselect();
+    if (connectionRequest != null) {
+      if (currentConnectionType != RECEIVED_CONNECTION) {
+        displayConnectionReceive(connectionRequest.getConnectionReceive());
+        currentConnectionType = RECEIVED_CONNECTION;
+        setReceivedSelect();
+        setSentDeselect();
+      }
     }
   }
 
   private void selectSentConnection() {
-    if (currentConnectionType != SENT_CONNECTION) {
-      displayConnectionSend(connectionRequest.getConnectionSend());
-      currentConnectionType = SENT_CONNECTION;
-      setSentSelect();
-      setReceivedDeselect();
+    if (connectionRequest != null) {
+      if (currentConnectionType != SENT_CONNECTION) {
+        displayConnectionSend(connectionRequest.getConnectionSend());
+        currentConnectionType = SENT_CONNECTION;
+        setSentSelect();
+        setReceivedDeselect();
+      }
     }
   }
 
