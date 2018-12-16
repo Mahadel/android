@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">تبادل مهارت</string>
+    <string name="app_name">تبادل مهارت دمو</string>
     <string name="prompt_select_kind_skill_label">انتخاب نوع مهارت</string>
     <string name="login_with_google_label">ورود با حساب‌کاربری گوگل</string>
     <string name="submit_label">تایید</string>

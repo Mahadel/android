@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Skill Swap</string>
+    <string name="app_name">Skill Swap Demo</string>
     <string name="prompt_select_kind_skill_label">Select kind of skill</string>
     <string name="login_with_google_label">Login with Google account</string>
     <string name="submit_label">Submit</string>
