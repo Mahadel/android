@@ -2,18 +2,11 @@
 <resources>
     <color name="colorAccent">#039be5</color>
     <color name="grey_10">#e6e6e6</color>
-    <color name="grey_20">#cccccc</color>
     <color name="grey_40">#999999</color>
     <color name="grey_60">#666666</color>
     <color name="grey_80">#37474F</color>
     <color name="grey_90">#263238</color>
-    <color name="grey_100">#000a12</color>
     <color name="dark_100">#141d26</color>
     <color name="transparent">#00ffffff</color>
-    <!--<color name="mtrl_textinput_default_box_stroke_color">#fff</color>-->
-
     <color name="white">#FFFFFF</color>
-    <color name="whiteT70">#B3FFFFFF</color>
-    <color name="redA200">#FF5252</color>
-    <color name="blackT87">#DE000000</color>
 </resources>

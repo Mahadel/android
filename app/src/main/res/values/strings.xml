@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Skill Swap Demo</string>
-    <string name="prompt_select_kind_skill_label">Select kind of skill</string>
     <string name="login_with_google_label">Login with Google account</string>
     <string name="submit_label">Submit</string>
     <string name="first_name_label">First Name</string>
@@ -41,7 +40,6 @@
     <string name="retry_label">Retry</string>
     <string name="field_require_label">Please fill all fields</string>
     <string name="select_skill_message_label">Please select a skill</string>
-    <string name="more_info_label">More info</string>
     <string name="request_label">Request</string>
     <string name="connections_label">Connections</string>
     <string name="search_label">Search</string>
