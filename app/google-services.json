@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1071346960599",
+    "firebase_url": "https://learning-1535713853686.firebaseio.com",
+    "project_id": "learning-1535713853686",
+    "storage_bucket": "learning-1535713853686.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1071346960599:android:8236bef5cf74bd34",
+        "android_client_info": {
+          "package_name": "com.github.mahadel.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1071346960599-s73gvah8mgq3u33v4f0jes4btgrclro4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.github.mahadel.demo",
+            "certificate_hash": "618dec78adab6f3394580900ebe109552c070b07"
+          }
+        },
+        {
+          "client_id": "1071346960599-5knq2udj6t34sbebu2jns3ut15hgkjs0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzwmZIFJWXxCJCfxPLbVPwuVYyCzcXN_8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1071346960599-5knq2udj6t34sbebu2jns3ut15hgkjs0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
