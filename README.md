@@ -21,14 +21,14 @@
 - [Material Design 2]: MaterialCardView / MaterialButton / Bottom App Bars
 - [Play Services Auth]: use for sign up with Google account
 - [FastAdapter]: The bullet proof, fast and easy to use adapter library, which minimizes developing time to a fraction
-- UtilCode
-- Calligraphy3
-- CardSlider
-- Square Retrofit / Okhttp / Logging-Interceptor
-- Glide
-- CircularImageView
+- [AndroidUtilCode]: is a powerful & easy to use library for Android. 
+- [Calligraphy3]: Custom fonts in Android the easy way
+- [CardSlider]: Cardslider is a material design UI controller that allows you to swipe through cards with pictures and accompanying descriptions.
+- Square [Retrofit] / [Okhttp] / [Logging-Interceptor]
+- [Glide]: An image loading and caching library for Android focused on smooth scrolling
+- [CircularImageView] Create circular ImageView in Android in the simplest way possible.
 - Firebase Core / Crashlytics / Messaging
-- ButterKnife
+- [ButterKnife]: Bind Android views and callbacks to fields and methods.
 
 
 # License
@@ -51,3 +51,12 @@
 [Material Design 2]: https://material.io/develop/android/
 [Play Services Auth]: https://developers.google.com/android/guides/setup
 [FastAdapter]: https://github.com/mikepenz/FastAdapter
+[AndroidUtilCode]: https://github.com/Blankj/AndroidUtilCode
+[Calligraphy3]: https://github.com/InflationX/Calligraphy
+[CardSlider]: https://github.com/Ramotion/cardslider-android
+[Retrofit]: https://github.com/square/retrofit
+[Okhttp]: https://github.com/square/okhttp
+[Logging-Interceptor]: https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor
+[Glide]: https://github.com/bumptech/glide
+[CircularImageView]: https://github.com/lopspower/CircularImageView
+[ButterKnife]: https://github.com/JakeWharton/butterknife
