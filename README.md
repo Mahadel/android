@@ -1,5 +1,7 @@
 # Android client for Mahadel project
 
+[![Build Status](https://travis-ci.org/Mahadel/android.svg?branch=master)](https://travis-ci.org/Mahadel/android)
+
 <p align="center"><img src="assets/welcome-img.png" height="500" /></p>
 
 **Requirements**
