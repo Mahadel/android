@@ -248,7 +248,10 @@ public class SearchActivity extends BaseActivity {
         if (response.isSuccessful()) {
           bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
           AppUtil.showSnackbar(view, getString(R.string.request_sent_success), SearchActivity.this, SnackbarUtils.LENGTH_INDEFINITE);
+        } else if (response.code() == 400) {
+          AppUtil.showSnackbar(view, getString(R.string.request_duplicate), SearchActivity.this, SnackbarUtils.LENGTH_INDEFINITE);
         }
+
       }
 
       @Override

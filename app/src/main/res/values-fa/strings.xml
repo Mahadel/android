@@ -81,4 +81,5 @@
     <string name="access_deny_label">دسترسی غیرمجاز. لطفا دوباره وارد شوید</string>
     <string name="error_request_message">خطایی روی داد. دوباره تلاش کنید</string>
     <string name="no_email_available_label">ایمیل کاربر در دسترس نیست</string>
+    <string name="request_duplicate">درخواست شما تکراری است. لطفا منتظر پاسخ باشید.</string>
 </resources>
