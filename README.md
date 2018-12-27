@@ -4,6 +4,9 @@
 
 <p align="center"><img src="assets/welcome-img.png" height="500" /></p>
 
+**Download APK**
+[https://mahadel.ir/app/mahadel_ir.apk](https://mahadel.ir/app/mahadel_ir.apk)
+
 **Requirements**
 - Android Studio 3.4 Canary 8
 - JDK 8
