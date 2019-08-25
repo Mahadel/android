@@ -1,4 +1,4 @@
-# Android client for Mahadel project
+# Android client for Mahadel project [Deprecated]
 
 [![Build Status](https://travis-ci.org/Mahadel/android.svg?branch=master)](https://travis-ci.org/Mahadel/android)
 
